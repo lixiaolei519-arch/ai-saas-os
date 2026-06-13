@@ -91,8 +91,6 @@ DB_USERNAME=ai_saas_os
 DB_PASSWORD=replace-with-strong-password
 WECHAT_PAY_WEBHOOK_SECRET=replace-with-real-wechat-webhook-secret
 ALIPAY_WEBHOOK_SECRET=replace-with-real-alipay-webhook-secret
-ADMIN_DEMO_PASSWORD=replace-with-strong-admin-password
-CUSTOMER_DEMO_PASSWORD=replace-with-strong-customer-password
 ```
 
 真实微信/支付宝密钥未准备好时，只允许在测试或预发布环境继续使用模拟 HMAC 回调密钥。生产流量前必须替换。
@@ -195,7 +193,30 @@ php artisan migrate --force
 php artisan db:seed --force
 ```
 
-如果不需要演示账号，可跳过 `db:seed`。首次商业演示环境建议保留种子数据并立即修改演示密码。
+如果不需要种子数据，可跳过 `db:seed`。
+
+部署验收账号必须通过命令创建，不要在文档或代码仓库中保存真实密码：
+
+```bash
+php artisan app:create-demo-users
+```
+
+命令会在终端输出：
+
+```text
+admin email: <admin-email>
+admin password: <admin-password>
+customer email: <customer-email>
+customer password: <customer-password>
+```
+
+上线 smoke test 使用这里输出的账号和密码。需要指定邮箱时可传入参数，密码仍会自动生成并输出：
+
+```bash
+php artisan app:create-demo-users \
+  --admin-email=admin@your-domain.example \
+  --customer-email=customer@your-domain.example
+```
 
 ## 9. 缓存和优化命令
 
@@ -328,20 +349,26 @@ curl -I https://your-domain.example/
 
 3. 管理员登录接口：
 
+`/api/v1/admin/auth/login` 必须使用 `POST`，并且 curl 请求必须带 `Accept: application/json`。
+
 ```bash
 curl -s -X POST https://your-domain.example/api/v1/admin/auth/login \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"email":"admin@your-domain.example","password":"replace-with-strong-admin-password"}'
+  -d '{"email":"<admin-email-from-command>","password":"<admin-password-from-command>"}'
 ```
 
 期望返回 `data.token`。
 
 4. 普通用户登录接口：
 
+`/api/v1/auth/login` 必须使用 `POST`，并且 curl 请求必须带 `Accept: application/json`。
+
 ```bash
 curl -s -X POST https://your-domain.example/api/v1/auth/login \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"email":"customer@your-domain.example","password":"replace-with-strong-customer-password"}'
+  -d '{"email":"<customer-email-from-command>","password":"<customer-password-from-command>"}'
 ```
 
 期望返回 `data.token`。

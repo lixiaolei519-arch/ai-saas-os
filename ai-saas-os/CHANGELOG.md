@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased - 2026-06-14
+
+### Fixed
+- Added `php artisan app:create-demo-users` to create deployment verification admin and customer accounts with generated terminal-only passwords.
+- Updated Baota deployment smoke test instructions to use command output credentials, `POST` login requests, and `Accept: application/json`.
+- Added test coverage proving the command creates both users and that both accounts can log in successfully.
+
+### Verified
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan test` passed with 23 tests and 327 assertions.
+
 ## v1.0.1 - 2026-06-14
 
 ### Added

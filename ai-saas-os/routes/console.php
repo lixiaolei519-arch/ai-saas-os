@@ -1,11 +1,14 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
@@ -129,3 +132,39 @@ Artisan::command('app:production-check {--env-file= : Optional env file path for
 
     return $failed ? 1 : 0;
 })->purpose('Run application production environment self-checks');
+
+Artisan::command('app:create-demo-users
+    {--admin-email= : Admin account email}
+    {--admin-password= : Admin account password}
+    {--customer-email= : Customer account email}
+    {--customer-password= : Customer account password}', function () {
+    $adminEmail = $this->option('admin-email') ?: env('ADMIN_DEMO_EMAIL', 'admin@example.com');
+    $customerEmail = $this->option('customer-email') ?: env('CUSTOMER_DEMO_EMAIL', 'customer@example.com');
+    $adminPassword = $this->option('admin-password') ?: Str::random(20);
+    $customerPassword = $this->option('customer-password') ?: Str::random(20);
+
+    User::updateOrCreate([
+        'email' => $adminEmail,
+    ], [
+        'name' => 'Deployment Admin',
+        'password' => Hash::make($adminPassword),
+        'status' => 'active',
+        'is_admin' => true,
+    ]);
+
+    User::updateOrCreate([
+        'email' => $customerEmail,
+    ], [
+        'name' => 'Deployment Customer',
+        'password' => Hash::make($customerPassword),
+        'status' => 'active',
+        'is_admin' => false,
+    ]);
+
+    $this->line('admin email: '.$adminEmail);
+    $this->line('admin password: '.$adminPassword);
+    $this->line('customer email: '.$customerEmail);
+    $this->line('customer password: '.$customerPassword);
+
+    return 0;
+})->purpose('Create deployment verification admin and customer accounts');
