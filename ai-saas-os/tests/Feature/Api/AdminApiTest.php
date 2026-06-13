@@ -150,7 +150,7 @@ class AdminApiTest extends TestCase
         $this->getJson('/api/v1/admin/stats', $this->bearerHeaders($token))
             ->assertOk()
             ->assertJsonPath('data.tenants_count', 2)
-            ->assertJsonPath('data.licenses_count', 1)
+            ->assertJsonPath('data.licenses_count', 2)
             ->assertJsonPath('data.orders_count', 1)
             ->assertJsonPath('data.paid_orders_count', 1)
             ->assertJsonPath('data.payment_callbacks_count', 1)

@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentCallback;
+use App\Models\ProductPlan;
 use App\Services\Payments\PaymentGatewayManager;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +16,7 @@ class PaymentService
         private readonly PaymentGatewayManager $paymentGatewayManager,
         private readonly WorkflowService $workflowService,
         private readonly MarketingService $marketingService,
+        private readonly LicenseService $licenseService,
     ) {
     }
 
@@ -74,11 +77,61 @@ class PaymentService
                     'payment_id' => $payment->id,
                     'channel' => $payment->channel,
                 ]);
+                $this->provisionLicenseForOrder($payment->order);
                 $this->marketingService->calculateCommissionForOrder($payment->order);
                 $callback->update(['status' => 'processed']);
             }
 
             return $callback->fresh(['payment']);
         });
+    }
+
+    private function provisionLicenseForOrder(Order $order): void
+    {
+        $metadata = $order->metadata ?? [];
+
+        if (! empty($metadata['provisioned_license_id'])) {
+            return;
+        }
+
+        $item = $order->items()->first();
+        if (! $item?->product_plan_id) {
+            return;
+        }
+
+        $plan = ProductPlan::find($item->product_plan_id);
+        if (! $plan) {
+            return;
+        }
+
+        $result = $this->licenseService->issue([
+            'tenant_id' => $order->tenant_id,
+            'product_plan_id' => $plan->id,
+            'domain' => $metadata['license_domain'] ?? null,
+            'expires_at' => $this->licenseExpiresAt($plan->billing_cycle),
+            'max_activations' => $metadata['max_activations'] ?? 1,
+            'metadata' => [
+                'source' => 'paid_order',
+                'source_order_id' => $order->id,
+                'source_order_no' => $order->order_no,
+            ],
+        ]);
+
+        $order->update([
+            'metadata' => array_merge($metadata, [
+                'provisioned_license_id' => $result['license']->id,
+                'provisioned_license_key_last4' => substr($result['license_key'], -4),
+            ]),
+        ]);
+    }
+
+    private function licenseExpiresAt(string $billingCycle): string
+    {
+        return match ($billingCycle) {
+            'day' => now()->addDay()->toIso8601String(),
+            'quarter' => now()->addQuarter()->toIso8601String(),
+            'year' => now()->addYear()->toIso8601String(),
+            default => now()->addMonth()->toIso8601String(),
+        };
     }
 }

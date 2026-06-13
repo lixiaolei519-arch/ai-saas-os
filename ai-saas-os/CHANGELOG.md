@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.0.0 - 2026-06-14
+
+### Added
+- Added paid-order License auto-provisioning in the payment callback flow.
+- Added minimum commercial launch end-to-end test covering register/login, tenant setup, order creation, simulated payment callback, automatic License provisioning, LicenseKey copy, License verification, promotion attribution, and commission generation.
+- Added demo seed data for admin and customer accounts, demo tenant, AI balance, product plan, marketing channel, and promotion link.
+- Added `security:prelaunch` command and prelaunch security documentation.
+- Replaced the default Laravel README with project setup, quality gate, demo account, commercial flow, deployment, and health-check guidance.
+- Added API documentation draft.
+
+### Verified
+- `composer install --no-interaction` completed successfully.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully before final release tagging.
+- `php artisan test` passed with 21 tests and 302 assertions before final release tagging.
+
 ## v0.9.0 - 2026-06-14
 
 ### Added
