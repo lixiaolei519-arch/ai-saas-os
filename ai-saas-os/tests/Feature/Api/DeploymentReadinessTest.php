@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class DeploymentReadinessTest extends TestCase
@@ -45,5 +46,44 @@ class DeploymentReadinessTest extends TestCase
 
         $this->assertSame(0, $securityExitCode);
         $this->assertStringContainsString('[PASS] RELEASE_LOCK.md exists', Artisan::output());
+    }
+
+    public function test_app_production_check_command_runs(): void
+    {
+        app()->detectEnvironment(fn () => 'production');
+        config([
+            'app.key' => 'base64:4xgxwIGkfqQ+E0Mkc2U59hmp/TpmZPND2tMVgqktk8s=',
+            'cache.default' => 'array',
+            'database.default' => 'sqlite',
+            'queue.default' => 'sync',
+        ]);
+
+        $envFile = storage_path('framework/testing/app-production-check.env');
+        File::ensureDirectoryExists(dirname($envFile));
+        File::put($envFile, implode(PHP_EOL, [
+            'APP_ENV=production',
+            'APP_KEY=base64:4xgxwIGkfqQ+E0Mkc2U59hmp/TpmZPND2tMVgqktk8s=',
+            'APP_URL=https://example.test',
+            'DB_CONNECTION=sqlite',
+            'DB_DATABASE=:memory:',
+            'DB_USERNAME=null',
+            'QUEUE_CONNECTION=sync',
+            'CACHE_STORE=array',
+        ]));
+
+        $exitCode = Artisan::call('app:production-check', [
+            '--env-file' => $envFile,
+        ]);
+        $output = Artisan::output();
+
+        $this->assertSame(0, $exitCode);
+        $this->assertStringContainsString('[PASS] APP_ENV is production', $output);
+        $this->assertStringContainsString('[PASS] APP_KEY exists', $output);
+        $this->assertStringContainsString('[PASS] Database is reachable', $output);
+        $this->assertStringContainsString('[PASS] Storage is writable', $output);
+        $this->assertStringContainsString('[PASS] Cache is writable', $output);
+        $this->assertStringContainsString('[PASS] Queue config exists', $output);
+        $this->assertStringContainsString('[PASS] .env required fields exist', $output);
+        $this->assertStringContainsString('[PASS] /health is accessible', $output);
     }
 }

@@ -72,6 +72,9 @@ GET /health
 Production checks:
 
 ```bash
+php artisan app:production-check
 php artisan production:check
 php artisan security:prelaunch
 ```
+
+`app:production-check` validates production environment readiness: `APP_ENV`, `APP_KEY`, database connectivity, writable storage/cache, queue configuration, required `.env` fields, and `/health` accessibility.

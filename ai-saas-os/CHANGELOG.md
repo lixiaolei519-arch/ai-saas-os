@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.0.1 - 2026-06-14
+
+### Added
+- Added `php artisan app:production-check` for production environment self-checks.
+- The new self-check validates `APP_ENV=production`, configured `APP_KEY`, database connectivity, writable storage and cache, queue configuration, required `.env` keys, and `/health` accessibility.
+- Added automated test coverage for the production self-check command.
+- Added production delivery documents for v1.0.0 release notes, deployment package, production checklist, rollback guide, Baota panel deployment, Nginx pseudo-static rules, and production environment example configuration.
+
+### Verified
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan test` passed with 22 tests and 311 assertions after the production readiness changes.
+
 ## v1.0.0 - 2026-06-14
 
 ### Added
