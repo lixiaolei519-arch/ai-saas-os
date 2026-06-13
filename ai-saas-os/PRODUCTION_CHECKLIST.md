@@ -1,13 +1,13 @@
-# Production Checklist v1.2.0
+# Production Checklist v1.3.0
 
-Use this checklist before switching production traffic to `v1.2.0`.
+Use this checklist before switching production traffic to `v1.3.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.2.0`.
-- [ ] Release commit is `Release v1.2.0 payment adapter foundation`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.2.0`.
-- [ ] `CHANGELOG.md` contains `v1.2.0`.
+- [ ] Stable release is `v1.3.0`.
+- [ ] Release commit is `Release v1.3.0 business dashboard analytics`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.3.0`.
+- [ ] `CHANGELOG.md` contains `v1.3.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -118,6 +118,7 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] `/console/login` displays the Chinese administrator login page.
 - [ ] Administrator login succeeds and redirects to `/console/dashboard`.
 - [ ] Dashboard shows users, tenants, License, orders, paid orders, commission amount, today orders, and today users.
+- [ ] Dashboard analytics show today revenue, month revenue, pending orders, trends, status distributions, and recent business activity without errors.
 - [ ] Users, tenants, licenses, orders, payments, channels, commissions, and system pages load without API errors.
 - [ ] API requests include `Accept: application/json` and `Authorization: Bearer <token>` after login.
 - [ ] 401 responses redirect back to `/console/login`.

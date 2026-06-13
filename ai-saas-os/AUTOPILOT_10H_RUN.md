@@ -93,8 +93,36 @@ Push:
 
 ### v1.3.0 Business Dashboard Analytics
 
-Status: next.
+Status: in progress.
+
+Started: 2026-06-14 06:23:56 +08:00
+
+Completed: 2026-06-14 06:28:10 +08:00
 
 Scope:
 - Expand dashboard statistics into operational analytics.
 - Add revenue/order trends, status distributions, and recent business activity.
+
+Progress:
+- Added `/api/v1/admin/dashboard`.
+- Added dashboard analytics payloads for revenue, trends, distributions, and recent activity.
+- Upgraded React dashboard page.
+- Added dashboard analytics test coverage.
+
+Quality gate:
+- npm install: passed
+- npm run build: passed
+- composer audit --no-interaction: passed, no security advisories
+- php artisan migrate:fresh --env=testing --force: passed
+- php artisan db:seed --env=testing --force: passed
+- php artisan test: passed, 37 tests / 486 assertions
+
+Commit:
+- Pending.
+
+### v1.4.0 Queue and Scheduler Foundation
+
+Status: next.
+
+Scope:
+- Queue foundation, scheduled checks, renewal reminders, order timeout checks, commission settlement checks, failed-job observability, and `php artisan app:queue-check`.

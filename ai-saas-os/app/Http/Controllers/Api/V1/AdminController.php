@@ -70,6 +70,13 @@ class AdminController extends Controller
         ]);
     }
 
+    public function dashboard(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->dashboard(),
+        ]);
+    }
+
     public function system(): JsonResponse
     {
         return response()->json([

@@ -157,6 +157,33 @@ class AdminApiTest extends TestCase
             ->assertJsonPath('data.marketing_channels_count', 1)
             ->assertJsonPath('data.commission_records_count', 1)
             ->assertJsonPath('data.commission_amount_cents', 2000);
+
+        $this->getJson('/api/v1/admin/dashboard', $this->bearerHeaders($token))
+            ->assertOk()
+            ->assertJsonPath('data.today_orders_count', 1)
+            ->assertJsonPath('data.today_revenue_cents', 20000)
+            ->assertJsonPath('data.month_revenue_cents', 20000)
+            ->assertJsonPath('data.pending_orders_count', 0)
+            ->assertJsonPath('data.commission_amount_cents', 2000)
+            ->assertJsonStructure([
+                'data' => [
+                    'order_trend' => [
+                        '*' => ['date', 'orders_count'],
+                    ],
+                    'revenue_trend' => [
+                        '*' => ['date', 'revenue_cents'],
+                    ],
+                    'license_status_distribution' => [
+                        '*' => ['status', 'count'],
+                    ],
+                    'commission_status_distribution' => [
+                        '*' => ['status', 'count'],
+                    ],
+                    'recent_orders',
+                    'recent_payment_callbacks',
+                    'recent_licenses',
+                ],
+            ]);
     }
 
     private function bearerHeaders(string $token): array

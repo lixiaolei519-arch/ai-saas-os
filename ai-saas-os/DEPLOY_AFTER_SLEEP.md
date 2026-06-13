@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:23:56 +08:00
+Last updated: 2026-06-14 06:28:10 +08:00
 
 ## Run Summary
 
@@ -8,8 +8,8 @@ Last updated: 2026-06-14 06:23:56 +08:00
 - End time: in progress
 - Estimated duration: in progress
 - Start version: v1.1.1
-- Current target version: v1.2.0
-- End version: v1.2.0, continuing
+- Current target version: v1.3.0
+- End version: v1.3.0, continuing
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
 ## Completed Stages
@@ -23,6 +23,20 @@ Last updated: 2026-06-14 06:23:56 +08:00
 - Push: pushed to GitHub `main`
 
 ## Current Stage
+
+### v1.3.0 Business Dashboard Analytics
+
+- Status: stable locally, pending commit hash before push
+- Commit: pending
+- Tests: `php artisan test` passed with 37 tests / 486 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
+- Push: pending
+
+Completed changes so far:
+- Added `/api/v1/admin/dashboard`.
+- Added analytics metrics, trends, status distributions, and recent activity payloads.
+- Upgraded React dashboard to show operational analytics tables.
 
 ### v1.2.0 Payment Adapter Foundation
 
@@ -98,8 +112,8 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.2.0 is complete and pushed.
-- v1.3.0 business dashboard analytics has not started yet.
+- v1.3.0 is complete locally and awaiting Git commit/push.
+- v1.4.0 queue and scheduler foundation has not started yet.
 
 ## Risk List
 

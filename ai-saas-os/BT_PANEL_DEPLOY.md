@@ -1,8 +1,8 @@
 # 宝塔面板部署交付包
 
-适用版本：`v1.2.0`
+适用版本：`v1.3.0`
 
-稳定提交：`Release v1.2.0 payment adapter foundation`
+稳定提交：`Release v1.3.0 business dashboard analytics`
 
 本文档用于中国大陆服务器上的宝塔面板部署。仅覆盖部署、配置、权限、初始化、队列、定时任务和上线后 smoke test，不包含任何新业务功能。
 
@@ -62,7 +62,7 @@ PHP 禁用函数检查：
 cd /www/wwwroot
 git clone <your-repository-url> ai-saas-os
 cd /www/wwwroot/ai-saas-os
-git checkout v1.2.0
+git checkout v1.3.0
 ```
 
 如果使用压缩包上传，解压后确认 `artisan`、`composer.json`、`public/index.php` 位于项目根目录内。

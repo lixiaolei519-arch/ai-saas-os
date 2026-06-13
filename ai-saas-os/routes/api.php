@@ -49,6 +49,7 @@ Route::prefix('v1')->group(function () {
         Route::get('marketing/channels', [AdminController::class, 'channels']);
         Route::get('marketing/commissions', [AdminController::class, 'commissions']);
         Route::get('stats', [AdminController::class, 'stats']);
+        Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);
     });
 

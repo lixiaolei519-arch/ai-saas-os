@@ -1,6 +1,6 @@
 # Stable Tag
 
-Current stable version: v1.2.0
+Current stable version: v1.3.0
 
 Date: 2026-06-14
 
@@ -11,7 +11,7 @@ Quality gate:
 - composer audit: passed, no security advisories
 - php artisan migrate:fresh --env=testing --force: passed
 - php artisan db:seed --env=testing --force: passed
-- php artisan test: passed, 37 tests / 436 assertions
+- php artisan test: passed, 37 tests / 486 assertions
 
 Notes:
-- v1.2.0 is the payment adapter foundation release: the backend now has mock, WeChat Pay, and Alipay adapter structure, explicit unconfigured payloads for real payment channels, amount mismatch rejection, duplicate callback idempotency, and commission idempotency.
+- v1.3.0 is the business dashboard analytics release: the admin dashboard now exposes and displays revenue metrics, order/revenue trends, License and commission status distributions, and recent orders, payment callbacks, and Licenses.

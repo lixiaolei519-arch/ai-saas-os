@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.3.0 - 2026-06-14
+
+### Added
+- Added `/api/v1/admin/dashboard` for business dashboard analytics.
+- Added dashboard metrics for today orders, today revenue, month revenue, paid orders, pending orders, commission totals, users, tenants, and Licenses.
+- Added seven-day order and revenue trend payloads.
+- Added License and commission status distribution payloads.
+- Added recent orders, recent payment callbacks, and recent Licenses to the admin dashboard payload.
+- Upgraded the React administrator dashboard to show analytics cards and tables with Chinese labels, status tags, empty states, loading states, and RMB formatting.
+- Added test coverage for the new dashboard analytics API structure and key values.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 37 tests and 486 assertions after the business dashboard analytics changes.
+
 ## v1.2.0 - 2026-06-14
 
 ### Added

@@ -100,6 +100,36 @@ class AdminService
         ];
     }
 
+    public function dashboard(): array
+    {
+        $stats = $this->stats();
+
+        return array_merge($stats, [
+            'today_revenue_cents' => Order::where('status', 'paid')->whereDate('paid_at', today())->sum('total_cents'),
+            'month_revenue_cents' => Order::where('status', 'paid')->whereBetween('paid_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('total_cents'),
+            'pending_orders_count' => Order::where('status', 'pending')->count(),
+            'order_trend' => $this->dailyTrend('orders_count'),
+            'revenue_trend' => $this->dailyTrend('revenue_cents'),
+            'license_status_distribution' => $this->statusDistribution(License::class),
+            'commission_status_distribution' => $this->statusDistribution(CommissionRecord::class),
+            'recent_orders' => Order::query()
+                ->with(['tenant', 'items', 'payments'])
+                ->latest('id')
+                ->limit(8)
+                ->get(),
+            'recent_payment_callbacks' => PaymentCallback::query()
+                ->with('payment')
+                ->latest('id')
+                ->limit(8)
+                ->get(),
+            'recent_licenses' => License::query()
+                ->with(['tenant', 'productPlan'])
+                ->latest('id')
+                ->limit(8)
+                ->get(),
+        ]);
+    }
+
     public function system(): array
     {
         return [
@@ -123,6 +153,39 @@ class AdminService
         } catch (\Throwable) {
             return false;
         }
+    }
+
+    private function dailyTrend(string $metric): array
+    {
+        return collect(range(6, 0))->map(function (int $daysAgo) use ($metric) {
+            $date = today()->subDays($daysAgo);
+            $value = $metric === 'orders_count'
+                ? Order::whereDate('created_at', $date)->count()
+                : Order::where('status', 'paid')->whereDate('paid_at', $date)->sum('total_cents');
+
+            return [
+                'date' => $date->toDateString(),
+                $metric => $value,
+            ];
+        })->values()->all();
+    }
+
+    /**
+     * @param class-string<\Illuminate\Database\Eloquent\Model> $model
+     */
+    private function statusDistribution(string $model): array
+    {
+        return $model::query()
+            ->select('status', DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->orderBy('status')
+            ->get()
+            ->map(fn ($row) => [
+                'status' => $row->status,
+                'count' => (int) $row->count,
+            ])
+            ->values()
+            ->all();
     }
 
     private function healthOk(): bool

@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.2.0 scope adds the payment adapter foundation on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.3.0 scope adds business dashboard analytics on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, live payment fund capture, advanced plugin ecosystems, and complex workflow products are out of scope for v1.2.0.
+Advanced AI autonomous operations, live payment fund capture, advanced plugin ecosystems, and complex workflow products are out of scope for v1.3.0.
 
 ## Requirements
 
@@ -57,6 +57,8 @@ The console is one Vite SPA using React 18, Ant Design, Ant Design ProComponents
 Administrator users enter `/console/dashboard` after login. Customer users enter `/console/portal/dashboard` and use the dedicated portal menu for their own licenses, orders, referral links, and commissions.
 
 The console includes role-aware route guards, dedicated `403` and `404` pages, unified API handling for `401`, `403`, `422`, and `500` responses, and header metadata for the stable version, Git commit, and frontend build time.
+
+The administrator dashboard uses `/api/v1/admin/dashboard` for operational analytics: today orders, today revenue, month revenue, paid/pending orders, commission totals, seven-day order and revenue trends, License and commission status distributions, recent orders, recent payment callbacks, and recent Licenses.
 
 Baota servers without Node.js can use the committed `public/console` build directly. After changing frontend source, rebuild it:
 
