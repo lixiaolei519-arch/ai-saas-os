@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:29:12 +08:00
+Last updated: 2026-06-14 06:34:56 +08:00
 
 ## Run Summary
 
@@ -8,11 +8,11 @@ Last updated: 2026-06-14 06:29:12 +08:00
 - End time: in progress
 - Estimated duration: in progress
 - Start version: v1.1.1
-- Current target version: v1.3.0
-- End version: v1.3.0, continuing
+- Current target version: v1.5.0
+- End version: in progress
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
-## Completed Stages
+## Baseline Stage
 
 ### v1.1.1 React Customer Portal
 
@@ -23,6 +23,30 @@ Last updated: 2026-06-14 06:29:12 +08:00
 - Push: pushed to GitHub `main`
 
 ## Current Stage
+
+### v1.5.0 Production Hardening
+
+- Status: next
+- Commit: pending
+- Tests: pending
+- Frontend build: pending if frontend files change
+- Push: pending
+
+## Completed Stages
+
+### v1.4.0 Queue and Scheduler Foundation
+
+- Status: stable locally, pending release commit and push
+- Commit: pending
+- Tests: `php artisan test` passed with 39 tests / 503 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
+- Push: pending
+
+Completed changes so far:
+- Added queue readiness command.
+- Added scheduler foundation commands for renewal reminders, stale pending orders, and simulated commission settlement.
+- Added tests for internal-only scheduler command behavior.
 
 ### v1.3.0 Business Dashboard Analytics
 
@@ -112,8 +136,8 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.3.0 is complete and pushed.
-- v1.4.0 queue and scheduler foundation has not started yet.
+- v1.4.0 release commit and push are pending.
+- v1.5.0 has not started yet.
 
 ## Risk List
 
@@ -123,4 +147,4 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Production Deployment Risk
 
-Current risk: low. v1.1.2 is a console UX and permission-hardening release; production deployment still requires the manual commands above and post-deploy smoke test.
+Current risk: low. v1.4.0 adds internal queue and scheduler readiness commands only; production deployment still requires the manual commands above and post-deploy smoke test.

@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.4.0 - 2026-06-14
+
+### Added
+- Added `php artisan app:queue-check` to verify queue connection configuration, `jobs` table, `failed_jobs` table, pending job count, and failed job count.
+- Added `php artisan app:renewal-reminders` for scheduled renewal reminder processing using internal notification records.
+- Added `php artisan app:orders-expire` to expire stale pending orders without deleting data.
+- Added `php artisan app:commissions-settle` for simulated commission settlement checks without external payouts.
+- Registered queue and scheduler foundation commands with Laravel scheduling.
+- Added tests covering queue checks, renewal reminder command execution, pending order expiration, and simulated commission settlement.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 39 tests and 503 assertions after the queue and scheduler foundation changes.
+
 ## v1.3.0 - 2026-06-14
 
 ### Added

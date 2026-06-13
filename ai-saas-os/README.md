@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.3.0 scope adds business dashboard analytics on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.4.0 scope adds queue and scheduler foundations on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, live payment fund capture, advanced plugin ecosystems, and complex workflow products are out of scope for v1.3.0.
+Advanced AI autonomous operations, live payment fund capture, advanced plugin ecosystems, and complex workflow products are out of scope for v1.4.0.
 
 ## Requirements
 
@@ -136,8 +136,20 @@ cd ../..
 php artisan app:production-check
 php artisan production:check
 php artisan security:prelaunch
+php artisan app:queue-check
 php artisan app:smoke-test
 ```
 
 `app:production-check` validates production environment readiness: `APP_ENV`, `APP_KEY`, database connectivity, writable storage/cache, queue configuration, required `.env` fields, and `/health` accessibility.
 `app:smoke-test` validates the minimum commercial launch flow using synthetic smoke-test data.
+
+Queue and scheduler commands:
+
+```bash
+php artisan app:queue-check
+php artisan app:renewal-reminders
+php artisan app:orders-expire --minutes=30
+php artisan app:commissions-settle
+```
+
+The scheduler wires renewal reminders daily, pending-order expiration every fifteen minutes, and commission settlement checks daily. These commands only write internal records/statuses and do not send real email, SMS, payouts, or external marketing actions.

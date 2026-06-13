@@ -125,7 +125,35 @@ Push:
 
 ### v1.4.0 Queue and Scheduler Foundation
 
-Status: next.
+Status: stable, pending commit.
+
+Started: 2026-06-14 06:29:12 +08:00
+Completed: 2026-06-14 06:34:56 +08:00
 
 Scope:
 - Queue foundation, scheduled checks, renewal reminders, order timeout checks, commission settlement checks, failed-job observability, and `php artisan app:queue-check`.
+
+Progress:
+- Added `app:queue-check`.
+- Added `app:renewal-reminders`.
+- Added `app:orders-expire`.
+- Added `app:commissions-settle`.
+- Added scheduler registrations and focused test coverage.
+
+Quality gate:
+- npm install completed in `frontend/admin-console`.
+- npm run build completed and generated a committed `public/console` build.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 39 tests and 503 assertions.
+
+Commit:
+- Pending.
+
+### v1.5.0 Production Hardening
+
+Status: next.
+
+Scope:
+- Production diagnostics, deployment hardening, operational checks, and documentation updates within the existing Laravel and React surfaces.

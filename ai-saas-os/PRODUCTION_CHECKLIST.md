@@ -1,13 +1,13 @@
-# Production Checklist v1.3.0
+# Production Checklist v1.4.0
 
-Use this checklist before switching production traffic to `v1.3.0`.
+Use this checklist before switching production traffic to `v1.4.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.3.0`.
-- [ ] Release commit is `Release v1.3.0 business dashboard analytics`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.3.0`.
-- [ ] `CHANGELOG.md` contains `v1.3.0`.
+- [ ] Stable release is `v1.4.0`.
+- [ ] Release commit is `Release v1.4.0 queue and scheduler foundation`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.4.0`.
+- [ ] `CHANGELOG.md` contains `v1.4.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -75,11 +75,15 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 ```
 
 - [ ] Queue worker is supervised and restarts on failure.
+- [ ] `php artisan app:queue-check` passes.
 - [ ] Scheduler cron is configured:
 
 ```bash
 * * * * * cd /www/wwwroot/ai-saas-os && php artisan schedule:run >> /dev/null 2>&1
 ```
+
+- [ ] Scheduler command registration includes renewal reminders, order expiration, and commission settlement checks.
+- [ ] No scheduler command sends real email, SMS, external marketing, or payouts without manual production configuration.
 
 ## Checks
 

@@ -1,8 +1,8 @@
 # 宝塔面板部署交付包
 
-适用版本：`v1.3.0`
+适用版本：`v1.4.0`
 
-稳定提交：`Release v1.3.0 business dashboard analytics`
+稳定提交：`Release v1.4.0 queue and scheduler foundation`
 
 本文档用于中国大陆服务器上的宝塔面板部署。仅覆盖部署、配置、权限、初始化、队列、定时任务和上线后 smoke test，不包含任何新业务功能。
 
@@ -62,7 +62,7 @@ PHP 禁用函数检查：
 cd /www/wwwroot
 git clone <your-repository-url> ai-saas-os
 cd /www/wwwroot/ai-saas-os
-git checkout v1.3.0
+git checkout v1.4.0
 ```
 
 如果使用压缩包上传，解压后确认 `artisan`、`composer.json`、`public/index.php` 位于项目根目录内。
@@ -306,6 +306,20 @@ cd /www/wwwroot/ai-saas-os && php artisan queue:work database --sleep=3 --tries=
 php artisan queue:restart
 ```
 
+队列状态检查：
+
+```bash
+php artisan app:queue-check
+```
+
+期望看到：
+
+```text
+[PASS] queue connection configured
+[PASS] jobs table exists
+[PASS] failed_jobs table exists
+```
+
 如后续启用 Redis：
 
 ```env
@@ -344,6 +358,16 @@ cd /www/wwwroot/ai-saas-os && php artisan schedule:run >> /dev/null 2>&1
 ```bash
 cd /www/wwwroot/ai-saas-os && /www/server/php/83/bin/php artisan schedule:run >> /dev/null 2>&1
 ```
+
+v1.4.0 已注册的定时任务命令：
+
+```bash
+php artisan app:renewal-reminders
+php artisan app:orders-expire --minutes=30
+php artisan app:commissions-settle
+```
+
+这些命令只处理系统内部记录，不会真实发送邮件、短信、外部营销内容或付款。
 
 ## 12. 上线前检查命令
 

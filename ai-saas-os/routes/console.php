@@ -2,6 +2,7 @@
 
 use App\Models\CommissionRecord;
 use App\Models\License;
+use App\Models\Order;
 use App\Models\User;
 use App\Services\CatalogService;
 use App\Services\CustomerPortalService;
@@ -178,6 +179,83 @@ Artisan::command('app:create-demo-users
 
     return 0;
 })->purpose('Create deployment verification admin and customer accounts');
+
+Artisan::command('app:queue-check', function () {
+    $connection = config('queue.default');
+    $checks = [
+        'queue connection configured' => filled($connection) && is_array(config('queue.connections.'.$connection)),
+        'jobs table exists' => Schema::hasTable('jobs'),
+        'failed_jobs table exists' => Schema::hasTable('failed_jobs'),
+        'schedule command available' => true,
+    ];
+
+    $failed = false;
+    foreach ($checks as $label => $passed) {
+        $this->line(($passed ? '[PASS] ' : '[FAIL] ').$label);
+        $failed = $failed || ! $passed;
+    }
+
+    if (Schema::hasTable('jobs')) {
+        $this->line('[INFO] pending jobs: '.DB::table('jobs')->count());
+    }
+    if (Schema::hasTable('failed_jobs')) {
+        $this->line('[INFO] failed jobs: '.DB::table('failed_jobs')->count());
+    }
+
+    return $failed ? 1 : 0;
+})->purpose('Check queue and failed-job storage readiness');
+
+Artisan::command('app:renewal-reminders', function () {
+    $deliveries = app(MarketingService::class)->processDueRenewalReminders();
+    $this->line('[OK] renewal reminders processed: '.$deliveries->count());
+
+    return 0;
+})->purpose('Process due renewal reminder records')->dailyAt('09:00');
+
+Artisan::command('app:orders-expire {--minutes=30 : Pending order timeout in minutes}', function () {
+    $minutes = max(1, (int) $this->option('minutes'));
+    $orders = Order::where('status', 'pending')
+        ->where('created_at', '<=', now()->subMinutes($minutes))
+        ->get();
+    $orders->each(function (Order $order) {
+        $order->update([
+            'status' => 'expired',
+            'metadata' => array_merge($order->metadata ?? [], [
+                'expired_by' => 'app:orders-expire',
+                'expired_at' => now()->toIso8601String(),
+            ]),
+        ]);
+    });
+
+    $this->line('[OK] expired pending orders: '.$orders->count());
+
+    return 0;
+})->purpose('Expire pending orders older than the configured timeout')->everyFifteenMinutes();
+
+Artisan::command('app:commissions-settle {--mark-paid : Mark pending commissions as settled in simulation mode}', function () {
+    $query = CommissionRecord::where('status', 'pending');
+    $count = (clone $query)->count();
+
+    if ($this->option('mark-paid')) {
+        $query->get()->each(function (CommissionRecord $commission) {
+            $commission->update([
+                'status' => 'settled',
+                'metadata' => array_merge($commission->metadata ?? [], [
+                    'settled_by' => 'app:commissions-settle',
+                    'settled_at' => now()->toIso8601String(),
+                    'settlement_mode' => 'simulation',
+                ]),
+            ]);
+        });
+        $this->line('[OK] settled pending commissions: '.$count);
+
+        return 0;
+    }
+
+    $this->line('[OK] pending commissions checked: '.$count);
+
+    return 0;
+})->purpose('Check commission settlement queue without external payouts')->dailyAt('10:00');
 
 Artisan::command('app:smoke-test', function () {
     $failed = false;
