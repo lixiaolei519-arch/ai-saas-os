@@ -1,6 +1,6 @@
 # Stable Tag
 
-Current stable version: v1.8.0
+Current stable version: v1.9.0
 
 Date: 2026-06-14
 
@@ -11,7 +11,7 @@ Quality gate:
 - composer audit: passed, no security advisories
 - php artisan migrate:fresh --env=testing --force: passed
 - php artisan db:seed --env=testing --force: passed
-- php artisan test: passed, 41 tests / 568 assertions
+- php artisan test: passed, 44 tests / 624 assertions
 
 Notes:
-- v1.8.0 is the workflow automation foundation release: the app now records workflow events, exposes workflow definitions/runs/events to administrators, and keeps workflow actions in internal simulation mode without external service calls.
+- v1.9.0 is the AI Company OS core release: the app now stores internal company tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompt drafts, and daily reports in simulation mode. It does not execute code changes, deployments, production pushes, external service calls, payments, email, SMS, or marketing actions automatically.

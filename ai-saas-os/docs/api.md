@@ -44,6 +44,17 @@ Payment callbacks use the simulated HMAC adapter unless real WeChat Pay or Alipa
 
 AI usage checks License validity and balance before charging. The mock completion endpoint estimates tokens, creates usage and ledger records, and returns a simulated response without calling a real model provider.
 
+## AI Company OS
+
+AI Company OS v1.9.0 is internal simulation only. Artisan commands create draft tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompt drafts, and daily reports. They do not call external AI providers, modify code, deploy, push to production, send messages, publish marketing content, or spend money.
+
+Safe commands:
+
+- `php artisan ai-company:scan`
+- `php artisan ai-company:plan`
+- `php artisan ai-company:generate-prompts`
+- `php artisan ai-company:daily-report`
+
 ## Plugin Foundation
 
 - `POST /plugins`
@@ -98,6 +109,15 @@ Only internal event, condition, action, log, and retry behavior is included. Wor
 - `GET /admin/workflows`
 - `GET /admin/workflow-runs`
 - `GET /admin/workflow-events`
+- `GET /admin/ai-company/dashboard`
+- `GET /admin/ai-company/tasks`
+- `GET /admin/ai-company/ideas`
+- `GET /admin/ai-company/roadmaps`
+- `GET /admin/ai-company/release-plans`
+- `GET /admin/ai-company/quality-reports`
+- `GET /admin/ai-company/risk-reports`
+- `GET /admin/ai-company/codex-prompts`
+- `GET /admin/ai-company/daily-reports`
 - `GET /admin/stats`
 
 Admin routes require an authenticated admin token.

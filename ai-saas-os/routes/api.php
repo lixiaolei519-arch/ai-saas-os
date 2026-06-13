@@ -56,6 +56,15 @@ Route::prefix('v1')->group(function () {
         Route::get('workflows', [AdminController::class, 'workflows']);
         Route::get('workflow-runs', [AdminController::class, 'workflowRuns']);
         Route::get('workflow-events', [AdminController::class, 'workflowEvents']);
+        Route::get('ai-company/dashboard', [AdminController::class, 'aiCompanyDashboard']);
+        Route::get('ai-company/tasks', [AdminController::class, 'aiCompanyTasks']);
+        Route::get('ai-company/ideas', [AdminController::class, 'aiCompanyIdeas']);
+        Route::get('ai-company/roadmaps', [AdminController::class, 'aiCompanyRoadmaps']);
+        Route::get('ai-company/release-plans', [AdminController::class, 'aiCompanyReleasePlans']);
+        Route::get('ai-company/quality-reports', [AdminController::class, 'aiCompanyQualityReports']);
+        Route::get('ai-company/risk-reports', [AdminController::class, 'aiCompanyRiskReports']);
+        Route::get('ai-company/codex-prompts', [AdminController::class, 'aiCompanyCodexPrompts']);
+        Route::get('ai-company/daily-reports', [AdminController::class, 'aiCompanyDailyReports']);
         Route::get('stats', [AdminController::class, 'stats']);
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);

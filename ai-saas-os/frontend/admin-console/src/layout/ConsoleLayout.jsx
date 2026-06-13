@@ -6,6 +6,7 @@ import {
   DashboardOutlined,
   DollarOutlined,
   LogoutOutlined,
+  RobotOutlined,
   SafetyCertificateOutlined,
   SettingOutlined,
   TransactionOutlined,
@@ -35,6 +36,15 @@ const menuItems = [
   { key: '/console/workflows', icon: <AppstoreOutlined />, label: '工作流' },
   { key: '/console/workflow-runs', icon: <TransactionOutlined />, label: '执行记录' },
   { key: '/console/workflow-events', icon: <AuditOutlined />, label: '事件日志' },
+  { key: '/console/ai-company/dashboard', icon: <RobotOutlined />, label: 'AI Company' },
+  { key: '/console/ai-company/tasks', icon: <RobotOutlined />, label: 'AI 任务池' },
+  { key: '/console/ai-company/ideas', icon: <RobotOutlined />, label: 'AI 需求池' },
+  { key: '/console/ai-company/roadmap', icon: <RobotOutlined />, label: 'AI 路线图' },
+  { key: '/console/ai-company/releases', icon: <RobotOutlined />, label: 'AI 版本计划' },
+  { key: '/console/ai-company/quality', icon: <RobotOutlined />, label: 'AI 质量评分' },
+  { key: '/console/ai-company/risks', icon: <RobotOutlined />, label: 'AI 风险清单' },
+  { key: '/console/ai-company/prompts', icon: <RobotOutlined />, label: 'AI 指令生成' },
+  { key: '/console/ai-company/reports', icon: <RobotOutlined />, label: 'AI 运营报告' },
   { key: '/console/system', icon: <SettingOutlined />, label: '系统状态' },
 ];
 

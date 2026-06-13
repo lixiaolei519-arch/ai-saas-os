@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Services\CatalogService;
 use App\Services\CustomerPortalService;
+use App\Services\AiCompanyService;
 use App\Services\LicenseService;
 use App\Services\MarketingService;
 use App\Services\OrderService;
@@ -314,6 +315,49 @@ Artisan::command('app:commissions-settle {--mark-paid : Mark pending commissions
 
     return 0;
 })->purpose('Check commission settlement queue without external payouts')->dailyAt('10:00');
+
+Artisan::command('ai-company:scan {--stable-version= : Stable version label}', function () {
+    $result = app(AiCompanyService::class)->scan($this->option('stable-version'));
+
+    $this->line('[OK] ai company scan completed');
+    $this->line('[OK] quality report generated: '.$result['quality_report']->id);
+    $this->line('[OK] risk report generated: '.$result['risk_report']->id);
+    $this->line('[OK] simulation mode enabled');
+
+    return 0;
+})->purpose('Generate AI Company OS quality and risk reports in simulation mode');
+
+Artisan::command('ai-company:plan {--target-version=v2.0.0 : Target version for the draft plan}', function () {
+    $result = app(AiCompanyService::class)->plan($this->option('target-version'));
+
+    $this->line('[OK] ai company plan generated');
+    $this->line('[OK] roadmap generated: '.$result['roadmap']->id);
+    $this->line('[OK] release plan generated: '.$result['release_plan']->id);
+    $this->line('[OK] draft tasks generated: '.$result['tasks']->count());
+    $this->line('[OK] manual approval required');
+
+    return 0;
+})->purpose('Generate AI Company OS roadmap, release plan, and draft tasks');
+
+Artisan::command('ai-company:generate-prompts {--target-version=v2.0.0 : Target version for Codex prompt drafts}', function () {
+    $prompts = app(AiCompanyService::class)->generatePrompts($this->option('target-version'));
+
+    $this->line('[OK] codex prompt drafts generated: '.$prompts->count());
+    $this->line('[OK] prompts require manual approval');
+    $this->line('[OK] no code, deployment, or external action executed');
+
+    return 0;
+})->purpose('Generate draft Codex prompts from AI Company OS tasks without executing them');
+
+Artisan::command('ai-company:daily-report {--date= : Report date in YYYY-MM-DD format}', function () {
+    $report = app(AiCompanyService::class)->dailyReport($this->option('date'));
+
+    $this->line('[OK] daily report generated: '.$report->report_date->toDateString());
+    $this->line('[OK] report status: '.$report->status);
+    $this->line('[OK] simulation mode enabled');
+
+    return 0;
+})->purpose('Generate an internal AI Company OS daily operations report');
 
 Artisan::command('app:smoke-test', function () {
     $failed = false;

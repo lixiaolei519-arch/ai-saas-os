@@ -105,6 +105,69 @@ class AdminController extends Controller
         ]);
     }
 
+    public function aiCompanyDashboard(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyDashboard(),
+        ]);
+    }
+
+    public function aiCompanyTasks(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyTasks($this->limit($request)),
+        ]);
+    }
+
+    public function aiCompanyIdeas(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyIdeas($this->limit($request)),
+        ]);
+    }
+
+    public function aiCompanyRoadmaps(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyRoadmaps($this->limit($request)),
+        ]);
+    }
+
+    public function aiCompanyReleasePlans(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyReleasePlans($this->limit($request)),
+        ]);
+    }
+
+    public function aiCompanyQualityReports(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyQualityReports($this->limit($request)),
+        ]);
+    }
+
+    public function aiCompanyRiskReports(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyRiskReports($this->limit($request)),
+        ]);
+    }
+
+    public function aiCompanyCodexPrompts(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyCodexPrompts($this->limit($request)),
+        ]);
+    }
+
+    public function aiCompanyDailyReports(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiCompanyDailyReports($this->limit($request)),
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([

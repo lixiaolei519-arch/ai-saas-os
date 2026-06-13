@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:12:17 +08:00
+Last updated: 2026-06-14 07:22:58 +08:00
 
 ## Run Summary
 
@@ -26,17 +26,18 @@ Last updated: 2026-06-14 07:12:17 +08:00
 
 ### v1.9.0 AI Company OS Core
 
-- Status: next
+- Status: stable pending release commit
 - Commit: pending
-- Tests: pending
-- Frontend build: pending if React console changes
-- Backend gates: pending
+- Tests: `php artisan test` passed with 44 tests / 624 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
 - Push: pending
 
-Planned scope:
+Completed changes so far:
 - Add internal AI Company OS simulation records for tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompts, and daily reports.
 - Add safe artisan commands to scan, plan, generate Codex prompt drafts, and generate daily reports without external calls.
 - Add administrator API and console pages for AI Company OS visibility.
+- Rebuilt committed React assets in `public/console`.
 
 ## Completed Stages
 

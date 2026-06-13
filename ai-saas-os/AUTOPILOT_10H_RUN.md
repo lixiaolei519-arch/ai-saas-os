@@ -283,7 +283,32 @@ Push:
 
 ### v1.9.0 AI Company OS Core
 
-Status: next.
+Status: stable pending release commit.
+
+Started: 2026-06-14 07:20:26 +08:00
+Completed: 2026-06-14 07:22:58 +08:00
 
 Scope:
 - Internal AI Company OS simulation layer for company tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompt drafts, and daily reports. No real code changes, deployments, production pushes, or external actions are executed by the system.
+
+Progress:
+- Added AI Company OS simulation migration and models.
+- Added service methods for scan, plan, Codex prompt draft generation, daily reports, dashboard, and admin lists.
+- Added safe artisan commands for `ai-company:scan`, `ai-company:plan`, `ai-company:generate-prompts`, and `ai-company:daily-report`.
+- Added administrator AI Company OS APIs.
+- Added React administrator AI Company OS pages and menu entries.
+- Rebuilt `public/console` production assets.
+- Added targeted backend and console deep-link tests.
+
+Quality gate:
+- npm install completed in `frontend/admin-console`.
+- npm run build completed and generated a committed `public/console` build.
+- Targeted `AiCompanyOsTest` passed with 3 tests and 47 assertions.
+- Targeted `ConsoleSpaTest` passed with 7 tests and 43 assertions.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 44 tests and 624 assertions.
+
+Commit:
+- Pending release commit.

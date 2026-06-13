@@ -3,6 +3,14 @@
 namespace App\Services;
 
 use App\Models\AiUsageRecord;
+use App\Models\AiCompanyCodexPrompt;
+use App\Models\AiCompanyDailyReport;
+use App\Models\AiCompanyIdea;
+use App\Models\AiCompanyQualityReport;
+use App\Models\AiCompanyReleasePlan;
+use App\Models\AiCompanyRiskReport;
+use App\Models\AiCompanyRoadmap;
+use App\Models\AiCompanyTask;
 use App\Models\CommissionRecord;
 use App\Models\License;
 use App\Models\MarketingChannel;
@@ -143,6 +151,51 @@ class AdminService
             ->get();
     }
 
+    public function aiCompanyDashboard(): array
+    {
+        return app(AiCompanyService::class)->dashboard();
+    }
+
+    public function aiCompanyTasks(int $limit = 50): Collection
+    {
+        return app(AiCompanyService::class)->tasks($limit);
+    }
+
+    public function aiCompanyIdeas(int $limit = 50): Collection
+    {
+        return app(AiCompanyService::class)->ideas($limit);
+    }
+
+    public function aiCompanyRoadmaps(int $limit = 50): Collection
+    {
+        return app(AiCompanyService::class)->roadmaps($limit);
+    }
+
+    public function aiCompanyReleasePlans(int $limit = 50): Collection
+    {
+        return app(AiCompanyService::class)->releasePlans($limit);
+    }
+
+    public function aiCompanyQualityReports(int $limit = 50): Collection
+    {
+        return app(AiCompanyService::class)->qualityReports($limit);
+    }
+
+    public function aiCompanyRiskReports(int $limit = 50): Collection
+    {
+        return app(AiCompanyService::class)->riskReports($limit);
+    }
+
+    public function aiCompanyCodexPrompts(int $limit = 50): Collection
+    {
+        return app(AiCompanyService::class)->codexPrompts($limit);
+    }
+
+    public function aiCompanyDailyReports(int $limit = 50): Collection
+    {
+        return app(AiCompanyService::class)->dailyReports($limit);
+    }
+
     public function stats(): array
     {
         return [
@@ -165,6 +218,14 @@ class AdminService
             'workflow_definitions_count' => WorkflowDefinition::count(),
             'workflow_runs_count' => WorkflowRun::count(),
             'workflow_event_logs_count' => WorkflowEventLog::count(),
+            'ai_company_tasks_count' => AiCompanyTask::count(),
+            'ai_company_ideas_count' => AiCompanyIdea::count(),
+            'ai_company_roadmaps_count' => AiCompanyRoadmap::count(),
+            'ai_company_release_plans_count' => AiCompanyReleasePlan::count(),
+            'ai_company_quality_reports_count' => AiCompanyQualityReport::count(),
+            'ai_company_risk_reports_count' => AiCompanyRiskReport::count(),
+            'ai_company_codex_prompts_count' => AiCompanyCodexPrompt::count(),
+            'ai_company_daily_reports_count' => AiCompanyDailyReport::count(),
         ];
     }
 

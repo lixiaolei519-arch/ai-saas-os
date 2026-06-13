@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.9.0 - 2026-06-14
+
+### Added
+- Added AI Company OS simulation tables for tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompt drafts, and daily reports.
+- Added `AiCompanyService` and safe artisan commands: `ai-company:scan`, `ai-company:plan`, `ai-company:generate-prompts`, and `ai-company:daily-report`.
+- Added administrator APIs for AI Company OS dashboard and read-only list views.
+- Added React administrator pages under `/console/ai-company/*` for AI Company OS dashboard, task pool, idea pool, roadmap, releases, quality, risks, prompts, and reports.
+- Added tests covering AI Company OS commands, simulation/approval safety flags, administrator API visibility, customer access blocking, and console deep links.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 44 tests and 624 assertions after the AI Company OS core changes.
+
 ## v1.8.0 - 2026-06-14
 
 ### Added

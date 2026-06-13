@@ -72,6 +72,33 @@ class ConsoleSpaTest extends TestCase
         $this->get('/console/workflow-events')
             ->assertOk();
 
+        $this->get('/console/ai-company/dashboard')
+            ->assertOk();
+
+        $this->get('/console/ai-company/tasks')
+            ->assertOk();
+
+        $this->get('/console/ai-company/ideas')
+            ->assertOk();
+
+        $this->get('/console/ai-company/roadmap')
+            ->assertOk();
+
+        $this->get('/console/ai-company/releases')
+            ->assertOk();
+
+        $this->get('/console/ai-company/quality')
+            ->assertOk();
+
+        $this->get('/console/ai-company/risks')
+            ->assertOk();
+
+        $this->get('/console/ai-company/prompts')
+            ->assertOk();
+
+        $this->get('/console/ai-company/reports')
+            ->assertOk();
+
         $this->get('/console/missing-page')
             ->assertOk();
 

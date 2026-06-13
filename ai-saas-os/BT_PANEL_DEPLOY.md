@@ -673,3 +673,45 @@ php artisan migrate --force
 php artisan app:production-check
 php artisan app:smoke-test
 ```
+
+## v1.9.0 AI Company OS Core Notes
+
+Release: `Release v1.9.0 AI Company OS core`
+
+This version adds the AI Company OS simulation layer. It stores internal tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompt drafts, and daily reports. These records are drafts only and require manual approval before any real work is done.
+
+Safe commands:
+
+```bash
+cd /www/wwwroot/ai-saas-os
+php artisan ai-company:scan
+php artisan ai-company:plan
+php artisan ai-company:generate-prompts
+php artisan ai-company:daily-report
+```
+
+Optional version labels:
+
+```bash
+php artisan ai-company:scan --stable-version=v1.9.0
+php artisan ai-company:plan --target-version=v2.0.0
+php artisan ai-company:generate-prompts --target-version=v2.0.0
+```
+
+Console checks:
+
+- AI Company dashboard: `https://ai.js3.cn/console/ai-company/dashboard`
+- AI task pool: `https://ai.js3.cn/console/ai-company/tasks`
+- AI idea pool: `https://ai.js3.cn/console/ai-company/ideas`
+- AI roadmap: `https://ai.js3.cn/console/ai-company/roadmap`
+- AI release plans: `https://ai.js3.cn/console/ai-company/releases`
+- AI quality reports: `https://ai.js3.cn/console/ai-company/quality`
+- AI risk reports: `https://ai.js3.cn/console/ai-company/risks`
+- AI Codex prompts: `https://ai.js3.cn/console/ai-company/prompts`
+- AI daily reports: `https://ai.js3.cn/console/ai-company/reports`
+
+Safety limits:
+
+- Do not store real OpenAI, Claude, Gemini, or other model-provider keys for this release.
+- Do not allow AI Company OS output to directly modify code, deploy, push to production, send email/SMS, publish marketing content, or spend money.
+- Use these commands only to generate internal draft records for administrator review.

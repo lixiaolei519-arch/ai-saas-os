@@ -21,6 +21,17 @@ import PluginDownloadsPage from './pages/PluginDownloadsPage.jsx';
 import WorkflowsPage from './pages/WorkflowsPage.jsx';
 import WorkflowRunsPage from './pages/WorkflowRunsPage.jsx';
 import WorkflowEventsPage from './pages/WorkflowEventsPage.jsx';
+import {
+  AiCompanyDashboardPage,
+  AiCompanyIdeasPage,
+  AiCompanyPromptsPage,
+  AiCompanyQualityPage,
+  AiCompanyReportsPage,
+  AiCompanyReleasesPage,
+  AiCompanyRisksPage,
+  AiCompanyRoadmapPage,
+  AiCompanyTasksPage,
+} from './pages/AiCompanyPages.jsx';
 import PortalDashboardPage from './pages/portal/PortalDashboardPage.jsx';
 import PortalLicensesPage from './pages/portal/PortalLicensesPage.jsx';
 import PortalOrdersPage from './pages/portal/PortalOrdersPage.jsx';
@@ -78,6 +89,15 @@ export default function App() {
           <Route path="workflows" element={<WorkflowsPage />} />
           <Route path="workflow-runs" element={<WorkflowRunsPage />} />
           <Route path="workflow-events" element={<WorkflowEventsPage />} />
+          <Route path="ai-company/dashboard" element={<AiCompanyDashboardPage />} />
+          <Route path="ai-company/tasks" element={<AiCompanyTasksPage />} />
+          <Route path="ai-company/ideas" element={<AiCompanyIdeasPage />} />
+          <Route path="ai-company/roadmap" element={<AiCompanyRoadmapPage />} />
+          <Route path="ai-company/releases" element={<AiCompanyReleasesPage />} />
+          <Route path="ai-company/quality" element={<AiCompanyQualityPage />} />
+          <Route path="ai-company/risks" element={<AiCompanyRisksPage />} />
+          <Route path="ai-company/prompts" element={<AiCompanyPromptsPage />} />
+          <Route path="ai-company/reports" element={<AiCompanyReportsPage />} />
           <Route path="system" element={<SystemPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

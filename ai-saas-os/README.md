@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.8.0 scope adds workflow automation foundation visibility on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.9.0 scope adds a safe AI Company OS core on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, live payment fund capture, real model-provider calls, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v1.8.0.
+Autonomous code execution, production deployment, production pushes, live payment fund capture, real model-provider calls, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v1.9.0.
 
 ## Requirements
 
@@ -66,6 +66,8 @@ The administrator console includes `/console/plugins` for plugin package/version
 
 The administrator console includes `/console/workflows`, `/console/workflow-runs`, and `/console/workflow-events` for workflow definitions, execution records, and event logs.
 
+The administrator console includes AI Company OS simulation pages: `/console/ai-company/dashboard`, `/console/ai-company/tasks`, `/console/ai-company/ideas`, `/console/ai-company/roadmap`, `/console/ai-company/releases`, `/console/ai-company/quality`, `/console/ai-company/risks`, `/console/ai-company/prompts`, and `/console/ai-company/reports`.
+
 The customer portal includes `/console/portal/ai-usage`, backed by `/api/v1/portal/ai-account` and `/api/v1/portal/usage-records`, for AI balance and usage visibility.
 
 The customer portal includes `/console/portal/plugins`, backed by `/api/v1/portal/plugins`, for installed/downloadable plugins scoped to the logged-in customer's tenants.
@@ -119,6 +121,21 @@ POST /api/v1/ai/mock/completions
 ```
 
 The mock provider estimates token usage, validates the License, checks balance and token quota, writes an AI usage record, writes a ledger transaction, and returns a simulated response. It does not call OpenAI, Claude, Gemini, or any external model provider, and no real model API key is required or stored.
+
+## AI Company OS
+
+The AI Company OS core is an internal simulation and planning layer. It creates database records for tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompt drafts, and daily reports. It does not edit source code, deploy, push to production, call external AI providers, send emails, send SMS, place ads, or spend money.
+
+Safe commands:
+
+```bash
+php artisan ai-company:scan
+php artisan ai-company:plan
+php artisan ai-company:generate-prompts
+php artisan ai-company:daily-report
+```
+
+Use `--stable-version=<version>` with `ai-company:scan` and `--target-version=<version>` with `ai-company:plan` or `ai-company:generate-prompts` when a specific version label is required. All generated tasks and prompts are `draft`, `simulation_mode=true`, and require manual approval.
 
 ## Plugin Delivery
 
