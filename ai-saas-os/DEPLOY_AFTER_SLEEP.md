@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:15:59 +08:00
+Last updated: 2026-06-14 06:17:07 +08:00
 
 ## Run Summary
 
@@ -26,12 +26,12 @@ Last updated: 2026-06-14 06:15:59 +08:00
 
 ### v1.1.2 Console Permissions and UX Hardening
 
-- Status: stable locally, pending commit hash before push
-- Commit: pending
+- Status: stable and pushed
+- Commit: `4c2f423` (`Release v1.1.2 console permissions and UX hardening`)
 - Tests: `php artisan test` passed with 34 tests / 401 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes:
 - Added role-aware React route guards for administrator and customer sections.
@@ -82,7 +82,7 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.1.2 is complete locally and awaiting Git commit/push.
+- v1.1.2 is complete and pushed.
 - v1.2.0 payment adapter foundation has not started yet.
 
 ## Risk List
