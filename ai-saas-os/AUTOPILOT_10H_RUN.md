@@ -353,7 +353,7 @@ Push:
 
 ### v2.1.0 Autonomous Operations Center
 
-Status: stable pending release commit.
+Status: stable and pushed.
 
 Started: 2026-06-14 07:37:42 +08:00
 Completed: 2026-06-14 07:40:05 +08:00
@@ -381,4 +381,14 @@ Quality gate:
 - php artisan test passed with 50 tests and 721 assertions.
 
 Commit:
-- Pending release commit.
+- `97df0be4da0111e5c00c3d83468fe517e833187b` (`Release v2.1.0 autonomous operations center`)
+
+Push:
+- pushed to GitHub `main` at 2026-06-14 07:40:57 +08:00.
+
+### v2.2.0 Product Factory Foundation
+
+Status: next.
+
+Scope:
+- Safe product factory for product templates, plugin templates, landing page templates, pricing package templates, License package templates, launch checklists, product generation drafts, Codex prompt drafts, and internal tasks. It must not create real external websites or automatically sell products.
