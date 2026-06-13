@@ -2,15 +2,15 @@ import { ProTable } from '@ant-design/pro-components';
 import { Input, Typography } from 'antd';
 import { useMemo, useState } from 'react';
 import { dateTime, maskHash, statusTag } from '../utils/format.jsx';
+import { filterRows, tablePagination } from '../utils/table.js';
 import { useApiData } from '../hooks/useApiData.js';
 
 export default function LicensesPage() {
   const [keyword, setKeyword] = useState('');
   const { data, loading } = useApiData('/admin/licenses?limit=100', []);
-  const licenses = useMemo(() => data.filter((license) => {
+  const licenses = useMemo(() => filterRows(data, keyword, (license) => {
     const owner = license.tenant?.contact_email || license.tenant?.users?.[0]?.email || '';
-    const text = `${license.domain || ''} ${owner} ${license.metadata?.source_order_id || ''}`;
-    return text.toLowerCase().includes(keyword.toLowerCase());
+    return `${license.domain || ''} ${owner} ${license.metadata?.source_order_id || ''}`;
   }), [data, keyword]);
 
   return (
@@ -24,7 +24,7 @@ export default function LicensesPage() {
         options={false}
         dataSource={licenses}
         locale={{ emptyText: '暂无 License' }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={tablePagination()}
         columns={[
           { title: 'LicenseKey', dataIndex: 'license_key_hash', render: (_, row) => maskHash(row.license_key_hash) },
           { title: '状态', dataIndex: 'status', render: (_, row) => statusTag(row.status) },

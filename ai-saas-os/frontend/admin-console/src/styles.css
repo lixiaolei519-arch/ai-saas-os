@@ -58,6 +58,18 @@ body {
   margin: 0 !important;
 }
 
+.console-header-right {
+  justify-content: flex-end;
+}
+
+.app-meta {
+  font-size: 12px;
+}
+
+.auth-status {
+  white-space: nowrap;
+}
+
 .console-content {
   padding: 24px;
 }
@@ -69,6 +81,14 @@ body {
 
 .portal-dashboard-tables {
   margin-top: 16px;
+}
+
+.result-page {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
 }
 
 .ant-pro-card,
@@ -83,6 +103,11 @@ body {
     height: auto;
     min-height: 64px;
     padding: 12px 16px;
+  }
+
+  .console-header-right {
+    justify-content: flex-start;
+    width: 100%;
   }
 
   .console-content {

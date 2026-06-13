@@ -9,6 +9,8 @@ import {
 import { Button, Layout, Menu, Space, Typography } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/auth.js';
+import AppMeta from '../components/AppMeta.jsx';
+import AuthStatus from '../components/AuthStatus.jsx';
 
 const { Header, Sider, Content } = Layout;
 
@@ -46,8 +48,9 @@ export default function PortalLayout() {
       <Layout>
         <Header className="console-header">
           <Typography.Title level={4} className="console-title">客户门户</Typography.Title>
-          <Space>
-            <span>{user?.email || '客户'}</span>
+          <Space className="console-header-right" size={16} wrap>
+            <AppMeta />
+            <AuthStatus user={user} fallback="客户" />
             <Button icon={<LogoutOutlined />} onClick={logout}>退出</Button>
           </Space>
         </Header>

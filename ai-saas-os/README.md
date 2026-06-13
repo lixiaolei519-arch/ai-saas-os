@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.1.1 scope adds the React customer portal into the existing React + Ant Design Pro console project on top of the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, deployment readiness, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.1.2 scope hardens the React console experience on top of the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, real payment adapters, advanced plugin ecosystems, and complex workflow products are out of scope for v1.1.1.
+Advanced AI autonomous operations, real payment adapters, advanced plugin ecosystems, and complex workflow products are out of scope for v1.1.2.
 
 ## Requirements
 
@@ -55,6 +55,8 @@ The React source is in `frontend/admin-console`, and the committed production bu
 The console is one Vite SPA using React 18, Ant Design, Ant Design ProComponents, React Router, Zustand, and Axios. It contains both the administrator console and the customer portal. API requests use `VITE_API_BASE_URL=/api/v1`, store the token in `localStorage`, and send `Accept: application/json` plus `Authorization: Bearer <token>`.
 
 Administrator users enter `/console/dashboard` after login. Customer users enter `/console/portal/dashboard` and use the dedicated portal menu for their own licenses, orders, referral links, and commissions.
+
+The console includes role-aware route guards, dedicated `403` and `404` pages, unified API handling for `401`, `403`, `422`, and `500` responses, and header metadata for the stable version, Git commit, and frontend build time.
 
 Baota servers without Node.js can use the committed `public/console` build directly. After changing frontend source, rebuild it:
 

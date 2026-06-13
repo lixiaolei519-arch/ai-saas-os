@@ -4,6 +4,8 @@ import ConsoleLayout from './layout/ConsoleLayout.jsx';
 import PortalLayout from './layout/PortalLayout.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import PortalLoginPage from './pages/PortalLoginPage.jsx';
+import ForbiddenPage from './pages/ForbiddenPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import UsersPage from './pages/UsersPage.jsx';
 import TenantsPage from './pages/TenantsPage.jsx';
@@ -24,7 +26,7 @@ function AdminProtected({ children }) {
   const user = useAuthStore((state) => state.user);
   if (!token) return <Navigate to="/console/login" replace />;
   if (!user) return <Navigate to="/console/login" replace />;
-  if (!user.is_admin) return <Navigate to="/console/portal/dashboard" replace />;
+  if (!user.is_admin) return <Navigate to="/console/403" replace />;
   return children;
 }
 
@@ -33,7 +35,7 @@ function PortalProtected({ children }) {
   const user = useAuthStore((state) => state.user);
   if (!token) return <Navigate to="/console/portal/login" replace />;
   if (!user) return <Navigate to="/console/portal/login" replace />;
-  if (user.is_admin) return <Navigate to="/console/dashboard" replace />;
+  if (user.is_admin) return <Navigate to="/console/403" replace />;
   return children;
 }
 
@@ -43,6 +45,7 @@ export default function App() {
       <Routes>
         <Route path="/console/login" element={<LoginPage />} />
         <Route path="/console/portal/login" element={<PortalLoginPage />} />
+        <Route path="/console/403" element={<ForbiddenPage />} />
         <Route path="/console/admin" element={<Navigate to="/console/dashboard" replace />} />
         <Route
           path="/console"
@@ -62,6 +65,7 @@ export default function App() {
           <Route path="channels" element={<ChannelsPage />} />
           <Route path="commissions" element={<CommissionsPage />} />
           <Route path="system" element={<SystemPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route
           path="/console/portal"
@@ -77,8 +81,9 @@ export default function App() {
           <Route path="orders" element={<PortalOrdersPage />} />
           <Route path="referrals" element={<PortalReferralsPage />} />
           <Route path="commissions" element={<PortalCommissionsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
-        <Route path="*" element={<Navigate to="/console/dashboard" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

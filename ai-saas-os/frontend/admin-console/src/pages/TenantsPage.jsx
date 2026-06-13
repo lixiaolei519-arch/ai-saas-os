@@ -1,22 +1,27 @@
 import { ProTable } from '@ant-design/pro-components';
-import { Typography } from 'antd';
+import { Input, Typography } from 'antd';
+import { useMemo, useState } from 'react';
 import { dateTime, statusTag } from '../utils/format.jsx';
+import { filterRows, tablePagination } from '../utils/table.js';
 import { useApiData } from '../hooks/useApiData.js';
 
 export default function TenantsPage() {
+  const [keyword, setKeyword] = useState('');
   const { data, loading } = useApiData('/admin/tenants?limit=100', []);
+  const tenants = useMemo(() => filterRows(data, keyword, (tenant) => `${tenant.name || ''} ${tenant.slug || ''} ${tenant.contact_email || ''}`), [data, keyword]);
 
   return (
     <>
       <Typography.Title level={3}>租户管理</Typography.Title>
+      <Input.Search className="table-search" placeholder="搜索租户、Slug 或联系人" allowClear onSearch={setKeyword} onChange={(event) => setKeyword(event.target.value)} />
       <ProTable
         rowKey="id"
         loading={loading}
         search={false}
         options={false}
-        dataSource={data}
+        dataSource={tenants}
         locale={{ emptyText: '暂无租户' }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={tablePagination()}
         columns={[
           { title: '租户名称', dataIndex: 'name' },
           { title: 'Slug', dataIndex: 'slug', copyable: true },

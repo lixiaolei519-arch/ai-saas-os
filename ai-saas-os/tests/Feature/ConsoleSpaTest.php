@@ -43,6 +43,23 @@ class ConsoleSpaTest extends TestCase
         );
     }
 
+    public function test_console_hardening_deep_links_return_frontend_app(): void
+    {
+        $this->get('/console/403')
+            ->assertOk();
+
+        $this->get('/console/missing-page')
+            ->assertOk();
+
+        $this->get('/console/portal/missing-page')
+            ->assertOk();
+
+        $this->assertStringContainsString(
+            '/console/assets/',
+            (string) file_get_contents(public_path('console/index.html'))
+        );
+    }
+
     public function test_api_v1_routes_are_not_affected_by_console_fallback(): void
     {
         $this->getJson('/api/v1/product-plans')
@@ -78,5 +95,24 @@ class ConsoleSpaTest extends TestCase
                     'laravel_version',
                 ],
             ]);
+    }
+
+    public function test_console_api_auth_errors_are_json_and_role_scoped(): void
+    {
+        $customer = User::create([
+            'name' => 'Console Customer',
+            'email' => 'console-customer@example.com',
+            'password' => 'password123',
+            'status' => 'active',
+            'is_admin' => false,
+        ]);
+
+        $this->withHeader('Authorization', 'Bearer invalid-token')
+            ->getJson('/api/v1/admin/stats')
+            ->assertUnauthorized();
+
+        $this->withToken($customer->createToken('customer')->plainTextToken)
+            ->getJson('/api/v1/admin/stats')
+            ->assertForbidden();
     }
 }

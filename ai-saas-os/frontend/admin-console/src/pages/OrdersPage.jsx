@@ -2,15 +2,15 @@ import { ProTable } from '@ant-design/pro-components';
 import { Input, Space, Typography } from 'antd';
 import { useMemo, useState } from 'react';
 import { dateTime, statusTag, yuan } from '../utils/format.jsx';
+import { filterRows, tablePagination } from '../utils/table.js';
 import { useApiData } from '../hooks/useApiData.js';
 
 export default function OrdersPage() {
   const [keyword, setKeyword] = useState('');
   const { data, loading } = useApiData('/admin/orders?limit=100', []);
-  const orders = useMemo(() => data.filter((order) => {
+  const orders = useMemo(() => filterRows(data, keyword, (order) => {
     const owner = order.tenant?.contact_email || order.tenant?.users?.[0]?.email || '';
-    const text = `${order.order_no || ''} ${owner}`;
-    return text.toLowerCase().includes(keyword.toLowerCase());
+    return `${order.order_no || ''} ${owner}`;
   }), [data, keyword]);
 
   return (
@@ -24,7 +24,7 @@ export default function OrdersPage() {
         options={false}
         dataSource={orders}
         locale={{ emptyText: '暂无订单' }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={tablePagination()}
         columns={[
           { title: '订单号', dataIndex: 'order_no', copyable: true },
           { title: '金额', dataIndex: 'total_cents', render: (_, row) => yuan(row.total_cents) },

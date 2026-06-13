@@ -1,7 +1,9 @@
 import { CopyOutlined } from '@ant-design/icons';
-import { Button, message, Typography } from 'antd';
+import { Button, Input, message, Typography } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
+import { useMemo, useState } from 'react';
 import { yuan } from '../../utils/format.jsx';
+import { filterRows, tablePagination } from '../../utils/table.js';
 import { useApiData } from '../../hooks/useApiData.js';
 
 async function copyLink(text) {
@@ -10,19 +12,22 @@ async function copyLink(text) {
 }
 
 export default function PortalReferralsPage() {
+  const [keyword, setKeyword] = useState('');
   const { data, loading } = useApiData('/portal/referrals?per_page=100', []);
+  const referrals = useMemo(() => filterRows(data, keyword, (row) => `${row.code || ''} ${row.tracking_url || ''}`), [data, keyword]);
 
   return (
     <>
       <Typography.Title level={3}>我的推广</Typography.Title>
+      <Input.Search className="table-search" placeholder="搜索推广码或推广链接" allowClear onSearch={setKeyword} onChange={(event) => setKeyword(event.target.value)} />
       <ProTable
         rowKey="id"
         loading={loading}
         search={false}
         options={false}
-        dataSource={data}
+        dataSource={referrals}
         locale={{ emptyText: '暂无推广链接' }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={tablePagination()}
         columns={[
           { title: '推广码', dataIndex: 'code', copyable: true },
           { title: '推广链接', dataIndex: 'tracking_url', ellipsis: true },

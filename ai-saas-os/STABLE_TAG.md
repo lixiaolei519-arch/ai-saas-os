@@ -1,6 +1,6 @@
 # Stable Tag
 
-Current stable version: v1.1.1
+Current stable version: v1.1.2
 
 Date: 2026-06-14
 
@@ -11,7 +11,7 @@ Quality gate:
 - composer audit: passed, no security advisories
 - php artisan migrate:fresh --env=testing --force: passed
 - php artisan db:seed --env=testing --force: passed
-- php artisan test: passed, 32 tests / 395 assertions
+- php artisan test: passed, 34 tests / 401 assertions
 
 Notes:
-- v1.1.1 is the React customer portal release: the existing frontend/admin-console Vite SPA now includes customer login, dashboard, licenses, orders, referrals, and commissions under /console/portal/*, with authenticated portal APIs scoped to the current customer and an enhanced deployment smoke test.
+- v1.1.2 is the console permissions and UX hardening release: the existing frontend/admin-console Vite SPA now includes stronger role-aware route guards, dedicated 403 and 404 pages, unified API error handling, header version/Git/build metadata, and consistent table search/pagination behavior.

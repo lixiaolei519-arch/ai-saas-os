@@ -2,15 +2,13 @@ import { ProTable } from '@ant-design/pro-components';
 import { Input, Tag, Typography } from 'antd';
 import { useMemo, useState } from 'react';
 import { dateTime, statusTag } from '../utils/format.jsx';
+import { filterRows, tablePagination } from '../utils/table.js';
 import { useApiData } from '../hooks/useApiData.js';
 
 export default function UsersPage() {
   const [keyword, setKeyword] = useState('');
   const { data, loading } = useApiData('/admin/users?limit=100', []);
-  const users = useMemo(() => data.filter((user) => {
-    const text = `${user.name || ''} ${user.email || ''}`;
-    return text.toLowerCase().includes(keyword.toLowerCase());
-  }), [data, keyword]);
+  const users = useMemo(() => filterRows(data, keyword, (user) => `${user.name || ''} ${user.email || ''}`), [data, keyword]);
 
   return (
     <>
@@ -23,7 +21,7 @@ export default function UsersPage() {
         options={false}
         dataSource={users}
         locale={{ emptyText: '暂无用户' }}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
+        pagination={tablePagination()}
         columns={[
           { title: '姓名', dataIndex: 'name' },
           { title: '邮箱', dataIndex: 'email', copyable: true },

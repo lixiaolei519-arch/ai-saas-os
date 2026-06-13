@@ -23,7 +23,8 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status;
+    if (status === 401) {
       useAuthStore.getState().clearAuth();
       const loginPath = window.location.pathname.startsWith('/console/portal')
         ? '/console/portal/login'
@@ -31,12 +32,26 @@ api.interceptors.response.use(
       if (window.location.pathname !== loginPath) {
         window.location.href = loginPath;
       }
+      error.__handled = true;
+    } else if (status === 403) {
+      error.__handled = true;
+      message.error('没有权限访问该资源');
+      if (window.location.pathname.startsWith('/console') && window.location.pathname !== '/console/403') {
+        window.location.href = '/console/403';
+      }
+    } else if (status >= 500) {
+      error.__handled = true;
+      message.error('服务器异常，请稍后重试');
     }
     return Promise.reject(error);
   },
 );
 
 export function errorMessage(error, fallback = '请求失败，请稍后重试') {
-  const text = error?.response?.data?.message || error?.response?.data?.errors?.email?.[0] || fallback;
+  if (error?.__handled) return;
+
+  const errors = error?.response?.data?.errors;
+  const firstValidationError = errors && Object.values(errors).flat().find(Boolean);
+  const text = error?.response?.data?.message || firstValidationError || fallback;
   message.error(text);
 }

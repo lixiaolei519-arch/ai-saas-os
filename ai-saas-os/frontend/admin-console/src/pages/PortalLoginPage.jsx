@@ -1,12 +1,17 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Typography } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { api, errorMessage } from '../api/client.js';
 import { useAuthStore } from '../store/auth.js';
 
 export default function PortalLoginPage() {
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+
+  if (token && user?.is_admin) return <Navigate to="/console/dashboard" replace />;
+  if (token && user && !user.is_admin) return <Navigate to="/console/portal/dashboard" replace />;
 
   const submit = async (values) => {
     try {

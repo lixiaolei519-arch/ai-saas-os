@@ -7,13 +7,15 @@ import {
   LogoutOutlined,
   SafetyCertificateOutlined,
   SettingOutlined,
-  TeamOutlined,
   TransactionOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Typography, Button, Space } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/auth.js';
+import { useApiData } from '../hooks/useApiData.js';
+import AppMeta from '../components/AppMeta.jsx';
+import AuthStatus from '../components/AuthStatus.jsx';
 
 const { Header, Sider, Content } = Layout;
 
@@ -34,6 +36,7 @@ export default function ConsoleLayout() {
   const location = useLocation();
   const user = useAuthStore((state) => state.user);
   const clearAuth = useAuthStore((state) => state.clearAuth);
+  const { data: system } = useApiData('/admin/system', {});
 
   const logout = () => {
     clearAuth();
@@ -55,9 +58,9 @@ export default function ConsoleLayout() {
       <Layout>
         <Header className="console-header">
           <Typography.Title level={4} className="console-title">企业级控制台</Typography.Title>
-          <Space>
-            <TeamOutlined />
-            <span>{user?.email || '管理员'}</span>
+          <Space className="console-header-right" size={16} wrap>
+            <AppMeta system={system} />
+            <AuthStatus user={user} fallback="管理员" />
             <Button icon={<LogoutOutlined />} onClick={logout}>退出</Button>
           </Space>
         </Header>

@@ -1,13 +1,13 @@
-# Production Checklist v1.1.1
+# Production Checklist v1.1.2
 
-Use this checklist before switching production traffic to `v1.1.1`.
+Use this checklist before switching production traffic to `v1.1.2`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.1.1`.
-- [ ] Release commit is `Release v1.1.1 React customer portal`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.1.1`.
-- [ ] `CHANGELOG.md` contains `v1.1.1`.
+- [ ] Stable release is `v1.1.2`.
+- [ ] Release commit is `Release v1.1.2 console permissions and UX hardening`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.1.2`.
+- [ ] `CHANGELOG.md` contains `v1.1.2`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -116,6 +116,10 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Users, tenants, licenses, orders, payments, channels, commissions, and system pages load without API errors.
 - [ ] API requests include `Accept: application/json` and `Authorization: Bearer <token>` after login.
 - [ ] 401 responses redirect back to `/console/login`.
+- [ ] A customer attempting to open administrator pages sees a `403` page or is blocked before data loads.
+- [ ] Missing console pages show the `404` page inside the SPA.
+- [ ] Header metadata displays stable version, Git commit, and frontend build time.
+- [ ] List pages use consistent search, loading, empty, and pagination behavior.
 
 ## Customer Portal
 
@@ -126,6 +130,7 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] A normal customer token cannot access `/api/v1/admin/*`.
 - [ ] Guest requests to `/api/v1/portal/*` return JSON `401`.
 - [ ] 401 responses from portal API calls redirect back to `/console/portal/login`.
+- [ ] Portal API `403` responses route to the shared `403` page.
 
 ## Launch Decision
 

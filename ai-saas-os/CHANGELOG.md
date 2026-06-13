@@ -1,5 +1,27 @@
 # Changelog
 
+## v1.1.2 - 2026-06-14
+
+### Added
+- Added role-aware console route guards for administrator and customer sections.
+- Added dedicated React `403` and `404` pages for forbidden and missing console routes.
+- Added frontend build metadata for stable version, Git commit, and build time.
+- Added shared header identity display for current user role and email.
+- Added unified table pagination and search helpers across administrator and customer portal list pages.
+- Added Laravel coverage for console hardening deep links, invalid token JSON `401`, and customer rejection from administrator APIs.
+
+### Changed
+- Hardened Axios response handling for `401`, `403`, `422`, and `500` API responses.
+- Existing logged-in users are redirected away from login pages to their role-specific console entry.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 34 tests and 401 assertions after the console hardening changes.
+
 ## v1.1.1 - 2026-06-14
 
 ### Added
