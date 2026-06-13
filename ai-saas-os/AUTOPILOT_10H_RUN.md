@@ -388,7 +388,7 @@ Push:
 
 ### v2.2.0 Product Factory Foundation
 
-Status: stable pending release commit.
+Status: stable and pushed.
 
 Started: 2026-06-14 07:45:59 +08:00
 Completed: 2026-06-14 07:48:26 +08:00
@@ -416,4 +416,14 @@ Quality gate:
 - php artisan test passed with 53 tests and 756 assertions.
 
 Commit:
-- Pending release commit.
+- `4087d4844eaff9288c5b1272de2c0b586e52f3b0` (`Release v2.2.0 product factory foundation`)
+
+Push:
+- pushed to GitHub `main` at 2026-06-14 07:49:22 +08:00.
+
+### v2.3.0 Deep Quality Expansion
+
+Status: next.
+
+Scope:
+- Deep quality expansion pool covering additional feature tests, seed/demo data, API/resource consistency, audit/operation logs, read-only system information, OpenAPI/API documentation, frontend utilities, table filters/exports, manuals, FAQs, troubleshooting, rollback drills, and security/prelaunch checklists.
