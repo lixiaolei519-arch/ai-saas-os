@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:22:38 +08:00
+Last updated: 2026-06-14 06:23:56 +08:00
 
 ## Run Summary
 
@@ -26,12 +26,12 @@ Last updated: 2026-06-14 06:22:38 +08:00
 
 ### v1.2.0 Payment Adapter Foundation
 
-- Status: stable locally, pending commit hash before push
-- Commit: pending
+- Status: stable and pushed
+- Commit: `3b6c01b` (`Release v1.2.0 payment adapter foundation`)
 - Tests: `php artisan test` passed with 37 tests / 436 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
 - Added mock, WeChat Pay, and Alipay adapter structure.
@@ -98,7 +98,7 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.2.0 is complete locally and awaiting Git commit/push.
+- v1.2.0 is complete and pushed.
 - v1.3.0 business dashboard analytics has not started yet.
 
 ## Risk List
