@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.7.0 - 2026-06-14
+
+### Added
+- Added root `RELEASE_LOCK.md` by copying the existing release lock from `release-system/RELEASE_LOCK.md`.
+- Extended `ROADMAP.md` with the locked productionization route from v0.7.0 through v1.0.0.
+- Added administrator user flag support.
+- Added admin login API with protected admin token issuance.
+- Added admin-only middleware for backoffice API access.
+- Added read-only admin APIs for users, tenants, licenses, orders, payment callbacks, marketing channels, commission records, and basic statistics.
+- Added tests covering admin login, non-admin rejection, backoffice resource listing, and stats.
+
+### Verified
+- `composer audit` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan test` passed with 16 tests and 232 assertions before final release tagging.
+
 ## v0.6.0 - 2026-06-14
 
 ### Added

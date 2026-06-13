@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AdminAuthController;
+use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\AiUsageController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\AuthorizationController;
@@ -20,6 +22,18 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('auth/me', [AuthController::class, 'me']);
         Route::post('auth/logout', [AuthController::class, 'logout']);
+    });
+
+    Route::post('admin/auth/login', [AdminAuthController::class, 'login']);
+    Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+        Route::get('users', [AdminController::class, 'users']);
+        Route::get('tenants', [AdminController::class, 'tenants']);
+        Route::get('licenses', [AdminController::class, 'licenses']);
+        Route::get('orders', [AdminController::class, 'orders']);
+        Route::get('payment-callbacks', [AdminController::class, 'paymentCallbacks']);
+        Route::get('marketing/channels', [AdminController::class, 'channels']);
+        Route::get('marketing/commissions', [AdminController::class, 'commissions']);
+        Route::get('stats', [AdminController::class, 'stats']);
     });
 
     Route::post('tenants', [TenantController::class, 'store']);
