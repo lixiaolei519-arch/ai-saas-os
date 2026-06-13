@@ -283,7 +283,7 @@ Push:
 
 ### v1.9.0 AI Company OS Core
 
-Status: stable pending release commit.
+Status: stable and pushed.
 
 Started: 2026-06-14 07:20:26 +08:00
 Completed: 2026-06-14 07:22:58 +08:00
@@ -311,4 +311,14 @@ Quality gate:
 - php artisan test passed with 44 tests and 624 assertions.
 
 Commit:
-- Pending release commit.
+- `335fb1bd9cdad9bb1f7193e067dd205b4fd357f3` (`Release v1.9.0 AI Company OS core`)
+
+Push:
+- pushed to GitHub `main` at 2026-06-14 07:23:47 +08:00.
+
+### v2.0.0 Self-Evolution Engine
+
+Status: next.
+
+Scope:
+- Safe self-evolution engine for scanning, scoring, planning, release review, rollback suggestions, deployment suggestions, testing suggestions, security suggestions, and commercial suggestions. The system can only generate plans, tasks, prompts, and drafts; it must not directly modify production code.

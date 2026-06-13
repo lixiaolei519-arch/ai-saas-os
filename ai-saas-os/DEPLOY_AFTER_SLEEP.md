@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:22:58 +08:00
+Last updated: 2026-06-14 07:23:47 +08:00
 
 ## Run Summary
 
@@ -8,7 +8,7 @@ Last updated: 2026-06-14 07:22:58 +08:00
 - End time: in progress
 - Estimated duration: in progress
 - Start version: v1.1.1
-- Current target version: v1.9.0
+- Current target version: v2.0.0
 - End version: in progress
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
@@ -24,22 +24,36 @@ Last updated: 2026-06-14 07:22:58 +08:00
 
 ## Current Stage
 
+### v2.0.0 Self-Evolution Engine
+
+- Status: next
+- Commit: pending
+- Tests: pending
+- Frontend build: pending if React console changes
+- Backend gates: pending
+- Push: pending
+
+Planned scope:
+- Add safe self-evolution scanner, scorer, task planner, version planner, release reviewer, and suggestion records.
+- Add artisan commands for `self-evolve:scan`, `self-evolve:score`, `self-evolve:plan`, and `self-evolve:review-release`.
+- Add administrator API and console pages for self-evolution visibility.
+
+## Completed Stages
+
 ### v1.9.0 AI Company OS Core
 
-- Status: stable pending release commit
-- Commit: pending
+- Status: stable and pushed
+- Commit: `335fb1bd9cdad9bb1f7193e067dd205b4fd357f3` (`Release v1.9.0 AI Company OS core`)
 - Tests: `php artisan test` passed with 44 tests / 624 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
-- Add internal AI Company OS simulation records for tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompts, and daily reports.
-- Add safe artisan commands to scan, plan, generate Codex prompt drafts, and generate daily reports without external calls.
-- Add administrator API and console pages for AI Company OS visibility.
+- Added AI Company OS simulation records for tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompts, and daily reports.
+- Added safe AI Company OS artisan commands.
+- Added administrator AI Company OS APIs and React console pages.
 - Rebuilt committed React assets in `public/console`.
-
-## Completed Stages
 
 ### v1.8.0 Workflow Automation Foundation
 
