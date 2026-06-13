@@ -156,7 +156,7 @@ Push:
 
 ### v1.5.0 Production Hardening
 
-Status: stable, pending commit.
+Status: stable and pushed.
 
 Started: 2026-06-14 06:44:21 +08:00
 Completed: 2026-06-14 06:47:30 +08:00
@@ -179,7 +179,10 @@ Quality gate:
 - php artisan test passed with 39 tests and 519 assertions.
 
 Commit:
-- Pending.
+- `cd187cc5a501715afa9888a9efcb6a7944a1661b` (`Release v1.5.0 production hardening`)
+
+Push:
+- pushed to GitHub `main` at 2026-06-14 06:48:30 +08:00.
 
 ### v1.6.0 AI Billing Foundation
 

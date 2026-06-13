@@ -4,7 +4,7 @@ This guide covers rollback for the `v1.5.0` production hardening release.
 
 Git branch: `main`
 
-Stable commit: `Release v1.5.0 production hardening`
+Stable commit: `cd187cc5a501715afa9888a9efcb6a7944a1661b Release v1.5.0 production hardening`
 
 ## Rollback Principles
 

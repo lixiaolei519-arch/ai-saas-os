@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:47:30 +08:00
+Last updated: 2026-06-14 06:48:30 +08:00
 
 ## Run Summary
 
@@ -36,12 +36,12 @@ Last updated: 2026-06-14 06:47:30 +08:00
 
 ### v1.5.0 Production Hardening
 
-- Status: stable locally, pending release commit and push
-- Commit: pending
+- Status: stable and pushed
+- Commit: `cd187cc5a501715afa9888a9efcb6a7944a1661b` (`Release v1.5.0 production hardening`)
 - Tests: `php artisan test` passed with 39 tests / 519 assertions
 - Frontend build: not required unless frontend files change
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
 - Enhanced `app:production-check` for production config, writable cache, console, API JSON, and sensitive-file checks.
@@ -151,7 +151,6 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.5.0 release commit and push are pending.
 - v1.6.0 has not started yet.
 
 ## Risk List
