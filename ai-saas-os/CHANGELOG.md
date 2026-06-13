@@ -1,16 +1,5 @@
 # Changelog
 
-## Unreleased - 2026-06-14
-
-### Fixed
-- Added `php artisan app:create-demo-users` to create deployment verification admin and customer accounts with generated terminal-only passwords.
-- Updated Baota deployment smoke test instructions to use command output credentials, `POST` login requests, and `Accept: application/json`.
-- Added test coverage proving the command creates both users and that both accounts can log in successfully.
-
-### Verified
-- `composer audit --no-interaction` reported no security vulnerability advisories.
-- `php artisan test` passed with 23 tests and 327 assertions.
-
 ## v1.0.1 - 2026-06-14
 
 ### Added
@@ -18,10 +7,18 @@
 - The new self-check validates `APP_ENV=production`, configured `APP_KEY`, database connectivity, writable storage and cache, queue configuration, required `.env` keys, and `/health` accessibility.
 - Added automated test coverage for the production self-check command.
 - Added production delivery documents for v1.0.0 release notes, deployment package, production checklist, rollback guide, Baota panel deployment, Nginx pseudo-static rules, and production environment example configuration.
+- Added `php artisan app:smoke-test` for one-command deployment validation of the minimum commercial flow.
+- The smoke test validates database connectivity, key tables, `/health`, smoke customer login, order creation, simulated payment callback, automatic License provisioning, LicenseKey readback, License verification, promotion attribution, and commission generation.
+- Added test coverage for the deployment smoke test command.
+
+### Fixed
+- Added `php artisan app:create-demo-users` to create deployment verification admin and customer accounts with generated terminal-only passwords.
+- Updated Baota deployment smoke test instructions to use command output credentials, `POST` login requests, and `Accept: application/json`.
+- Added test coverage proving the demo-user command creates both users and that both accounts can log in successfully.
 
 ### Verified
 - `composer audit --no-interaction` reported no security vulnerability advisories.
-- `php artisan test` passed with 22 tests and 311 assertions after the production readiness changes.
+- `php artisan test` passed with 24 tests and 342 assertions after the deployment smoke test changes.
 
 ## v1.0.0 - 2026-06-14
 

@@ -1,6 +1,6 @@
 # Stable Tag
 
-Current stable version: v1.0.0
+Current stable version: v1.0.1
 
 Date: 2026-06-14
 
@@ -8,7 +8,7 @@ Quality gate:
 - composer install: passed
 - composer audit: passed, no security advisories
 - php artisan migrate:fresh --env=testing --force: passed
-- php artisan test: passed, 21 tests / 302 assertions
+- php artisan test: passed, 24 tests / 342 assertions
 
 Notes:
-- v1.0.0 is the minimum commercial launch release: full register-to-paid-License-to-commission flow, demo seed data, security checks, README, and API documentation draft.
+- v1.0.1 is the deployment readiness patch release: production self-checks, demo user creation for deployment verification, one-command commercial smoke test, Baota deployment updates, and stable v1.0.1 delivery documentation.

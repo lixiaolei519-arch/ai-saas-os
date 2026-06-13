@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.0.0 scope is intentionally limited to the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, and deployment readiness.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.0.1 scope is intentionally limited to the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, deployment readiness, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, advanced plugin ecosystems, and complex workflow products are out of scope for v1.0.0.
+Advanced AI autonomous operations, advanced plugin ecosystems, and complex workflow products are out of scope for v1.0.1.
 
 ## Requirements
 
@@ -32,14 +32,25 @@ php artisan migrate:fresh --env=testing --force
 php artisan test
 ```
 
-## Demo Accounts
+## Deployment Verification Accounts
 
-Seeded defaults can be changed in `.env`:
+Create temporary deployment verification accounts after migration:
 
-- Admin: `admin@example.com` / `password123`
-- Customer: `customer@example.com` / `password123`
+```bash
+php artisan app:create-demo-users
+```
 
-Do not use default demo passwords in production.
+The command prints the admin/customer emails and generated passwords in the terminal. Use that output for login smoke tests. Do not store real production passwords in documentation or the repository.
+
+## Deployment Smoke Test
+
+Run the one-command commercial flow smoke test after deployment:
+
+```bash
+php artisan app:smoke-test
+```
+
+The command verifies database connectivity, key tables, `/health`, customer login, order creation, simulated payment callback, automatic License provisioning, LicenseKey readback, License verification, promotion attribution, and commission generation. On failure it prints the failed step, reason, and suggested fix.
 
 ## Commercial Flow
 
@@ -75,6 +86,8 @@ Production checks:
 php artisan app:production-check
 php artisan production:check
 php artisan security:prelaunch
+php artisan app:smoke-test
 ```
 
 `app:production-check` validates production environment readiness: `APP_ENV`, `APP_KEY`, database connectivity, writable storage/cache, queue configuration, required `.env` fields, and `/health` accessibility.
+`app:smoke-test` validates the minimum commercial launch flow using synthetic smoke-test data.

@@ -1,8 +1,8 @@
 # 宝塔面板部署交付包
 
-适用版本：`v1.0.0`
+适用版本：`v1.0.1`
 
-稳定提交：`c69377b Release v1.0.0 minimum commercial launch`
+稳定提交：`Release v1.0.1 deployment smoke test`
 
 本文档用于中国大陆服务器上的宝塔面板部署。仅覆盖部署、配置、权限、初始化、队列、定时任务和上线后 smoke test，不包含任何新业务功能。
 
@@ -309,11 +309,35 @@ cd /www/wwwroot/ai-saas-os
 composer audit --no-interaction
 php artisan production:check
 php artisan security:prelaunch
+php artisan app:production-check
 ```
 
 必须全部通过后再切生产流量。
 
 ## 13. 上线后 Smoke Test
+
+优先执行一键部署验收命令：
+
+```bash
+cd /www/wwwroot/ai-saas-os
+php artisan app:smoke-test
+```
+
+该命令会创建或复用 `smoke-test@example.invalid` 测试客户，并创建带 `deployment_smoke_test` 标记的测试订单、License、推广归因和佣金数据。命令不需要真实微信/支付宝密钥，会使用当前配置的 HMAC 回调密钥生成模拟支付回调签名。
+
+成功时必须看到以下关键输出：
+
+```text
+[OK] database connected
+[OK] customer login
+[OK] order created
+[OK] mock payment callback
+[OK] license provisioned
+[OK] license verified
+[OK] commission generated
+```
+
+如果某一步失败，命令会输出 `Reason:` 和 `Suggested fix:`。先按建议修复数据库、迁移、路由、支付回调密钥或 APP_KEY，再重新运行 `php artisan app:smoke-test`。
 
 按顺序检查：
 

@@ -1,13 +1,13 @@
-# Production Checklist v1.0.0
+# Production Checklist v1.0.1
 
-Use this checklist before switching production traffic to `v1.0.0`.
+Use this checklist before switching production traffic to `v1.0.1`.
 
 ## Release Identity
 
-- [ ] Git tag is `v1.0.0`.
-- [ ] Tagged commit is `c69377b`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.0.0`.
-- [ ] `CHANGELOG.md` contains `v1.0.0`.
+- [ ] Stable release is `v1.0.1`.
+- [ ] Release commit is `Release v1.0.1 deployment smoke test`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.0.1`.
+- [ ] `CHANGELOG.md` contains `v1.0.1`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -31,7 +31,8 @@ Use this checklist before switching production traffic to `v1.0.0`.
 - [ ] `APP_URL` uses the production HTTPS domain.
 - [ ] Database credentials are production credentials.
 - [ ] Payment callback secrets are no longer placeholder values.
-- [ ] Demo passwords have been changed.
+- [ ] Deployment verification accounts are created with `php artisan app:create-demo-users`.
+- [ ] No real production passwords are stored in documentation or the repository.
 
 ## Database
 
@@ -69,21 +70,20 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] `composer audit --no-interaction` reports no advisories.
 - [ ] `php artisan production:check` passes.
 - [ ] `php artisan security:prelaunch` passes.
+- [ ] `php artisan app:production-check` passes.
 - [ ] `GET /health` returns `status=ok`.
 
 ## Smoke Test
 
-- [ ] User registration works.
-- [ ] User login works.
-- [ ] Tenant creation works.
-- [ ] Product plan exists.
-- [ ] Order creation works.
-- [ ] Simulated or real payment callback marks order paid.
-- [ ] Paid order automatically provisions License.
-- [ ] Customer portal can copy LicenseKey.
-- [ ] License verification works.
-- [ ] Promotion attribution creates commission.
-- [ ] Admin can view stats.
+- [ ] `php artisan app:smoke-test` passes.
+- [ ] Smoke test output includes `[OK] database connected`.
+- [ ] Smoke test output includes `[OK] customer login`.
+- [ ] Smoke test output includes `[OK] order created`.
+- [ ] Smoke test output includes `[OK] mock payment callback`.
+- [ ] Smoke test output includes `[OK] license provisioned`.
+- [ ] Smoke test output includes `[OK] license verified`.
+- [ ] Smoke test output includes `[OK] commission generated`.
+- [ ] If smoke test fails, the printed `Reason:` and `Suggested fix:` have been resolved before launch.
 
 ## Launch Decision
 
