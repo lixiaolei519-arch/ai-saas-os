@@ -315,6 +315,27 @@ class AdminController extends Controller
         ]);
     }
 
+    public function qualityVersion(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->qualityVersion(),
+        ]);
+    }
+
+    public function qualityDeployment(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->qualityDeployment(),
+        ]);
+    }
+
+    public function qualityDocs(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->qualityDocs(),
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([

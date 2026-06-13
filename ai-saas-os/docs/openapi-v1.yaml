@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: AI SaaS OS API Draft
+  version: v2.3.0
+servers:
+  - url: https://ai.js3.cn/api/v1
+paths:
+  /admin/quality/version:
+    get:
+      summary: Read stable version and runtime metadata
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Version metadata
+  /admin/quality/deployment:
+    get:
+      summary: Read deployment readiness signals
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Deployment status
+  /admin/quality/docs:
+    get:
+      summary: Read required documentation presence
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Documentation status
+  /health:
+    get:
+      summary: Public health check
+      responses:
+        '200':
+          description: Health status
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Sanctum

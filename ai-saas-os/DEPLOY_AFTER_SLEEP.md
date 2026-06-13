@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:49:22 +08:00
+Last updated: 2026-06-14 07:53:10 +08:00
 
 ## Run Summary
 
@@ -26,16 +26,17 @@ Last updated: 2026-06-14 07:49:22 +08:00
 
 ### v2.3.0 Deep Quality Expansion
 
-- Status: next
+- Status: stable pending release commit
 - Commit: pending
-- Tests: pending
-- Frontend build: pending if React console changes
-- Backend gates: pending
+- Tests: `php artisan test` passed with 55 tests / 778 assertions
+- Frontend build: not required, frontend source unchanged
+- Backend gates: `composer audit`, testing migration, and testing seed passed
 - Push: pending
 
-Planned scope:
-- Add focused quality improvements from the deep quality expansion pool.
-- Keep changes grouped, tested, documented, committed, and pushed after quality gate.
+Completed changes so far:
+- Added read-only quality version, deployment, and documentation status APIs.
+- Added OpenAPI draft at `docs/openapi-v1.yaml`.
+- Added targeted quality endpoint tests.
 
 ## Completed Stages
 

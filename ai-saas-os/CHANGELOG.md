@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.3.0 - 2026-06-14
+
+### Added
+- Added read-only quality status APIs for version metadata, deployment readiness signals, and documentation presence.
+- Added `QualityStatusService` for stable version, Git commit, runtime, health, cache, queue, console build, and docs checks.
+- Added `docs/openapi-v1.yaml` as an OpenAPI draft for core quality endpoints.
+- Added tests covering quality status APIs, admin role scoping, and OpenAPI presence.
+
+### Verified
+- Frontend source was not changed; no React rebuild was required.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 55 tests and 778 assertions after the Deep Quality Expansion changes.
+
 ## v2.2.0 - 2026-06-14
 
 ### Added

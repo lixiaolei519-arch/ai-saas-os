@@ -1,6 +1,6 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v2.2.0 scope adds a safe Product Factory foundation on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, self-evolution scans/scores/plans/reviews/suggestions, draft-only operations records, product factory templates/drafts/checklists, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v2.3.0 scope adds deep quality status endpoints and an OpenAPI draft on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, self-evolution scans/scores/plans/reviews/suggestions, draft-only operations records, product factory templates/drafts/checklists, risk controls, marketing attribution, quality status APIs, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
 Autonomous code execution, production deployment, production pushes, live payment fund capture, real model-provider calls, real email/SMS sending, real ad publishing, real customer contact, real external website creation, automatic product sales, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v2.2.0.
 
@@ -181,6 +181,18 @@ php artisan product-factory:generate-drafts
 ```
 
 All generated records are `draft`, `simulation_mode=true`, and require manual approval. The command does not create real external websites and does not automatically sell products.
+
+## Quality Status
+
+Read-only administrator quality endpoints:
+
+```text
+GET /api/v1/admin/quality/version
+GET /api/v1/admin/quality/deployment
+GET /api/v1/admin/quality/docs
+```
+
+The OpenAPI draft is stored at `docs/openapi-v1.yaml`.
 
 ## Plugin Delivery
 

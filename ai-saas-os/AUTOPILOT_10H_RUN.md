@@ -423,7 +423,27 @@ Push:
 
 ### v2.3.0 Deep Quality Expansion
 
-Status: next.
+Status: stable pending release commit.
+
+Started: 2026-06-14 07:51:40 +08:00
+Completed: 2026-06-14 07:53:10 +08:00
 
 Scope:
 - Deep quality expansion pool covering additional feature tests, seed/demo data, API/resource consistency, audit/operation logs, read-only system information, OpenAPI/API documentation, frontend utilities, table filters/exports, manuals, FAQs, troubleshooting, rollback drills, and security/prelaunch checklists.
+
+Progress:
+- Added read-only quality status service for version, deployment, and documentation status.
+- Added administrator APIs for quality version, deployment, and docs.
+- Added OpenAPI draft at `docs/openapi-v1.yaml`.
+- Added focused feature tests for quality endpoints, role scoping, and OpenAPI presence.
+
+Quality gate:
+- Frontend source unchanged; no React rebuild required.
+- Targeted `DeepQualityExpansionTest` passed with 2 tests and 22 assertions.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 55 tests and 778 assertions.
+
+Commit:
+- Pending release commit.

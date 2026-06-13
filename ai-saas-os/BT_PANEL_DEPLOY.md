@@ -813,3 +813,23 @@ Safety limits:
 - Keep all Product Factory records as draft simulation output.
 - Require manual approval before any generated product plan is used.
 - Do not connect this release to external site builders, payment launchers, or automatic sales flows.
+
+## v2.3.0 Deep Quality Expansion Notes
+
+Release: `Release v2.3.0 deep quality expansion`
+
+This version adds read-only administrator quality endpoints and an OpenAPI draft:
+
+```text
+GET /api/v1/admin/quality/version
+GET /api/v1/admin/quality/deployment
+GET /api/v1/admin/quality/docs
+```
+
+OpenAPI draft:
+
+```text
+docs/openapi-v1.yaml
+```
+
+These endpoints are read-only and require an administrator token.

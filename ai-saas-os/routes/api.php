@@ -86,6 +86,9 @@ Route::prefix('v1')->group(function () {
         Route::get('product-factory/landing-page-templates', [AdminController::class, 'productFactoryLandingPageTemplates']);
         Route::get('product-factory/package-templates', [AdminController::class, 'productFactoryPackageTemplates']);
         Route::get('product-factory/launch-checklists', [AdminController::class, 'productFactoryLaunchChecklists']);
+        Route::get('quality/version', [AdminController::class, 'qualityVersion']);
+        Route::get('quality/deployment', [AdminController::class, 'qualityDeployment']);
+        Route::get('quality/docs', [AdminController::class, 'qualityDocs']);
         Route::get('stats', [AdminController::class, 'stats']);
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);

@@ -82,6 +82,16 @@ Safe command:
 
 - `php artisan product-factory:generate-drafts`
 
+## Quality Status
+
+Read-only administrator quality endpoints:
+
+- `GET /admin/quality/version`
+- `GET /admin/quality/deployment`
+- `GET /admin/quality/docs`
+
+The OpenAPI draft is stored in `docs/openapi-v1.yaml`.
+
 ## Plugin Foundation
 
 - `POST /plugins`
@@ -166,6 +176,9 @@ Only internal event, condition, action, log, and retry behavior is included. Wor
 - `GET /admin/product-factory/landing-page-templates`
 - `GET /admin/product-factory/package-templates`
 - `GET /admin/product-factory/launch-checklists`
+- `GET /admin/quality/version`
+- `GET /admin/quality/deployment`
+- `GET /admin/quality/docs`
 - `GET /admin/stats`
 
 Admin routes require an authenticated admin token.

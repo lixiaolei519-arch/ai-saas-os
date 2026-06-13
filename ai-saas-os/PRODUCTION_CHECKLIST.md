@@ -1,13 +1,14 @@
-# Production Checklist v2.2.0
+# Production Checklist v2.3.0
 
-Use this checklist before switching production traffic to `v2.2.0`.
+Use this checklist before switching production traffic to `v2.3.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v2.2.0`.
-- [ ] Release commit is `Release v2.2.0 product factory foundation`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v2.2.0`.
-- [ ] `CHANGELOG.md` contains `v2.2.0`.
+- [ ] Stable release is `v2.3.0`.
+- [ ] Release commit is `Release v2.3.0 deep quality expansion`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v2.3.0`.
+- [ ] `CHANGELOG.md` contains `v2.3.0`.
+- [ ] `docs/openapi-v1.yaml` exists.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -113,6 +114,7 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] `https://ai.js3.cn/console/login` returns the React administrator console entry.
 - [ ] `https://ai.js3.cn/console/portal/login` returns the React customer portal entry.
 - [ ] `https://ai.js3.cn/api/v1` remains the API base path.
+- [ ] Administrator quality endpoints `/api/v1/admin/quality/version`, `/api/v1/admin/quality/deployment`, and `/api/v1/admin/quality/docs` return JSON for an admin token.
 
 ## Smoke Test
 

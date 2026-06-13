@@ -311,6 +311,21 @@ class AdminService
         return app(ProductFactoryService::class)->launchChecklists($limit);
     }
 
+    public function qualityVersion(): array
+    {
+        return app(QualityStatusService::class)->version();
+    }
+
+    public function qualityDeployment(): array
+    {
+        return app(QualityStatusService::class)->deployment();
+    }
+
+    public function qualityDocs(): array
+    {
+        return app(QualityStatusService::class)->docs();
+    }
+
     public function stats(): array
     {
         return [
