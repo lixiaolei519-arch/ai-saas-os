@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.9.0 - 2026-06-14
+
+### Added
+- Updated `.env.example` for MySQL, China timezone, payment webhook placeholders, demo account placeholders, and optional License RSA keys.
+- Added `/health` JSON health check endpoint.
+- Added `php artisan production:check` readiness command.
+- Added Baota deployment documentation covering runtime, project setup, database initialization, Nginx pseudo-static rules, queue worker, scheduler, health checks, simulated payments, and production checks.
+- Added prelaunch checklist documentation.
+- Added tests covering `/health`, deployment document existence, and the production check command.
+
+### Verified
+- `composer audit` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan test` passed with 20 tests and 277 assertions before final release tagging.
+
 ## v0.8.0 - 2026-06-14
 
 ### Added
