@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\License;
 use App\Models\LicenseActivation;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -36,6 +37,7 @@ class LicenseService
                 'tenant_id' => $payload['tenant_id'],
                 'product_plan_id' => $payload['product_plan_id'],
                 'license_key_hash' => $this->hashValue($plainKey),
+                'license_key_encrypted' => Crypt::encryptString($plainKey),
                 'signed_payload' => json_encode($signedPayload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
                 'domain' => $payload['domain'],
                 'domain_hash' => $payload['domain'] ? $this->hashValue($payload['domain']) : null,

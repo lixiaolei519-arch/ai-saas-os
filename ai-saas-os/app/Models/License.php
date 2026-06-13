@@ -13,6 +13,10 @@ class License extends Model
 
     protected $guarded = [];
 
+    protected $hidden = [
+        'license_key_encrypted',
+    ];
+
     protected function casts(): array
     {
         return [

@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.8.0 - 2026-06-14
+
+### Added
+- Added encrypted LicenseKey storage for newly issued licenses so customer portal copy operations can return the original key without exposing it in normal list responses.
+- Added customer portal service and authenticated `/api/v1/portal/*` APIs.
+- Added customer-owned views for licenses, orders, AI usage records, promotion links, and commission records.
+- Added customer renewal request API backed by the existing order service.
+- Added customer LicenseKey copy API with ownership checks.
+- Added customer License domain unbind API.
+- Added tests covering customer ownership boundaries, portal listings, renewal requests, LicenseKey copy, and domain unbinding.
+
+### Verified
+- `composer audit` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan test` passed with 17 tests and 267 assertions before final release tagging.
+
 ## v0.7.0 - 2026-06-14
 
 ### Added

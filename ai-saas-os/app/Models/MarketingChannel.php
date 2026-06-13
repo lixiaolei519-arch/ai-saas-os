@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MarketingChannel extends Model
 {
@@ -13,5 +14,10 @@ class MarketingChannel extends Model
         return [
             'metadata' => 'array',
         ];
+    }
+
+    public function promotionLinks(): HasMany
+    {
+        return $this->hasMany(PromotionLink::class);
     }
 }

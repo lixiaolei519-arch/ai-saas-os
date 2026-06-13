@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\AiUsageController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\AuthorizationController;
+use App\Http\Controllers\Api\V1\CustomerPortalController;
 use App\Http\Controllers\Api\V1\LicenseController;
 use App\Http\Controllers\Api\V1\MarketingController;
 use App\Http\Controllers\Api\V1\OrderController;
@@ -22,6 +23,17 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('auth/me', [AuthController::class, 'me']);
         Route::post('auth/logout', [AuthController::class, 'logout']);
+
+        Route::prefix('portal')->group(function () {
+            Route::get('licenses', [CustomerPortalController::class, 'licenses']);
+            Route::get('orders', [CustomerPortalController::class, 'orders']);
+            Route::get('usage-records', [CustomerPortalController::class, 'usageRecords']);
+            Route::get('promotion-links', [CustomerPortalController::class, 'promotionLinks']);
+            Route::get('commissions', [CustomerPortalController::class, 'commissions']);
+            Route::post('renewals', [CustomerPortalController::class, 'requestRenewal']);
+            Route::get('licenses/{license}/key', [CustomerPortalController::class, 'copyLicenseKey']);
+            Route::delete('licenses/{license}/domain', [CustomerPortalController::class, 'unbindDomain']);
+        });
     });
 
     Route::post('admin/auth/login', [AdminAuthController::class, 'login']);
