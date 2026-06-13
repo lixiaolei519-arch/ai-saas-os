@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:04:07 +08:00
+Last updated: 2026-06-14 07:05:54 +08:00
 
 ## Run Summary
 
@@ -36,12 +36,12 @@ Last updated: 2026-06-14 07:04:07 +08:00
 
 ### v1.7.0 Plugin Delivery Foundation
 
-- Status: stable locally, pending release commit and push
-- Commit: pending
+- Status: stable and pushed
+- Commit: `1df6bce738ec2658a5dde437867ba99dac143755` (`Release v1.7.0 plugin delivery foundation`)
 - Tests: `php artisan test` passed with 41 tests / 558 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
 - Added plugin download records and write-on-verify behavior.
