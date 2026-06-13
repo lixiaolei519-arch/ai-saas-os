@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:11:33 +08:00
+Last updated: 2026-06-14 07:12:17 +08:00
 
 ## Run Summary
 
@@ -8,7 +8,7 @@ Last updated: 2026-06-14 07:11:33 +08:00
 - End time: in progress
 - Estimated duration: in progress
 - Start version: v1.1.1
-- Current target version: v1.8.0
+- Current target version: v1.9.0
 - End version: in progress
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
@@ -24,22 +24,36 @@ Last updated: 2026-06-14 07:11:33 +08:00
 
 ## Current Stage
 
+### v1.9.0 AI Company OS Core
+
+- Status: next
+- Commit: pending
+- Tests: pending
+- Frontend build: pending if React console changes
+- Backend gates: pending
+- Push: pending
+
+Planned scope:
+- Add internal AI Company OS simulation records for tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompts, and daily reports.
+- Add safe artisan commands to scan, plan, generate Codex prompt drafts, and generate daily reports without external calls.
+- Add administrator API and console pages for AI Company OS visibility.
+
+## Completed Stages
+
 ### v1.8.0 Workflow Automation Foundation
 
-- Status: stable pending release commit
-- Commit: pending
+- Status: stable and pushed
+- Commit: `1b7b94b58bd33e05a1ab1d7fc84b8f78e69edad0` (`Release v1.8.0 workflow automation foundation`)
 - Tests: `php artisan test` passed with 41 tests / 568 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
 - Added workflow event logs and event log writes for workflow runs/triggers.
 - Added administrator workflow definitions, runs, and event APIs/pages.
 - Added workflow list, execution record, and event log pages in React.
 - Rebuilt committed React assets in `public/console`.
-
-## Completed Stages
 
 ### v1.7.0 Plugin Delivery Foundation
 

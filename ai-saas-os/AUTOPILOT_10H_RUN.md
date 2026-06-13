@@ -251,7 +251,7 @@ Push:
 
 ### v1.8.0 Workflow Automation Foundation
 
-Status: stable pending release commit.
+Status: stable and pushed.
 
 Started: 2026-06-14 07:09:32 +08:00
 Completed: 2026-06-14 07:11:33 +08:00
@@ -276,4 +276,14 @@ Quality gate:
 - php artisan test passed with 41 tests and 568 assertions.
 
 Commit:
-- Pending release commit.
+- `1b7b94b58bd33e05a1ab1d7fc84b8f78e69edad0` (`Release v1.8.0 workflow automation foundation`)
+
+Push:
+- pushed to GitHub `main` at 2026-06-14 07:12:17 +08:00.
+
+### v1.9.0 AI Company OS Core
+
+Status: next.
+
+Scope:
+- Internal AI Company OS simulation layer for company tasks, ideas, roadmaps, release plans, quality reports, risk reports, Codex prompt drafts, and daily reports. No real code changes, deployments, production pushes, or external actions are executed by the system.
