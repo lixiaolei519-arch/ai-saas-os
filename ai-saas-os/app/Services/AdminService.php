@@ -18,6 +18,11 @@ use App\Models\Order;
 use App\Models\PaymentCallback;
 use App\Models\Plugin;
 use App\Models\PluginDownloadRecord;
+use App\Models\SelfEvolutionPlan;
+use App\Models\SelfEvolutionReleaseReview;
+use App\Models\SelfEvolutionScan;
+use App\Models\SelfEvolutionScore;
+use App\Models\SelfEvolutionSuggestion;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Models\WorkflowDefinition;
@@ -196,6 +201,36 @@ class AdminService
         return app(AiCompanyService::class)->dailyReports($limit);
     }
 
+    public function selfEvolutionDashboard(): array
+    {
+        return app(SelfEvolutionService::class)->dashboard();
+    }
+
+    public function selfEvolutionScans(int $limit = 50): Collection
+    {
+        return app(SelfEvolutionService::class)->scans($limit);
+    }
+
+    public function selfEvolutionScores(int $limit = 50): Collection
+    {
+        return app(SelfEvolutionService::class)->scores($limit);
+    }
+
+    public function selfEvolutionPlans(int $limit = 50): Collection
+    {
+        return app(SelfEvolutionService::class)->plans($limit);
+    }
+
+    public function selfEvolutionReleaseReviews(int $limit = 50): Collection
+    {
+        return app(SelfEvolutionService::class)->releaseReviews($limit);
+    }
+
+    public function selfEvolutionSuggestions(int $limit = 50): Collection
+    {
+        return app(SelfEvolutionService::class)->suggestions($limit);
+    }
+
     public function stats(): array
     {
         return [
@@ -226,6 +261,11 @@ class AdminService
             'ai_company_risk_reports_count' => AiCompanyRiskReport::count(),
             'ai_company_codex_prompts_count' => AiCompanyCodexPrompt::count(),
             'ai_company_daily_reports_count' => AiCompanyDailyReport::count(),
+            'self_evolution_scans_count' => SelfEvolutionScan::count(),
+            'self_evolution_scores_count' => SelfEvolutionScore::count(),
+            'self_evolution_plans_count' => SelfEvolutionPlan::count(),
+            'self_evolution_release_reviews_count' => SelfEvolutionReleaseReview::count(),
+            'self_evolution_suggestions_count' => SelfEvolutionSuggestion::count(),
         ];
     }
 

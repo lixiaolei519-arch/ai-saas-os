@@ -168,6 +168,48 @@ class AdminController extends Controller
         ]);
     }
 
+    public function selfEvolutionDashboard(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->selfEvolutionDashboard(),
+        ]);
+    }
+
+    public function selfEvolutionScans(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->selfEvolutionScans($this->limit($request)),
+        ]);
+    }
+
+    public function selfEvolutionScores(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->selfEvolutionScores($this->limit($request)),
+        ]);
+    }
+
+    public function selfEvolutionPlans(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->selfEvolutionPlans($this->limit($request)),
+        ]);
+    }
+
+    public function selfEvolutionReleaseReviews(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->selfEvolutionReleaseReviews($this->limit($request)),
+        ]);
+    }
+
+    public function selfEvolutionSuggestions(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->selfEvolutionSuggestions($this->limit($request)),
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([

@@ -1,13 +1,13 @@
-# Production Checklist v1.9.0
+# Production Checklist v2.0.0
 
-Use this checklist before switching production traffic to `v1.9.0`.
+Use this checklist before switching production traffic to `v2.0.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.9.0`.
-- [ ] Release commit is `Release v1.9.0 AI Company OS core`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.9.0`.
-- [ ] `CHANGELOG.md` contains `v1.9.0`.
+- [ ] Stable release is `v2.0.0`.
+- [ ] Release commit is `Release v2.0.0 self evolution engine`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v2.0.0`.
+- [ ] `CHANGELOG.md` contains `v2.0.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -43,6 +43,8 @@ Use this checklist before switching production traffic to `v1.9.0`.
 - [ ] No real OpenAI, Claude, Gemini, or other model-provider API key is stored in `.env`, docs, or source code.
 - [ ] AI Company OS is used only in simulation/draft mode.
 - [ ] AI Company OS output cannot directly modify code, deploy, push production, send email/SMS, publish marketing content, call external model APIs, or spend money.
+- [ ] Self-Evolution Engine is used only in simulation/draft mode.
+- [ ] Self-Evolution Engine output cannot directly modify production code, deploy, push, call external services, send messages, publish marketing content, or spend money.
 - [ ] Duplicate payment callbacks do not create duplicate Licenses or commission records.
 - [ ] Amount-mismatch payment callbacks are rejected before business provisioning.
 - [ ] Deployment verification accounts are created with `php artisan app:create-demo-users`.
@@ -145,6 +147,8 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Administrator workflow pages `/console/workflows`, `/console/workflow-runs`, and `/console/workflow-events` load without API errors.
 - [ ] Administrator AI Company OS pages `/console/ai-company/dashboard`, `/console/ai-company/tasks`, `/console/ai-company/ideas`, `/console/ai-company/roadmap`, `/console/ai-company/releases`, `/console/ai-company/quality`, `/console/ai-company/risks`, `/console/ai-company/prompts`, and `/console/ai-company/reports` load without API errors.
 - [ ] `php artisan ai-company:scan`, `php artisan ai-company:plan`, `php artisan ai-company:generate-prompts`, and `php artisan ai-company:daily-report` only create draft simulation records.
+- [ ] Administrator Self-Evolution pages `/console/self-evolution/dashboard`, `/console/self-evolution/score`, `/console/self-evolution/plans`, `/console/self-evolution/release-review`, and `/console/self-evolution/suggestions` load without API errors.
+- [ ] `php artisan self-evolve:scan`, `php artisan self-evolve:score`, `php artisan self-evolve:plan`, and `php artisan self-evolve:review-release` only create draft simulation records.
 - [ ] API requests include `Accept: application/json` and `Authorization: Bearer <token>` after login.
 - [ ] 401 responses redirect back to `/console/login`.
 - [ ] A customer attempting to open administrator pages sees a `403` page or is blocked before data loads.
@@ -162,6 +166,7 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Plugin download token verification writes a download record before launch approval.
 - [ ] Workflow actions remain internal simulations and do not call external services.
 - [ ] AI Company OS tasks and Codex prompts remain draft records that require manual approval.
+- [ ] Self-Evolution plans, release reviews, and suggestions remain draft records that require manual approval.
 - [ ] Customer-owned LicenseKey values can be copied from `/console/portal/licenses`.
 - [ ] A normal customer token cannot access `/api/v1/admin/*`.
 - [ ] Guest requests to `/api/v1/portal/*` return JSON `401`.

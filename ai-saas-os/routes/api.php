@@ -65,6 +65,12 @@ Route::prefix('v1')->group(function () {
         Route::get('ai-company/risk-reports', [AdminController::class, 'aiCompanyRiskReports']);
         Route::get('ai-company/codex-prompts', [AdminController::class, 'aiCompanyCodexPrompts']);
         Route::get('ai-company/daily-reports', [AdminController::class, 'aiCompanyDailyReports']);
+        Route::get('self-evolution/dashboard', [AdminController::class, 'selfEvolutionDashboard']);
+        Route::get('self-evolution/scans', [AdminController::class, 'selfEvolutionScans']);
+        Route::get('self-evolution/scores', [AdminController::class, 'selfEvolutionScores']);
+        Route::get('self-evolution/plans', [AdminController::class, 'selfEvolutionPlans']);
+        Route::get('self-evolution/release-reviews', [AdminController::class, 'selfEvolutionReleaseReviews']);
+        Route::get('self-evolution/suggestions', [AdminController::class, 'selfEvolutionSuggestions']);
         Route::get('stats', [AdminController::class, 'stats']);
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);

@@ -318,7 +318,32 @@ Push:
 
 ### v2.0.0 Self-Evolution Engine
 
-Status: next.
+Status: stable pending release commit.
+
+Started: 2026-06-14 07:29:04 +08:00
+Completed: 2026-06-14 07:31:20 +08:00
 
 Scope:
 - Safe self-evolution engine for scanning, scoring, planning, release review, rollback suggestions, deployment suggestions, testing suggestions, security suggestions, and commercial suggestions. The system can only generate plans, tasks, prompts, and drafts; it must not directly modify production code.
+
+Progress:
+- Added Self-Evolution Engine migration and models.
+- Added service methods for scans, scores, plans, release reviews, suggestions, dashboard, and admin lists.
+- Added safe artisan commands for `self-evolve:scan`, `self-evolve:score`, `self-evolve:plan`, and `self-evolve:review-release`.
+- Added administrator self-evolution APIs.
+- Added React administrator self-evolution pages and menu entries.
+- Rebuilt `public/console` production assets.
+- Added targeted backend and console deep-link tests.
+
+Quality gate:
+- npm install completed in `frontend/admin-console`.
+- npm run build completed and generated a committed `public/console` build.
+- Targeted `SelfEvolutionEngineTest` passed with 3 tests and 45 assertions.
+- Targeted `ConsoleSpaTest` passed with 7 tests and 48 assertions.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 47 tests and 674 assertions.
+
+Commit:
+- Pending release commit.

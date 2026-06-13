@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:23:47 +08:00
+Last updated: 2026-06-14 07:31:20 +08:00
 
 ## Run Summary
 
@@ -26,17 +26,18 @@ Last updated: 2026-06-14 07:23:47 +08:00
 
 ### v2.0.0 Self-Evolution Engine
 
-- Status: next
+- Status: stable pending release commit
 - Commit: pending
-- Tests: pending
-- Frontend build: pending if React console changes
-- Backend gates: pending
+- Tests: `php artisan test` passed with 47 tests / 674 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
 - Push: pending
 
-Planned scope:
+Completed changes so far:
 - Add safe self-evolution scanner, scorer, task planner, version planner, release reviewer, and suggestion records.
 - Add artisan commands for `self-evolve:scan`, `self-evolve:score`, `self-evolve:plan`, and `self-evolve:review-release`.
 - Add administrator API and console pages for self-evolution visibility.
+- Rebuilt committed React assets in `public/console`.
 
 ## Completed Stages
 

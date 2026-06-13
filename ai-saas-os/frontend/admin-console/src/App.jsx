@@ -32,6 +32,13 @@ import {
   AiCompanyRoadmapPage,
   AiCompanyTasksPage,
 } from './pages/AiCompanyPages.jsx';
+import {
+  SelfEvolutionDashboardPage,
+  SelfEvolutionPlansPage,
+  SelfEvolutionReleaseReviewPage,
+  SelfEvolutionScorePage,
+  SelfEvolutionSuggestionsPage,
+} from './pages/SelfEvolutionPages.jsx';
 import PortalDashboardPage from './pages/portal/PortalDashboardPage.jsx';
 import PortalLicensesPage from './pages/portal/PortalLicensesPage.jsx';
 import PortalOrdersPage from './pages/portal/PortalOrdersPage.jsx';
@@ -98,6 +105,11 @@ export default function App() {
           <Route path="ai-company/risks" element={<AiCompanyRisksPage />} />
           <Route path="ai-company/prompts" element={<AiCompanyPromptsPage />} />
           <Route path="ai-company/reports" element={<AiCompanyReportsPage />} />
+          <Route path="self-evolution/dashboard" element={<SelfEvolutionDashboardPage />} />
+          <Route path="self-evolution/score" element={<SelfEvolutionScorePage />} />
+          <Route path="self-evolution/plans" element={<SelfEvolutionPlansPage />} />
+          <Route path="self-evolution/release-review" element={<SelfEvolutionReleaseReviewPage />} />
+          <Route path="self-evolution/suggestions" element={<SelfEvolutionSuggestionsPage />} />
           <Route path="system" element={<SystemPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

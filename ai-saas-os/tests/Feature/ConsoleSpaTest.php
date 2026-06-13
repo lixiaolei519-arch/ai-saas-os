@@ -99,6 +99,21 @@ class ConsoleSpaTest extends TestCase
         $this->get('/console/ai-company/reports')
             ->assertOk();
 
+        $this->get('/console/self-evolution/dashboard')
+            ->assertOk();
+
+        $this->get('/console/self-evolution/score')
+            ->assertOk();
+
+        $this->get('/console/self-evolution/plans')
+            ->assertOk();
+
+        $this->get('/console/self-evolution/release-review')
+            ->assertOk();
+
+        $this->get('/console/self-evolution/suggestions')
+            ->assertOk();
+
         $this->get('/console/missing-page')
             ->assertOk();
 

@@ -11,6 +11,7 @@ use App\Services\LicenseService;
 use App\Services\MarketingService;
 use App\Services\OrderService;
 use App\Services\PaymentService;
+use App\Services\SelfEvolutionService;
 use App\Services\TenantService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request as HttpRequest;
@@ -358,6 +359,46 @@ Artisan::command('ai-company:daily-report {--date= : Report date in YYYY-MM-DD f
 
     return 0;
 })->purpose('Generate an internal AI Company OS daily operations report');
+
+Artisan::command('self-evolve:scan {--stable-version= : Stable version label}', function () {
+    $scan = app(SelfEvolutionService::class)->scan($this->option('stable-version'));
+
+    $this->line('[OK] self evolution scan completed');
+    $this->line('[OK] scan generated: '.$scan->id);
+    $this->line('[OK] simulation mode enabled');
+
+    return 0;
+})->purpose('Generate a safe self-evolution scan draft');
+
+Artisan::command('self-evolve:score {--stable-version= : Stable version label}', function () {
+    $score = app(SelfEvolutionService::class)->score($this->option('stable-version'));
+
+    $this->line('[OK] self evolution score generated');
+    $this->line('[OK] overall score: '.$score->overall_score);
+    $this->line('[OK] scoring remains draft-only');
+
+    return 0;
+})->purpose('Generate a self-evolution score draft');
+
+Artisan::command('self-evolve:plan {--target-version=v2.1.0 : Target version for the draft plan}', function () {
+    $plan = app(SelfEvolutionService::class)->plan($this->option('target-version'));
+
+    $this->line('[OK] self evolution plan generated');
+    $this->line('[OK] target version: '.$plan->target_version);
+    $this->line('[OK] manual approval required');
+
+    return 0;
+})->purpose('Generate a self-evolution version plan draft');
+
+Artisan::command('self-evolve:review-release {--release-version= : Release version to review}', function () {
+    $review = app(SelfEvolutionService::class)->reviewRelease($this->option('release-version'));
+
+    $this->line('[OK] release review generated');
+    $this->line('[OK] decision: '.$review->decision);
+    $this->line('[OK] no production action executed');
+
+    return 0;
+})->purpose('Generate release review, rollback, deployment, test, security, and business suggestions');
 
 Artisan::command('app:smoke-test', function () {
     $failed = false;

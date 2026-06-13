@@ -55,6 +55,17 @@ Safe commands:
 - `php artisan ai-company:generate-prompts`
 - `php artisan ai-company:daily-report`
 
+## Self-Evolution Engine
+
+Self-Evolution Engine v2.0.0 is internal simulation only. Artisan commands create draft scans, scores, plans, release reviews, rollback suggestions, deployment suggestions, testing suggestions, security suggestions, and business suggestions. They do not modify production code, deploy, push, call external services, send messages, publish marketing content, or spend money.
+
+Safe commands:
+
+- `php artisan self-evolve:scan`
+- `php artisan self-evolve:score`
+- `php artisan self-evolve:plan`
+- `php artisan self-evolve:review-release`
+
 ## Plugin Foundation
 
 - `POST /plugins`
@@ -118,6 +129,12 @@ Only internal event, condition, action, log, and retry behavior is included. Wor
 - `GET /admin/ai-company/risk-reports`
 - `GET /admin/ai-company/codex-prompts`
 - `GET /admin/ai-company/daily-reports`
+- `GET /admin/self-evolution/dashboard`
+- `GET /admin/self-evolution/scans`
+- `GET /admin/self-evolution/scores`
+- `GET /admin/self-evolution/plans`
+- `GET /admin/self-evolution/release-reviews`
+- `GET /admin/self-evolution/suggestions`
 - `GET /admin/stats`
 
 Admin routes require an authenticated admin token.

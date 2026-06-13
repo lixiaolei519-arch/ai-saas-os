@@ -715,3 +715,42 @@ Safety limits:
 - Do not store real OpenAI, Claude, Gemini, or other model-provider keys for this release.
 - Do not allow AI Company OS output to directly modify code, deploy, push to production, send email/SMS, publish marketing content, or spend money.
 - Use these commands only to generate internal draft records for administrator review.
+
+## v2.0.0 Self-Evolution Engine Notes
+
+Release: `Release v2.0.0 self evolution engine`
+
+This version adds the Self-Evolution Engine simulation layer. It stores internal scans, scores, version plans, release reviews, and suggestions. The engine can generate drafts only; it must not directly modify production code, deploy, push, call external services, send messages, publish marketing content, or spend money.
+
+Safe commands:
+
+```bash
+cd /www/wwwroot/ai-saas-os
+php artisan self-evolve:scan
+php artisan self-evolve:score
+php artisan self-evolve:plan
+php artisan self-evolve:review-release
+```
+
+Optional version labels:
+
+```bash
+php artisan self-evolve:scan --stable-version=v2.0.0
+php artisan self-evolve:score --stable-version=v2.0.0
+php artisan self-evolve:plan --target-version=v2.1.0
+php artisan self-evolve:review-release --release-version=v2.0.0
+```
+
+Console checks:
+
+- Self-evolution dashboard: `https://ai.js3.cn/console/self-evolution/dashboard`
+- Self-evolution score: `https://ai.js3.cn/console/self-evolution/score`
+- Self-evolution plans: `https://ai.js3.cn/console/self-evolution/plans`
+- Self-evolution release review: `https://ai.js3.cn/console/self-evolution/release-review`
+- Self-evolution suggestions: `https://ai.js3.cn/console/self-evolution/suggestions`
+
+Safety limits:
+
+- Keep all generated self-evolution records as draft simulation output.
+- Require manual approval before any suggested plan can become real work.
+- Continue running `composer audit`, testing migrations, testing seed, full tests, and frontend build before marking a release stable.

@@ -1,5 +1,22 @@
 # Changelog
 
+## v2.0.0 - 2026-06-14
+
+### Added
+- Added Self-Evolution Engine simulation tables for scans, scores, plans, release reviews, and suggestions.
+- Added `SelfEvolutionService` and safe artisan commands: `self-evolve:scan`, `self-evolve:score`, `self-evolve:plan`, and `self-evolve:review-release`.
+- Added administrator APIs for self-evolution dashboard, scans, scores, plans, release reviews, and suggestions.
+- Added React administrator pages under `/console/self-evolution/*` for dashboard, scoring, plans, release review, and suggestions.
+- Added tests covering self-evolution commands, simulation/approval safety flags, administrator API visibility, customer access blocking, and console deep links.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 47 tests and 674 assertions after the Self-Evolution Engine changes.
+
 ## v1.9.0 - 2026-06-14
 
 ### Added

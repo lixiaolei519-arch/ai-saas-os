@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.9.0 scope adds a safe AI Company OS core on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v2.0.0 scope adds a safe Self-Evolution Engine on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, self-evolution scans/scores/plans/reviews/suggestions, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
-Autonomous code execution, production deployment, production pushes, live payment fund capture, real model-provider calls, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v1.9.0.
+Autonomous code execution, production deployment, production pushes, live payment fund capture, real model-provider calls, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v2.0.0.
 
 ## Requirements
 
@@ -67,6 +67,8 @@ The administrator console includes `/console/plugins` for plugin package/version
 The administrator console includes `/console/workflows`, `/console/workflow-runs`, and `/console/workflow-events` for workflow definitions, execution records, and event logs.
 
 The administrator console includes AI Company OS simulation pages: `/console/ai-company/dashboard`, `/console/ai-company/tasks`, `/console/ai-company/ideas`, `/console/ai-company/roadmap`, `/console/ai-company/releases`, `/console/ai-company/quality`, `/console/ai-company/risks`, `/console/ai-company/prompts`, and `/console/ai-company/reports`.
+
+The administrator console includes Self-Evolution Engine pages: `/console/self-evolution/dashboard`, `/console/self-evolution/score`, `/console/self-evolution/plans`, `/console/self-evolution/release-review`, and `/console/self-evolution/suggestions`.
 
 The customer portal includes `/console/portal/ai-usage`, backed by `/api/v1/portal/ai-account` and `/api/v1/portal/usage-records`, for AI balance and usage visibility.
 
@@ -136,6 +138,21 @@ php artisan ai-company:daily-report
 ```
 
 Use `--stable-version=<version>` with `ai-company:scan` and `--target-version=<version>` with `ai-company:plan` or `ai-company:generate-prompts` when a specific version label is required. All generated tasks and prompts are `draft`, `simulation_mode=true`, and require manual approval.
+
+## Self-Evolution Engine
+
+The Self-Evolution Engine generates internal scans, scores, plans, release reviews, and suggestions. It can discover issues, score dimensions, propose tasks, draft version plans, and produce rollback/deployment/testing/security/business suggestions. It does not directly modify production code, deploy, push to production, call external services, or execute generated plans.
+
+Safe commands:
+
+```bash
+php artisan self-evolve:scan
+php artisan self-evolve:score
+php artisan self-evolve:plan
+php artisan self-evolve:review-release
+```
+
+Use `--stable-version=<version>` with scan/score, `--target-version=<version>` with plan, and `--release-version=<version>` with release review when a specific version label is required. All generated plans, reviews, and suggestions are `draft`, `simulation_mode=true`, and require manual approval.
 
 ## Plugin Delivery
 

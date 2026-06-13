@@ -45,6 +45,11 @@ const menuItems = [
   { key: '/console/ai-company/risks', icon: <RobotOutlined />, label: 'AI 风险清单' },
   { key: '/console/ai-company/prompts', icon: <RobotOutlined />, label: 'AI 指令生成' },
   { key: '/console/ai-company/reports', icon: <RobotOutlined />, label: 'AI 运营报告' },
+  { key: '/console/self-evolution/dashboard', icon: <RobotOutlined />, label: '自进化总览' },
+  { key: '/console/self-evolution/score', icon: <RobotOutlined />, label: '自进化评分' },
+  { key: '/console/self-evolution/plans', icon: <RobotOutlined />, label: '自进化计划' },
+  { key: '/console/self-evolution/release-review', icon: <RobotOutlined />, label: '发布评审' },
+  { key: '/console/self-evolution/suggestions', icon: <RobotOutlined />, label: '建议中心' },
   { key: '/console/system', icon: <SettingOutlined />, label: '系统状态' },
 ];
 
