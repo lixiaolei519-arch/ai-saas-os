@@ -12,12 +12,10 @@ class DeploymentReadinessTest extends TestCase
     {
         $this->getJson('/health')
             ->assertOk()
-            ->assertJsonPath('status', 'ok')
-            ->assertJsonStructure([
-                'status',
-                'app',
-                'environment',
-                'timestamp',
+            ->assertExactJson([
+                'status' => 'ok',
+                'app' => config('app.name'),
+                'environment' => app()->environment(),
             ]);
     }
 

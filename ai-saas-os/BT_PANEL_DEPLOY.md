@@ -302,11 +302,21 @@ php artisan security:prelaunch
 curl -s https://your-domain.example/health
 ```
 
-期望包含：
+`/health` 是生产上线探活接口，用于确认 Nginx 已正确转发到 Laravel，且应用路由可以正常响应。期望返回：
 
 ```json
-{"status":"ok"}
+{
+  "status": "ok",
+  "app": "AI SaaS OS",
+  "environment": "production"
+}
 ```
+
+如果 `/health` 返回 Nginx 404，优先检查：
+
+- 宝塔站点根目录是否设置为 `/www/wwwroot/ai-saas-os/public`
+- 宝塔伪静态是否已配置 `try_files $uri $uri/ /index.php?$query_string;`
+- 修改路由或 `.env` 后是否执行了 `php artisan route:cache` 和 `php artisan config:cache`
 
 2. 首页可访问：
 

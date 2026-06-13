@@ -11,6 +11,5 @@ Route::get('/health', function () {
         'status' => 'ok',
         'app' => config('app.name'),
         'environment' => app()->environment(),
-        'timestamp' => now()->toIso8601String(),
     ]);
-});
+})->name('health');
