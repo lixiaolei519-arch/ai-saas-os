@@ -29,6 +29,20 @@ class ConsoleSpaTest extends TestCase
         );
     }
 
+    public function test_console_portal_deep_links_return_frontend_app(): void
+    {
+        $this->get('/console/portal/login')
+            ->assertOk();
+
+        $this->get('/console/portal/dashboard')
+            ->assertOk();
+
+        $this->assertStringContainsString(
+            '/console/assets/',
+            (string) file_get_contents(public_path('console/index.html'))
+        );
+    }
+
     public function test_api_v1_routes_are_not_affected_by_console_fallback(): void
     {
         $this->getJson('/api/v1/product-plans')

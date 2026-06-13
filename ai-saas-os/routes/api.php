@@ -25,10 +25,13 @@ Route::prefix('v1')->group(function () {
         Route::post('auth/logout', [AuthController::class, 'logout']);
 
         Route::prefix('portal')->group(function () {
+            Route::get('me', [CustomerPortalController::class, 'me']);
+            Route::get('dashboard', [CustomerPortalController::class, 'dashboard']);
             Route::get('licenses', [CustomerPortalController::class, 'licenses']);
             Route::get('orders', [CustomerPortalController::class, 'orders']);
             Route::get('usage-records', [CustomerPortalController::class, 'usageRecords']);
             Route::get('promotion-links', [CustomerPortalController::class, 'promotionLinks']);
+            Route::get('referrals', [CustomerPortalController::class, 'referrals']);
             Route::get('commissions', [CustomerPortalController::class, 'commissions']);
             Route::post('renewals', [CustomerPortalController::class, 'requestRenewal']);
             Route::get('licenses/{license}/key', [CustomerPortalController::class, 'copyLicenseKey']);

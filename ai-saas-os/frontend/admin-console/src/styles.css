@@ -34,6 +34,10 @@ body {
   background: #101828 !important;
 }
 
+.portal-sider {
+  background: #12312b !important;
+}
+
 .console-brand {
   color: #ffffff;
   font-size: 18px;
@@ -61,6 +65,10 @@ body {
 .table-search {
   margin-bottom: 16px;
   max-width: 360px;
+}
+
+.portal-dashboard-tables {
+  margin-top: 16px;
 }
 
 .ant-pro-card,

@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\PromotionLink;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -25,11 +26,21 @@ class CustomerPortalService
 
     public function licenses(User $user, ?int $tenantId = null): Collection
     {
-        return License::query()
+        $licenses = License::query()
             ->whereIn('tenant_id', $this->tenantIds($user, $tenantId))
             ->with('productPlan')
             ->latest('id')
             ->get();
+
+        $licenses->each(function (License $license) {
+            $license->setAttribute(
+                'license_key',
+                $license->license_key_encrypted ? Crypt::decryptString($license->license_key_encrypted) : null
+            );
+            $license->setAttribute('source_order_id', $license->metadata['source_order_id'] ?? null);
+        });
+
+        return $licenses;
     }
 
     public function orders(User $user, ?int $tenantId = null): Collection
@@ -55,11 +66,24 @@ class CustomerPortalService
             ->whereIn('tenant_id', $this->tenantIds($user, $tenantId))
             ->pluck('id');
 
-        return PromotionLink::query()
+        $links = PromotionLink::query()
             ->whereIn('marketing_channel_id', $channelIds)
             ->with('channel')
             ->latest('id')
             ->get();
+
+        $links->each(function (PromotionLink $link) {
+            $link->setAttribute(
+                'orders_count',
+                CommissionRecord::where('marketing_channel_id', $link->marketing_channel_id)->count()
+            );
+            $link->setAttribute(
+                'commission_amount_cents',
+                CommissionRecord::where('marketing_channel_id', $link->marketing_channel_id)->sum('commission_amount_cents')
+            );
+        });
+
+        return $links;
     }
 
     public function commissions(User $user, ?int $tenantId = null): Collection
@@ -72,6 +96,42 @@ class CustomerPortalService
             ->whereIn('marketing_channel_id', $channelIds)
             ->latest('id')
             ->get();
+    }
+
+    public function me(User $user): array
+    {
+        return [
+            'user' => $user->fresh('tenants'),
+        ];
+    }
+
+    public function dashboard(User $user): array
+    {
+        $tenantIds = $this->tenantIds($user);
+        $channelIds = MarketingChannel::query()
+            ->whereIn('tenant_id', $tenantIds)
+            ->pluck('id');
+
+        return [
+            'licenses_count' => License::whereIn('tenant_id', $tenantIds)->count(),
+            'orders_count' => Order::whereIn('tenant_id', $tenantIds)->count(),
+            'commission_amount_cents' => CommissionRecord::whereIn('marketing_channel_id', $channelIds)->sum('commission_amount_cents'),
+            'promotion_links_count' => PromotionLink::whereIn('marketing_channel_id', $channelIds)->count(),
+            'recent_orders' => Order::whereIn('tenant_id', $tenantIds)
+                ->with(['items', 'payments'])
+                ->latest('id')
+                ->limit(5)
+                ->get(),
+            'recent_licenses' => License::whereIn('tenant_id', $tenantIds)
+                ->with('productPlan')
+                ->latest('id')
+                ->limit(5)
+                ->get()
+                ->each(function (License $license) {
+                    $license->setAttribute('source_order_id', $license->metadata['source_order_id'] ?? null);
+                    $license->setAttribute('valid_until_label', $license->expires_at ? Carbon::parse($license->expires_at)->toDateString() : null);
+                }),
+        ];
     }
 
     public function requestRenewal(User $user, array $data): Order

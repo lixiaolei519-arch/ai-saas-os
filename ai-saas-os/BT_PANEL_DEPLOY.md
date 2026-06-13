@@ -1,8 +1,8 @@
 # 宝塔面板部署交付包
 
-适用版本：`v1.1.0`
+适用版本：`v1.1.1`
 
-稳定提交：`Release v1.1.0 React Ant Design Pro admin console`
+稳定提交：`Release v1.1.1 React customer portal`
 
 本文档用于中国大陆服务器上的宝塔面板部署。仅覆盖部署、配置、权限、初始化、队列、定时任务和上线后 smoke test，不包含任何新业务功能。
 
@@ -62,7 +62,7 @@ PHP 禁用函数检查：
 cd /www/wwwroot
 git clone <your-repository-url> ai-saas-os
 cd /www/wwwroot/ai-saas-os
-git checkout v1.1.0
+git checkout v1.1.1
 ```
 
 如果使用压缩包上传，解压后确认 `artisan`、`composer.json`、`public/index.php` 位于项目根目录内。
@@ -221,10 +221,16 @@ php artisan app:create-demo-users \
 
 ## 9. 缓存和优化命令
 
-React 企业级控制台访问地址：
+管理员后台访问地址：
 
 ```text
-https://ai.js3.cn/console
+https://ai.js3.cn/console/login
+```
+
+客户门户访问地址：
+
+```text
+https://ai.js3.cn/console/portal/login
 ```
 
 API 地址：
@@ -245,7 +251,7 @@ frontend/admin-console
 public/console
 ```
 
-本版本允许提交 `public/console` 构建产物。宝塔服务器如果没有 Node.js，也可以直接使用已提交的 `public/console` 目录访问后台。后续修改前端源码后必须重新构建：
+管理员后台和客户门户共用同一个 React 项目。宝塔服务器如果没有 Node.js，也可以直接使用已提交的 `public/console` 构建产物访问页面。后续修改前端源码后必须重新构建：
 
 ```bash
 cd /www/wwwroot/ai-saas-os/frontend/admin-console
@@ -364,7 +370,14 @@ php artisan app:smoke-test
 
 ```text
 [OK] database connected
+[OK] demo admin exists
+[OK] demo customer exists
 [OK] customer login
+[OK] customer portal api accessible
+[OK] customer license api is isolated
+[OK] customer order api is isolated
+[OK] admin api accessible
+[OK] console build exists
 [OK] order created
 [OK] mock payment callback
 [OK] license provisioned
@@ -409,8 +422,10 @@ curl -I https://your-domain.example/
 3. React 控制台入口可访问：
 
 ```bash
-curl -I https://ai.js3.cn/console
+curl -I https://ai.js3.cn/console/login
 curl -I https://ai.js3.cn/console/dashboard
+curl -I https://ai.js3.cn/console/portal/login
+curl -I https://ai.js3.cn/console/portal/dashboard
 ```
 
 期望 HTTP 状态为 `200`，并返回 `public/console/index.html`。
@@ -453,11 +468,17 @@ curl -s https://your-domain.example/api/v1/admin/stats \
 7. 客户门户接口：
 
 ```bash
+curl -s https://your-domain.example/api/v1/portal/dashboard \
+  -H "Authorization: Bearer <customer-token>"
+
+curl -s https://your-domain.example/api/v1/portal/licenses \
+  -H "Authorization: Bearer <customer-token>"
+
 curl -s https://your-domain.example/api/v1/portal/orders \
   -H "Authorization: Bearer <customer-token>"
 ```
 
-期望返回当前客户租户范围内订单列表。
+期望只返回当前客户自己的首页统计、License 列表和订单列表，不返回其他客户数据。
 
 8. 队列 worker：
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Services\CustomerPortalService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,39 +16,63 @@ class CustomerPortalController extends Controller
     ) {
     }
 
-    public function licenses(Request $request): JsonResponse
+    public function me(Request $request): JsonResponse
     {
         return response()->json([
-            'data' => $this->portalService->licenses($request->user(), $this->tenantId($request)),
+            'data' => $this->portalService->me($request->user()),
         ]);
+    }
+
+    public function dashboard(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->portalService->dashboard($request->user()),
+        ]);
+    }
+
+    public function licenses(Request $request): JsonResponse
+    {
+        return $this->paginated(
+            $this->portalService->licenses($request->user(), $this->tenantId($request)),
+            $request
+        );
     }
 
     public function orders(Request $request): JsonResponse
     {
-        return response()->json([
-            'data' => $this->portalService->orders($request->user(), $this->tenantId($request)),
-        ]);
+        return $this->paginated(
+            $this->portalService->orders($request->user(), $this->tenantId($request)),
+            $request
+        );
     }
 
     public function usageRecords(Request $request): JsonResponse
     {
-        return response()->json([
-            'data' => $this->portalService->usageRecords($request->user(), $this->tenantId($request)),
-        ]);
+        return $this->paginated(
+            $this->portalService->usageRecords($request->user(), $this->tenantId($request)),
+            $request
+        );
     }
 
     public function promotionLinks(Request $request): JsonResponse
     {
-        return response()->json([
-            'data' => $this->portalService->promotionLinks($request->user(), $this->tenantId($request)),
-        ]);
+        return $this->paginated(
+            $this->portalService->promotionLinks($request->user(), $this->tenantId($request)),
+            $request
+        );
+    }
+
+    public function referrals(Request $request): JsonResponse
+    {
+        return $this->promotionLinks($request);
     }
 
     public function commissions(Request $request): JsonResponse
     {
-        return response()->json([
-            'data' => $this->portalService->commissions($request->user(), $this->tenantId($request)),
-        ]);
+        return $this->paginated(
+            $this->portalService->commissions($request->user(), $this->tenantId($request)),
+            $request
+        );
     }
 
     public function requestRenewal(Request $request): JsonResponse
@@ -85,5 +110,27 @@ class CustomerPortalController extends Controller
         ]);
 
         return isset($data['tenant_id']) ? (int) $data['tenant_id'] : null;
+    }
+
+    private function paginated(Collection $items, Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'page' => ['nullable', 'integer', 'min:1'],
+            'per_page' => ['nullable', 'integer', 'min:1', 'max:100'],
+        ]);
+        $page = (int) ($data['page'] ?? 1);
+        $perPage = (int) ($data['per_page'] ?? 15);
+        $total = $items->count();
+        $pageItems = $items->forPage($page, $perPage)->values();
+
+        return response()->json([
+            'data' => $pageItems,
+            'meta' => [
+                'current_page' => $page,
+                'per_page' => $perPage,
+                'total' => $total,
+                'last_page' => (int) max(1, ceil($total / $perPage)),
+            ],
+        ]);
     }
 }

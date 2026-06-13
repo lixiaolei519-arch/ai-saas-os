@@ -1,13 +1,13 @@
-# Production Checklist v1.1.0
+# Production Checklist v1.1.1
 
-Use this checklist before switching production traffic to `v1.1.0`.
+Use this checklist before switching production traffic to `v1.1.1`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.1.0`.
-- [ ] Release commit is `Release v1.1.0 React Ant Design Pro admin console`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.1.0`.
-- [ ] `CHANGELOG.md` contains `v1.1.0`.
+- [ ] Stable release is `v1.1.1`.
+- [ ] Release commit is `Release v1.1.1 React customer portal`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.1.1`.
+- [ ] `CHANGELOG.md` contains `v1.1.1`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -83,14 +83,22 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] `php artisan security:prelaunch` passes.
 - [ ] `php artisan app:production-check` passes.
 - [ ] `GET /health` returns `status=ok`.
-- [ ] `https://ai.js3.cn/console` returns the React console entry.
+- [ ] `https://ai.js3.cn/console/login` returns the React administrator console entry.
+- [ ] `https://ai.js3.cn/console/portal/login` returns the React customer portal entry.
 - [ ] `https://ai.js3.cn/api/v1` remains the API base path.
 
 ## Smoke Test
 
 - [ ] `php artisan app:smoke-test` passes.
 - [ ] Smoke test output includes `[OK] database connected`.
+- [ ] Smoke test output includes `[OK] demo admin exists`.
+- [ ] Smoke test output includes `[OK] demo customer exists`.
 - [ ] Smoke test output includes `[OK] customer login`.
+- [ ] Smoke test output includes `[OK] customer portal api accessible`.
+- [ ] Smoke test output includes `[OK] customer license api is isolated`.
+- [ ] Smoke test output includes `[OK] customer order api is isolated`.
+- [ ] Smoke test output includes `[OK] admin api accessible`.
+- [ ] Smoke test output includes `[OK] console build exists`.
 - [ ] Smoke test output includes `[OK] order created`.
 - [ ] Smoke test output includes `[OK] mock payment callback`.
 - [ ] Smoke test output includes `[OK] license provisioned`.
@@ -100,13 +108,24 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 
 ## Console
 
-- [ ] Console URL is `https://ai.js3.cn/console`.
+- [ ] Administrator console URL is `https://ai.js3.cn/console/login`.
+- [ ] Customer portal URL is `https://ai.js3.cn/console/portal/login`.
 - [ ] `/console/login` displays the Chinese administrator login page.
 - [ ] Administrator login succeeds and redirects to `/console/dashboard`.
 - [ ] Dashboard shows users, tenants, License, orders, paid orders, commission amount, today orders, and today users.
 - [ ] Users, tenants, licenses, orders, payments, channels, commissions, and system pages load without API errors.
 - [ ] API requests include `Accept: application/json` and `Authorization: Bearer <token>` after login.
 - [ ] 401 responses redirect back to `/console/login`.
+
+## Customer Portal
+
+- [ ] `/console/portal/login` displays the Chinese customer login page.
+- [ ] Customer login succeeds and redirects to `/console/portal/dashboard`.
+- [ ] Customer portal pages show only the logged-in customer's licenses, orders, referral links, and commissions.
+- [ ] Customer-owned LicenseKey values can be copied from `/console/portal/licenses`.
+- [ ] A normal customer token cannot access `/api/v1/admin/*`.
+- [ ] Guest requests to `/api/v1/portal/*` return JSON `401`.
+- [ ] 401 responses from portal API calls redirect back to `/console/portal/login`.
 
 ## Launch Decision
 

@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.1.1 - 2026-06-14
+
+### Added
+- Added the React customer portal inside the existing `frontend/admin-console` Vite SPA without creating a second frontend project.
+- Added customer portal routes for login, dashboard, licenses, orders, referrals, and commissions under `/console/portal/*`.
+- Added customer-only portal API endpoints for profile, dashboard, licenses, orders, referrals, and commissions.
+- Added paginated customer portal responses that are scoped to the authenticated customer's tenant ownership.
+- Added portal UI pages with Ant Design Pro tables, loading states, empty states, status tags, RMB formatting, and copy actions for customer LicenseKey and referral links.
+- Enhanced `php artisan app:smoke-test` to validate demo accounts, customer portal API access, customer License/order isolation, admin API access, and the committed console build.
+- Added Laravel tests for customer portal authentication, ownership isolation, customer rejection from admin APIs, portal JSON 401 responses, smoke-test execution, and portal SPA deep links.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build for the administrator console and customer portal.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 32 tests and 395 assertions after the React customer portal changes.
+
 ## v1.1.0 - 2026-06-14
 
 ### Added

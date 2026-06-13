@@ -25,8 +25,11 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       useAuthStore.getState().clearAuth();
-      if (!window.location.pathname.endsWith('/console/login')) {
-        window.location.href = '/console/login';
+      const loginPath = window.location.pathname.startsWith('/console/portal')
+        ? '/console/portal/login'
+        : '/console/login';
+      if (window.location.pathname !== loginPath) {
+        window.location.href = loginPath;
       }
     }
     return Promise.reject(error);

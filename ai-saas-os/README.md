@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.1.0 scope adds a React + Ant Design Pro enterprise admin console on top of the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, deployment readiness, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.1.1 scope adds the React customer portal into the existing React + Ant Design Pro console project on top of the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, deployment readiness, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, real payment adapters, advanced plugin ecosystems, and complex workflow products are out of scope for v1.1.0.
+Advanced AI autonomous operations, real payment adapters, advanced plugin ecosystems, and complex workflow products are out of scope for v1.1.1.
 
 ## Requirements
 
@@ -30,6 +30,7 @@ php artisan serve
 composer install --no-interaction
 composer audit --no-interaction
 php artisan migrate:fresh --env=testing --force
+php artisan db:seed --env=testing --force
 php artisan test
 ```
 
@@ -45,12 +46,15 @@ The React source is in `frontend/admin-console`, and the committed production bu
 
 ## Enterprise Console
 
-- Console URL: `https://ai.js3.cn/console`
+- Administrator console URL: `https://ai.js3.cn/console/login`
+- Customer portal URL: `https://ai.js3.cn/console/portal/login`
 - API URL: `https://ai.js3.cn/api/v1`
 - Frontend source: `frontend/admin-console`
 - Build output: `public/console`
 
-The console is a Vite SPA using React 18, Ant Design, Ant Design ProComponents, React Router, Zustand, and Axios. API requests use `VITE_API_BASE_URL=/api/v1`, store the admin token in `localStorage`, and send `Accept: application/json` plus `Authorization: Bearer <token>`.
+The console is one Vite SPA using React 18, Ant Design, Ant Design ProComponents, React Router, Zustand, and Axios. It contains both the administrator console and the customer portal. API requests use `VITE_API_BASE_URL=/api/v1`, store the token in `localStorage`, and send `Accept: application/json` plus `Authorization: Bearer <token>`.
+
+Administrator users enter `/console/dashboard` after login. Customer users enter `/console/portal/dashboard` and use the dedicated portal menu for their own licenses, orders, referral links, and commissions.
 
 Baota servers without Node.js can use the committed `public/console` build directly. After changing frontend source, rebuild it:
 
@@ -78,7 +82,7 @@ Run the one-command commercial flow smoke test after deployment:
 php artisan app:smoke-test
 ```
 
-The command verifies database connectivity, key tables, `/health`, customer login, order creation, simulated payment callback, automatic License provisioning, LicenseKey readback, License verification, promotion attribution, and commission generation. On failure it prints the failed step, reason, and suggested fix.
+The command verifies database connectivity, key tables, `/health`, administrator and customer demo accounts, customer login, customer portal API access, customer data isolation, administrator API access, `/console/index.html`, order creation, simulated payment callback, automatic License provisioning, LicenseKey readback, License verification, promotion attribution, and commission generation. On failure it prints the failed step, reason, and suggested fix.
 
 ## Commercial Flow
 

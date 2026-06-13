@@ -205,6 +205,25 @@ Artisan::command('app:smoke-test', function () {
             return null;
         }
     };
+    $dispatchJson = function (string $method, string $uri, array $payload = [], ?string $token = null) {
+        $server = [
+            'HTTP_ACCEPT' => 'application/json',
+        ];
+        if ($token) {
+            $server['HTTP_AUTHORIZATION'] = 'Bearer '.$token;
+        }
+
+        $request = HttpRequest::create($uri, $method, [], [], [], $server);
+        if ($payload !== []) {
+            $request->merge($payload);
+        }
+
+        $response = app(\Illuminate\Contracts\Http\Kernel::class)->handle($request);
+        $body = json_decode((string) $response->getContent(), true) ?: [];
+        \Illuminate\Support\Facades\Auth::forgetGuards();
+
+        return [$response, $body];
+    };
 
     $runStep('database connected', function () {
         DB::connection()->getPdo();
@@ -259,6 +278,44 @@ Artisan::command('app:smoke-test', function () {
         return 1;
     }
 
+    $runStep('console build exists', function () {
+        $path = public_path('console/index.html');
+        if (! is_file($path)) {
+            throw new RuntimeException('Missing public/console/index.html');
+        }
+    }, 'Run cd frontend/admin-console && npm install && npm run build, then deploy public/console.');
+    if ($failed) {
+        return 1;
+    }
+
+    $context['demo_admin'] = $runStep('demo admin exists', function () {
+        return User::firstOrCreate([
+            'email' => env('ADMIN_DEMO_EMAIL', 'admin@example.com'),
+        ], [
+            'name' => 'Deployment Admin',
+            'password' => Hash::make(Str::random(24)),
+            'status' => 'active',
+            'is_admin' => true,
+        ]);
+    }, 'Run php artisan app:create-demo-users and confirm the admin account is active.');
+    if ($failed) {
+        return 1;
+    }
+
+    $context['demo_customer'] = $runStep('demo customer exists', function () {
+        return User::firstOrCreate([
+            'email' => env('CUSTOMER_DEMO_EMAIL', 'customer@example.com'),
+        ], [
+            'name' => 'Deployment Customer',
+            'password' => Hash::make(Str::random(24)),
+            'status' => 'active',
+            'is_admin' => false,
+        ]);
+    }, 'Run php artisan app:create-demo-users and confirm the customer account is active.');
+    if ($failed) {
+        return 1;
+    }
+
     $context['customer_password'] = 'SmokeTest-'.Str::random(16).'1!';
     $context['customer'] = $runStep('test customer ready', function () use (&$context) {
         return User::updateOrCreate([
@@ -274,23 +331,11 @@ Artisan::command('app:smoke-test', function () {
         return 1;
     }
 
-    $context['login'] = $runStep('customer login', function () use (&$context) {
-        $request = HttpRequest::create(
-            '/api/v1/auth/login',
-            'POST',
-            [],
-            [],
-            [],
-            [
-                'HTTP_ACCEPT' => 'application/json',
-            ]
-        );
-        $request->merge([
+    $context['login'] = $runStep('customer login', function () use (&$context, $dispatchJson) {
+        [$response, $payload] = $dispatchJson('POST', '/api/v1/auth/login', [
             'email' => $context['customer']->email,
             'password' => $context['customer_password'],
         ]);
-        $response = app(\Illuminate\Contracts\Http\Kernel::class)->handle($request);
-        $payload = json_decode((string) $response->getContent(), true);
 
         if ($response->getStatusCode() !== 200 || empty($payload['data']['token'])) {
             throw new RuntimeException('Login returned HTTP '.$response->getStatusCode().': '.$response->getContent());
@@ -298,6 +343,18 @@ Artisan::command('app:smoke-test', function () {
 
         return $payload['data'];
     }, 'Use POST /api/v1/auth/login with Accept: application/json and confirm the user status is active.');
+    if ($failed) {
+        return 1;
+    }
+
+    $runStep('admin api accessible', function () use (&$context, $dispatchJson) {
+        $token = $context['demo_admin']->createToken('smoke-admin', ['admin'])->plainTextToken;
+        [$response] = $dispatchJson('GET', '/api/v1/admin/stats', [], $token);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException('Admin stats returned HTTP '.$response->getStatusCode().': '.$response->getContent());
+        }
+    }, 'Confirm the demo admin account is active and /api/v1/admin/* accepts admin Bearer tokens.');
     if ($failed) {
         return 1;
     }
@@ -433,7 +490,7 @@ Artisan::command('app:smoke-test', function () {
         }
 
         return $callback;
-    }, 'Check WECHAT_PAY_WEBHOOK_SECRET and confirm the callback payload is signed with the configured secret.');
+    }, 'Check APP_KEY, WECHAT_PAY_WEBHOOK_SECRET, and confirm the callback payload is signed with the configured secret.');
     if ($failed) {
         return 1;
     }
@@ -449,6 +506,88 @@ Artisan::command('app:smoke-test', function () {
 
         return $license;
     }, 'Check LicenseService, APP_KEY, licenses table, and payment callback auto-provisioning.');
+    if ($failed) {
+        return 1;
+    }
+
+    $context['other_data'] = $runStep('other customer data ready', function () use ($smokeId, &$context) {
+        $otherTenant = app(TenantService::class)->createTenantWithOwner([
+            'tenant_name' => 'Smoke Other '.$smokeId,
+            'owner_name' => 'Smoke Other Customer',
+            'owner_email' => 'smoke-other-'.$smokeId.'@example.invalid',
+            'owner_password' => 'SmokeOther-'.Str::random(12).'1!',
+            'metadata' => [
+                'source' => 'deployment_smoke_test',
+                'smoke_id' => $smokeId,
+            ],
+        ]);
+        $otherLicense = app(LicenseService::class)->issue([
+            'tenant_id' => $otherTenant->id,
+            'product_plan_id' => $context['plan']->id,
+            'domain' => 'other-'.$smokeId.'.example.invalid',
+            'expires_at' => now()->addMonth()->toIso8601String(),
+        ])['license'];
+        $otherOrder = app(OrderService::class)->createOrder([
+            'tenant_id' => $otherTenant->id,
+            'product_plan_id' => $context['plan']->id,
+            'payment_channel' => 'wechat',
+            'metadata' => [
+                'source' => 'deployment_smoke_test_other',
+            ],
+        ]);
+
+        return [
+            'tenant' => $otherTenant,
+            'license' => $otherLicense,
+            'order' => $otherOrder,
+        ];
+    }, 'Check tenant, order, and License creation for customer data isolation verification.');
+    if ($failed) {
+        return 1;
+    }
+
+    $runStep('customer portal api accessible', function () use (&$context, $dispatchJson) {
+        [$response] = $dispatchJson('GET', '/api/v1/portal/dashboard', [], $context['login']['token']);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException('Portal dashboard returned HTTP '.$response->getStatusCode().': '.$response->getContent());
+        }
+    }, 'Confirm customer Bearer token can access /api/v1/portal/dashboard.');
+    if ($failed) {
+        return 1;
+    }
+
+    $runStep('customer license api is isolated', function () use (&$context, $dispatchJson) {
+        [$response, $payload] = $dispatchJson('GET', '/api/v1/portal/licenses', [], $context['login']['token']);
+        $ids = collect($payload['data'] ?? [])->pluck('id')->map(fn ($id) => (int) $id);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException('Portal licenses returned HTTP '.$response->getStatusCode().': '.$response->getContent());
+        }
+        if (! $ids->contains((int) $context['license']->id) || $ids->contains((int) $context['other_data']['license']->id)) {
+            throw new RuntimeException(sprintf(
+                'Portal licenses did not return only the current customer data. expected=%d other=%d returned=%s',
+                $context['license']->id,
+                $context['other_data']['license']->id,
+                $ids->implode(',')
+            ));
+        }
+    }, 'Confirm portal License queries are restricted by the current user tenant ids.');
+    if ($failed) {
+        return 1;
+    }
+
+    $runStep('customer order api is isolated', function () use (&$context, $dispatchJson) {
+        [$response, $payload] = $dispatchJson('GET', '/api/v1/portal/orders', [], $context['login']['token']);
+        $ids = collect($payload['data'] ?? [])->pluck('id')->map(fn ($id) => (int) $id);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException('Portal orders returned HTTP '.$response->getStatusCode().': '.$response->getContent());
+        }
+        if (! $ids->contains((int) $context['order']->id) || $ids->contains((int) $context['other_data']['order']->id)) {
+            throw new RuntimeException('Portal orders did not return only the current customer data.');
+        }
+    }, 'Confirm portal order queries are restricted by the current user tenant ids.');
     if ($failed) {
         return 1;
     }
