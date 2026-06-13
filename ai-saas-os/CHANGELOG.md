@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.8.0 - 2026-06-14
+
+### Added
+- Added workflow event logs to persist received and processed workflow events.
+- Added supported internal workflow action handling for simulated notification, commission, License, and audit-log style actions without external calls.
+- Added administrator APIs for workflow definitions, workflow runs, and workflow event logs.
+- Added React administrator pages for workflow lists, execution records, and event logs.
+- Added tests covering workflow event logging, administrator workflow visibility, and workflow console deep links.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 41 tests and 568 assertions after the workflow automation foundation changes.
+
 ## v1.7.0 - 2026-06-14
 
 ### Added

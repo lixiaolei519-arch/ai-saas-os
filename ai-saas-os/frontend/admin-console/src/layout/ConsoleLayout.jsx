@@ -32,6 +32,9 @@ const menuItems = [
   { key: '/console/ai-usage', icon: <ApiOutlined />, label: 'AI 用量' },
   { key: '/console/plugins', icon: <AppstoreOutlined />, label: '插件交付' },
   { key: '/console/plugin-downloads', icon: <AuditOutlined />, label: '插件下载' },
+  { key: '/console/workflows', icon: <AppstoreOutlined />, label: '工作流' },
+  { key: '/console/workflow-runs', icon: <TransactionOutlined />, label: '执行记录' },
+  { key: '/console/workflow-events', icon: <AuditOutlined />, label: '事件日志' },
   { key: '/console/system', icon: <SettingOutlined />, label: '系统状态' },
 ];
 

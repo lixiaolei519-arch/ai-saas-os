@@ -12,6 +12,9 @@ use App\Models\Plugin;
 use App\Models\PluginDownloadRecord;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Models\WorkflowDefinition;
+use App\Models\WorkflowEventLog;
+use App\Models\WorkflowRun;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -113,6 +116,33 @@ class AdminService
             ->get();
     }
 
+    public function workflowDefinitions(int $limit = 50): Collection
+    {
+        return WorkflowDefinition::query()
+            ->with(['rules'])
+            ->latest('id')
+            ->limit($limit)
+            ->get();
+    }
+
+    public function workflowRuns(int $limit = 50): Collection
+    {
+        return WorkflowRun::query()
+            ->with(['tenant', 'workflowDefinition', 'steps'])
+            ->latest('id')
+            ->limit($limit)
+            ->get();
+    }
+
+    public function workflowEventLogs(int $limit = 50): Collection
+    {
+        return WorkflowEventLog::query()
+            ->with('tenant')
+            ->latest('id')
+            ->limit($limit)
+            ->get();
+    }
+
     public function stats(): array
     {
         return [
@@ -132,6 +162,9 @@ class AdminService
             'ai_cost_amount' => AiUsageRecord::sum('total_cost_amount'),
             'plugins_count' => Plugin::count(),
             'plugin_download_records_count' => PluginDownloadRecord::count(),
+            'workflow_definitions_count' => WorkflowDefinition::count(),
+            'workflow_runs_count' => WorkflowRun::count(),
+            'workflow_event_logs_count' => WorkflowEventLog::count(),
         ];
     }
 

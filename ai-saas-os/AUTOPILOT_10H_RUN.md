@@ -251,7 +251,29 @@ Push:
 
 ### v1.8.0 Workflow Automation Foundation
 
-Status: next.
+Status: stable pending release commit.
+
+Started: 2026-06-14 07:09:32 +08:00
+Completed: 2026-06-14 07:11:33 +08:00
 
 Scope:
 - Event-driven workflow tables, supported business events, action execution records, admin workflow visibility, and internal-only automation without calling external services.
+
+Progress:
+- Added workflow event logs migration and model.
+- Added event logging for manual and automatic workflow triggers.
+- Added internal simulated action handling for supported workflow actions.
+- Added administrator workflow definitions, runs, and event log APIs.
+- Added React administrator workflow list, execution record, and event log pages.
+- Rebuilt `public/console` production assets.
+
+Quality gate:
+- npm install completed in `frontend/admin-console`.
+- npm run build completed and generated a committed `public/console` build.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 41 tests and 568 assertions.
+
+Commit:
+- Pending release commit.

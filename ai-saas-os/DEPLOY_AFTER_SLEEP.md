@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:05:54 +08:00
+Last updated: 2026-06-14 07:11:33 +08:00
 
 ## Run Summary
 
@@ -26,11 +26,18 @@ Last updated: 2026-06-14 07:05:54 +08:00
 
 ### v1.8.0 Workflow Automation Foundation
 
-- Status: next
+- Status: stable pending release commit
 - Commit: pending
-- Tests: pending
-- Frontend build: pending if frontend files change
+- Tests: `php artisan test` passed with 41 tests / 568 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
 - Push: pending
+
+Completed changes so far:
+- Added workflow event logs and event log writes for workflow runs/triggers.
+- Added administrator workflow definitions, runs, and event APIs/pages.
+- Added workflow list, execution record, and event log pages in React.
+- Rebuilt committed React assets in `public/console`.
 
 ## Completed Stages
 

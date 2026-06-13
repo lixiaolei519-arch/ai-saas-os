@@ -1,13 +1,13 @@
-# Production Checklist v1.7.0
+# Production Checklist v1.8.0
 
-Use this checklist before switching production traffic to `v1.7.0`.
+Use this checklist before switching production traffic to `v1.8.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.7.0`.
-- [ ] Release commit is `Release v1.7.0 plugin delivery foundation`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.7.0`.
-- [ ] `CHANGELOG.md` contains `v1.7.0`.
+- [ ] Stable release is `v1.8.0`.
+- [ ] Release commit is `Release v1.8.0 workflow automation foundation`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.8.0`.
+- [ ] `CHANGELOG.md` contains `v1.8.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -140,6 +140,7 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Administrator AI usage page `/console/ai-usage` loads without API errors.
 - [ ] Administrator plugin delivery page `/console/plugins` loads without API errors.
 - [ ] Administrator plugin download records page `/console/plugin-downloads` loads without API errors.
+- [ ] Administrator workflow pages `/console/workflows`, `/console/workflow-runs`, and `/console/workflow-events` load without API errors.
 - [ ] API requests include `Accept: application/json` and `Authorization: Bearer <token>` after login.
 - [ ] 401 responses redirect back to `/console/login`.
 - [ ] A customer attempting to open administrator pages sees a `403` page or is blocked before data loads.
@@ -155,6 +156,7 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Customer portal AI page `/console/portal/ai-usage` shows only the logged-in customer's AI balance and usage records.
 - [ ] Customer portal plugin page `/console/portal/plugins` shows only installed/downloadable plugins for the logged-in customer's tenants.
 - [ ] Plugin download token verification writes a download record before launch approval.
+- [ ] Workflow actions remain internal simulations and do not call external services.
 - [ ] Customer-owned LicenseKey values can be copied from `/console/portal/licenses`.
 - [ ] A normal customer token cannot access `/api/v1/admin/*`.
 - [ ] Guest requests to `/api/v1/portal/*` return JSON `401`.

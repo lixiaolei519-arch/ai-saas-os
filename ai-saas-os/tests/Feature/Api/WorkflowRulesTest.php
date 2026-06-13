@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -68,5 +69,38 @@ class WorkflowRulesTest extends TestCase
             'tenant_id' => $tenant['id'],
             'status' => 'completed',
         ]);
+        $this->assertDatabaseHas('workflow_event_logs', [
+            'tenant_id' => $tenant['id'],
+            'event_name' => 'lead.created',
+            'status' => 'processed',
+        ]);
+
+        $admin = User::create([
+            'name' => 'Workflow Admin',
+            'email' => 'workflow-admin@example.com',
+            'password' => 'password123',
+            'status' => 'active',
+            'is_admin' => true,
+        ]);
+        $token = $admin->createToken('admin')->plainTextToken;
+
+        $this->getJson('/api/v1/admin/workflows', $this->bearerHeaders($token))
+            ->assertOk()
+            ->assertJsonFragment(['name' => 'Qualified Lead Handler']);
+
+        $this->getJson('/api/v1/admin/workflow-runs', $this->bearerHeaders($token))
+            ->assertOk()
+            ->assertJsonFragment(['trigger_event' => 'lead.created']);
+
+        $this->getJson('/api/v1/admin/workflow-events', $this->bearerHeaders($token))
+            ->assertOk()
+            ->assertJsonFragment(['event_name' => 'lead.created']);
+    }
+
+    private function bearerHeaders(string $token): array
+    {
+        return [
+            'Authorization' => 'Bearer '.$token,
+        ];
     }
 }

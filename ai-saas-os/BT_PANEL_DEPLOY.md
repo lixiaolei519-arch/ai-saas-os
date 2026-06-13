@@ -653,3 +653,23 @@ php artisan app:smoke-test
 ```
 
 Confirm that verified plugin download tokens create records in `plugin_download_records` before enabling plugin package delivery for real customers.
+
+## v1.8.0 Workflow Automation Foundation Notes
+
+Release: `Release v1.8.0 workflow automation foundation`
+
+This version adds workflow event logs and administrator workflow visibility. Workflow actions remain internal simulations and must not call external services in this release.
+
+Console checks:
+
+- Workflow definitions: `https://ai.js3.cn/console/workflows`
+- Workflow runs: `https://ai.js3.cn/console/workflow-runs`
+- Workflow events: `https://ai.js3.cn/console/workflow-events`
+
+Operational checks:
+
+```bash
+php artisan migrate --force
+php artisan app:production-check
+php artisan app:smoke-test
+```

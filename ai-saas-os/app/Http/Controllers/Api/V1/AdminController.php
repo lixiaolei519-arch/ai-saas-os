@@ -84,6 +84,27 @@ class AdminController extends Controller
         ]);
     }
 
+    public function workflows(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->workflowDefinitions($this->limit($request)),
+        ]);
+    }
+
+    public function workflowRuns(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->workflowRuns($this->limit($request)),
+        ]);
+    }
+
+    public function workflowEvents(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->workflowEventLogs($this->limit($request)),
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([

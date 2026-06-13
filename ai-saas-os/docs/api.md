@@ -61,7 +61,7 @@ Only delivery foundation APIs are included. Download token verification creates 
 - `POST /workflows/run`
 - `POST /workflows/runs/{run}/retry`
 
-Only basic event, condition, action, log, and retry behavior is included in v1.0.0.
+Only internal event, condition, action, log, and retry behavior is included. Workflow actions do not call external services.
 
 ## Risk
 
@@ -95,6 +95,9 @@ Only basic event, condition, action, log, and retry behavior is included in v1.0
 - `GET /admin/ai/usage-records`
 - `GET /admin/plugins`
 - `GET /admin/plugin-downloads`
+- `GET /admin/workflows`
+- `GET /admin/workflow-runs`
+- `GET /admin/workflow-events`
 - `GET /admin/stats`
 
 Admin routes require an authenticated admin token.

@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.7.0 scope adds plugin delivery foundation visibility on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.8.0 scope adds workflow automation foundation visibility on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, live payment fund capture, real model-provider calls, advanced plugin ecosystems, plugin code execution, and complex workflow products are out of scope for v1.7.0.
+Advanced AI autonomous operations, live payment fund capture, real model-provider calls, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v1.8.0.
 
 ## Requirements
 
@@ -63,6 +63,8 @@ The administrator dashboard uses `/api/v1/admin/dashboard` for operational analy
 The administrator console also includes `/console/ai-usage`, backed by `/api/v1/admin/ai/usage-records`, for read-only AI usage records.
 
 The administrator console includes `/console/plugins` for plugin package/version management and `/console/plugin-downloads` for authorized download records.
+
+The administrator console includes `/console/workflows`, `/console/workflow-runs`, and `/console/workflow-events` for workflow definitions, execution records, and event logs.
 
 The customer portal includes `/console/portal/ai-usage`, backed by `/api/v1/portal/ai-account` and `/api/v1/portal/usage-records`, for AI balance and usage visibility.
 
@@ -132,6 +134,18 @@ Customer portal page:
 - `/console/portal/plugins`
 
 Download token verification creates a `plugin_download_records` row so administrators can audit authorized package access.
+
+## Workflow Automation
+
+The workflow foundation records workflow definitions, rules, runs, run steps, and event logs.
+
+Administrator pages:
+
+- `/console/workflows`
+- `/console/workflow-runs`
+- `/console/workflow-events`
+
+Supported workflow events include `order.created`, `order.paid`, `license.created`, `commission.generated`, `user.registered`, and `lead.created`. Workflow actions remain internal simulations and do not call external services.
 
 ## Commercial Flow
 

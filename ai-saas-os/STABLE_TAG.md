@@ -1,6 +1,6 @@
 # Stable Tag
 
-Current stable version: v1.7.0
+Current stable version: v1.8.0
 
 Date: 2026-06-14
 
@@ -11,7 +11,7 @@ Quality gate:
 - composer audit: passed, no security advisories
 - php artisan migrate:fresh --env=testing --force: passed
 - php artisan db:seed --env=testing --force: passed
-- php artisan test: passed, 41 tests / 558 assertions
+- php artisan test: passed, 41 tests / 568 assertions
 
 Notes:
-- v1.7.0 is the plugin delivery foundation release: the app now records authorized plugin downloads, exposes plugin delivery visibility to administrators, and shows installed/downloadable plugins in the customer portal without executing plugin code.
+- v1.8.0 is the workflow automation foundation release: the app now records workflow events, exposes workflow definitions/runs/events to administrators, and keeps workflow actions in internal simulation mode without external service calls.

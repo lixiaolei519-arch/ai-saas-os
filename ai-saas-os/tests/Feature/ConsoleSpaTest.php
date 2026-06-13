@@ -63,6 +63,15 @@ class ConsoleSpaTest extends TestCase
         $this->get('/console/plugin-downloads')
             ->assertOk();
 
+        $this->get('/console/workflows')
+            ->assertOk();
+
+        $this->get('/console/workflow-runs')
+            ->assertOk();
+
+        $this->get('/console/workflow-events')
+            ->assertOk();
+
         $this->get('/console/missing-page')
             ->assertOk();
 

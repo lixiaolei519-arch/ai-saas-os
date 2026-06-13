@@ -18,6 +18,9 @@ import SystemPage from './pages/SystemPage.jsx';
 import AiUsagePage from './pages/AiUsagePage.jsx';
 import PluginsPage from './pages/PluginsPage.jsx';
 import PluginDownloadsPage from './pages/PluginDownloadsPage.jsx';
+import WorkflowsPage from './pages/WorkflowsPage.jsx';
+import WorkflowRunsPage from './pages/WorkflowRunsPage.jsx';
+import WorkflowEventsPage from './pages/WorkflowEventsPage.jsx';
 import PortalDashboardPage from './pages/portal/PortalDashboardPage.jsx';
 import PortalLicensesPage from './pages/portal/PortalLicensesPage.jsx';
 import PortalOrdersPage from './pages/portal/PortalOrdersPage.jsx';
@@ -72,6 +75,9 @@ export default function App() {
           <Route path="ai-usage" element={<AiUsagePage />} />
           <Route path="plugins" element={<PluginsPage />} />
           <Route path="plugin-downloads" element={<PluginDownloadsPage />} />
+          <Route path="workflows" element={<WorkflowsPage />} />
+          <Route path="workflow-runs" element={<WorkflowRunsPage />} />
+          <Route path="workflow-events" element={<WorkflowEventsPage />} />
           <Route path="system" element={<SystemPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

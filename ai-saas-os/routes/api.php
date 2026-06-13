@@ -53,6 +53,9 @@ Route::prefix('v1')->group(function () {
         Route::get('ai/usage-records', [AdminController::class, 'aiUsageRecords']);
         Route::get('plugins', [AdminController::class, 'plugins']);
         Route::get('plugin-downloads', [AdminController::class, 'pluginDownloadRecords']);
+        Route::get('workflows', [AdminController::class, 'workflows']);
+        Route::get('workflow-runs', [AdminController::class, 'workflowRuns']);
+        Route::get('workflow-events', [AdminController::class, 'workflowEvents']);
         Route::get('stats', [AdminController::class, 'stats']);
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);

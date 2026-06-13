@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\WorkflowDefinition;
+use App\Models\WorkflowEventLog;
 use App\Models\WorkflowRun;
 use App\Models\WorkflowRule;
 use Illuminate\Support\Collection;
@@ -11,6 +12,26 @@ use InvalidArgumentException;
 
 class WorkflowService
 {
+    public const SUPPORTED_EVENTS = [
+        'order.created',
+        'order.paid',
+        'license.created',
+        'commission.generated',
+        'user.registered',
+        'lead.created',
+    ];
+
+    public const SUPPORTED_ACTIONS = [
+        'noop',
+        'notification',
+        'webhook',
+        'renewal',
+        'create_notification',
+        'create_commission',
+        'create_license',
+        'write_audit_log',
+    ];
+
     public function __construct(private readonly AuditService $auditService)
     {
     }
@@ -55,6 +76,9 @@ class WorkflowService
                 ->where('trigger_event', $data['trigger_event'])
                 ->where('status', 'active')
                 ->firstOrFail();
+            $this->recordEvent($data['tenant_id'], $data['trigger_event'], $data['payload'] ?? [], 1, [
+                'source' => 'manual_run',
+            ]);
 
             return $this->executeWorkflow($workflow, $data['payload'] ?? []);
         });
@@ -62,12 +86,17 @@ class WorkflowService
 
     public function triggerEvent(int $tenantId, string $triggerEvent, array $payload = []): Collection
     {
-        return WorkflowDefinition::with('rules')
+        $workflows = WorkflowDefinition::with('rules')
             ->where('tenant_id', $tenantId)
             ->where('trigger_event', $triggerEvent)
             ->where('status', 'active')
-            ->get()
-            ->map(fn (WorkflowDefinition $workflow) => $this->executeWorkflow($workflow, $payload));
+            ->get();
+
+        $this->recordEvent($tenantId, $triggerEvent, $payload, $workflows->count(), [
+            'source' => 'event_trigger',
+        ]);
+
+        return $workflows->map(fn (WorkflowDefinition $workflow) => $this->executeWorkflow($workflow, $payload));
     }
 
     public function retryRun(int $runId, ?array $payload = null): WorkflowRun
@@ -183,15 +212,31 @@ class WorkflowService
     private function executeAction(array $node, array $payload): array
     {
         $type = $node['type'] ?? 'noop';
+        $action = $node['action'] ?? null;
+        $handler = in_array($action, self::SUPPORTED_ACTIONS, true) ? $action : $type;
 
-        if (! in_array($type, ['noop', 'notification', 'webhook', 'renewal'], true)) {
+        if (! in_array($handler, self::SUPPORTED_ACTIONS, true)) {
             throw new InvalidArgumentException('unsupported_workflow_action');
         }
 
         return [
-            'handled_by' => $type,
+            'handled_by' => $handler,
             'payload_keys' => array_keys($payload),
-            'action' => $node['action'] ?? null,
+            'action' => $action,
+            'simulation' => true,
         ];
+    }
+
+    private function recordEvent(int $tenantId, string $eventName, array $payload, int $matchedWorkflowsCount, array $metadata = []): WorkflowEventLog
+    {
+        return WorkflowEventLog::create([
+            'tenant_id' => $tenantId,
+            'event_name' => $eventName,
+            'status' => 'processed',
+            'matched_workflows_count' => $matchedWorkflowsCount,
+            'payload' => $payload,
+            'metadata' => $metadata,
+            'occurred_at' => now(),
+        ]);
     }
 }
