@@ -318,7 +318,7 @@ Push:
 
 ### v2.0.0 Self-Evolution Engine
 
-Status: stable pending release commit.
+Status: stable and pushed.
 
 Started: 2026-06-14 07:29:04 +08:00
 Completed: 2026-06-14 07:31:20 +08:00
@@ -346,4 +346,14 @@ Quality gate:
 - php artisan test passed with 47 tests and 674 assertions.
 
 Commit:
-- Pending release commit.
+- `e3329d322888485e5e238b7dc1f1f56ae08752ec` (`Release v2.0.0 self evolution engine`)
+
+Push:
+- pushed to GitHub `main` at 2026-06-14 07:32:22 +08:00.
+
+### v2.1.0 Autonomous Operations Center
+
+Status: next.
+
+Scope:
+- Safe autonomous operations center for product daily reports, operations weekly reports, sales lead tasks, customer follow-up tasks, SEO content plans, landing page copy drafts, pricing strategy suggestions, release announcements, customer email drafts, support FAQ, promotion tasks, and partner recruiting copy. All output is draft-only, requires manual approval, and must not send, publish, advertise, or contact customers.

@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:31:20 +08:00
+Last updated: 2026-06-14 07:32:22 +08:00
 
 ## Run Summary
 
@@ -8,7 +8,7 @@ Last updated: 2026-06-14 07:31:20 +08:00
 - End time: in progress
 - Estimated duration: in progress
 - Start version: v1.1.1
-- Current target version: v2.0.0
+- Current target version: v2.1.0
 - End version: in progress
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
@@ -24,22 +24,36 @@ Last updated: 2026-06-14 07:31:20 +08:00
 
 ## Current Stage
 
+### v2.1.0 Autonomous Operations Center
+
+- Status: next
+- Commit: pending
+- Tests: pending
+- Frontend build: pending if React console changes
+- Backend gates: pending
+- Push: pending
+
+Planned scope:
+- Add draft-only autonomous operations records for reports, SEO plans, landing pages, pricing, announcements, customer emails, FAQ, promotion tasks, and partner recruiting copy.
+- Add administrator API and console pages under `/console/operations/*`.
+- Keep all outbound content as internal drafts requiring manual approval.
+
+## Completed Stages
+
 ### v2.0.0 Self-Evolution Engine
 
-- Status: stable pending release commit
-- Commit: pending
+- Status: stable and pushed
+- Commit: `e3329d322888485e5e238b7dc1f1f56ae08752ec` (`Release v2.0.0 self evolution engine`)
 - Tests: `php artisan test` passed with 47 tests / 674 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
-- Add safe self-evolution scanner, scorer, task planner, version planner, release reviewer, and suggestion records.
-- Add artisan commands for `self-evolve:scan`, `self-evolve:score`, `self-evolve:plan`, and `self-evolve:review-release`.
-- Add administrator API and console pages for self-evolution visibility.
+- Added safe self-evolution scanner, scorer, task planner, version planner, release reviewer, and suggestion records.
+- Added artisan commands for `self-evolve:scan`, `self-evolve:score`, `self-evolve:plan`, and `self-evolve:review-release`.
+- Added administrator API and console pages for self-evolution visibility.
 - Rebuilt committed React assets in `public/console`.
-
-## Completed Stages
 
 ### v1.9.0 AI Company OS Core
 
