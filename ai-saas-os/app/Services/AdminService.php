@@ -10,6 +10,9 @@ use App\Models\PaymentCallback;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 class AdminService
 {
@@ -58,10 +61,18 @@ class AdminService
 
     public function channels(int $limit = 50): Collection
     {
-        return MarketingChannel::query()
+        $channels = MarketingChannel::query()
+            ->with('promotionLinks')
             ->latest('id')
             ->limit($limit)
             ->get();
+
+        $channels->each(function (MarketingChannel $channel) {
+            $channel->setAttribute('orders_count', CommissionRecord::where('marketing_channel_id', $channel->id)->count());
+            $channel->setAttribute('commission_amount_cents', CommissionRecord::where('marketing_channel_id', $channel->id)->sum('commission_amount_cents'));
+        });
+
+        return $channels;
     }
 
     public function commissions(int $limit = 50): Collection
@@ -84,6 +95,77 @@ class AdminService
             'marketing_channels_count' => MarketingChannel::count(),
             'commission_records_count' => CommissionRecord::count(),
             'commission_amount_cents' => CommissionRecord::sum('commission_amount_cents'),
+            'today_orders_count' => Order::whereDate('created_at', today())->count(),
+            'today_users_count' => User::whereDate('created_at', today())->count(),
         ];
+    }
+
+    public function system(): array
+    {
+        return [
+            'app_env' => app()->environment(),
+            'app_debug' => config('app.debug'),
+            'database_connected' => $this->databaseConnected(),
+            'health_ok' => $this->healthOk(),
+            'stable_version' => $this->stableVersion(),
+            'git_commit' => $this->gitCommit(),
+            'php_version' => PHP_VERSION,
+            'laravel_version' => app()->version(),
+        ];
+    }
+
+    private function databaseConnected(): bool
+    {
+        try {
+            DB::select('select 1');
+
+            return true;
+        } catch (\Throwable) {
+            return false;
+        }
+    }
+
+    private function healthOk(): bool
+    {
+        try {
+            $route = Route::getRoutes()->match(Request::create('/health', 'GET'));
+            $response = $route->run();
+            $payload = json_decode((string) $response->getContent(), true);
+
+            return $response->getStatusCode() === 200 && ($payload['status'] ?? null) === 'ok';
+        } catch (\Throwable) {
+            return false;
+        }
+    }
+
+    private function stableVersion(): string
+    {
+        $path = base_path('STABLE_TAG.md');
+        if (! is_file($path)) {
+            return 'unknown';
+        }
+
+        $contents = (string) file_get_contents($path);
+
+        return preg_match('/Current stable version:\s*(.+)/', $contents, $matches)
+            ? trim($matches[1])
+            : 'unknown';
+    }
+
+    private function gitCommit(): string
+    {
+        $headPath = base_path('.git/HEAD');
+        if (! is_file($headPath)) {
+            return 'unknown';
+        }
+
+        $head = trim((string) file_get_contents($headPath));
+        if (str_starts_with($head, 'ref: ')) {
+            $refPath = base_path('.git/'.substr($head, 5));
+
+            return is_file($refPath) ? substr(trim((string) file_get_contents($refPath)), 0, 7) : 'unknown';
+        }
+
+        return substr($head, 0, 7);
     }
 }

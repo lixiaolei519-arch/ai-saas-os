@@ -70,6 +70,13 @@ class AdminController extends Controller
         ]);
     }
 
+    public function system(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->system(),
+        ]);
+    }
+
     private function limit(Request $request): int
     {
         $data = $request->validate([

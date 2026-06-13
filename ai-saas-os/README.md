@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.0.1 scope is intentionally limited to the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, deployment readiness, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.1.0 scope adds a React + Ant Design Pro enterprise admin console on top of the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, deployment readiness, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, advanced plugin ecosystems, and complex workflow products are out of scope for v1.0.1.
+Advanced AI autonomous operations, real payment adapters, advanced plugin ecosystems, and complex workflow products are out of scope for v1.1.0.
 
 ## Requirements
 
@@ -11,6 +11,7 @@ Advanced AI autonomous operations, advanced plugin ecosystems, and complex workf
 - MySQL 8.0 or compatible for production
 - SQLite is used by automated tests
 - Nginx with site root pointing to `public`
+- Node.js and npm are required only when rebuilding the React console
 
 ## Local Setup
 
@@ -30,6 +31,33 @@ composer install --no-interaction
 composer audit --no-interaction
 php artisan migrate:fresh --env=testing --force
 php artisan test
+```
+
+Frontend console build:
+
+```bash
+cd frontend/admin-console
+npm install
+npm run build
+```
+
+The React source is in `frontend/admin-console`, and the committed production build is in `public/console`.
+
+## Enterprise Console
+
+- Console URL: `https://ai.js3.cn/console`
+- API URL: `https://ai.js3.cn/api/v1`
+- Frontend source: `frontend/admin-console`
+- Build output: `public/console`
+
+The console is a Vite SPA using React 18, Ant Design, Ant Design ProComponents, React Router, Zustand, and Axios. API requests use `VITE_API_BASE_URL=/api/v1`, store the admin token in `localStorage`, and send `Accept: application/json` plus `Authorization: Bearer <token>`.
+
+Baota servers without Node.js can use the committed `public/console` build directly. After changing frontend source, rebuild it:
+
+```bash
+cd frontend/admin-console
+npm install
+npm run build
 ```
 
 ## Deployment Verification Accounts
@@ -83,6 +111,10 @@ GET /health
 Production checks:
 
 ```bash
+cd frontend/admin-console
+npm install
+npm run build
+cd ../..
 php artisan app:production-check
 php artisan production:check
 php artisan security:prelaunch

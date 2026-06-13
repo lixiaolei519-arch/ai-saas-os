@@ -1,8 +1,8 @@
 # 宝塔面板部署交付包
 
-适用版本：`v1.0.1`
+适用版本：`v1.1.0`
 
-稳定提交：`Release v1.0.1 deployment smoke test`
+稳定提交：`Release v1.1.0 React Ant Design Pro admin console`
 
 本文档用于中国大陆服务器上的宝塔面板部署。仅覆盖部署、配置、权限、初始化、队列、定时任务和上线后 smoke test，不包含任何新业务功能。
 
@@ -14,6 +14,7 @@
 - PHP 8.2 或更高，推荐 PHP 8.3
 - MySQL 8.0
 - Composer
+- Node.js 可选，仅在服务器上重新构建 React 控制台时需要
 - Redis 可选
 - Supervisor 管理器可选但推荐用于队列 worker
 
@@ -61,7 +62,7 @@ PHP 禁用函数检查：
 cd /www/wwwroot
 git clone <your-repository-url> ai-saas-os
 cd /www/wwwroot/ai-saas-os
-git checkout v1.0.0
+git checkout v1.1.0
 ```
 
 如果使用压缩包上传，解压后确认 `artisan`、`composer.json`、`public/index.php` 位于项目根目录内。
@@ -220,6 +221,40 @@ php artisan app:create-demo-users \
 
 ## 9. 缓存和优化命令
 
+React 企业级控制台访问地址：
+
+```text
+https://ai.js3.cn/console
+```
+
+API 地址：
+
+```text
+https://ai.js3.cn/api/v1
+```
+
+React 源码位置：
+
+```text
+frontend/admin-console
+```
+
+构建产物位置：
+
+```text
+public/console
+```
+
+本版本允许提交 `public/console` 构建产物。宝塔服务器如果没有 Node.js，也可以直接使用已提交的 `public/console` 目录访问后台。后续修改前端源码后必须重新构建：
+
+```bash
+cd /www/wwwroot/ai-saas-os/frontend/admin-console
+npm install
+npm run build
+```
+
+构建完成后确认 `public/console/index.html` 存在。
+
 ```bash
 cd /www/wwwroot/ai-saas-os
 php artisan storage:link
@@ -371,7 +406,16 @@ curl -I https://your-domain.example/
 
 期望 HTTP 状态为 `200` 或 `302`。
 
-3. 管理员登录接口：
+3. React 控制台入口可访问：
+
+```bash
+curl -I https://ai.js3.cn/console
+curl -I https://ai.js3.cn/console/dashboard
+```
+
+期望 HTTP 状态为 `200`，并返回 `public/console/index.html`。
+
+4. 管理员登录接口：
 
 `/api/v1/admin/auth/login` 必须使用 `POST`，并且 curl 请求必须带 `Accept: application/json`。
 
@@ -384,7 +428,7 @@ curl -s -X POST https://your-domain.example/api/v1/admin/auth/login \
 
 期望返回 `data.token`。
 
-4. 普通用户登录接口：
+5. 普通用户登录接口：
 
 `/api/v1/auth/login` 必须使用 `POST`，并且 curl 请求必须带 `Accept: application/json`。
 
@@ -397,7 +441,7 @@ curl -s -X POST https://your-domain.example/api/v1/auth/login \
 
 期望返回 `data.token`。
 
-5. 后台统计接口：
+6. 后台统计接口：
 
 ```bash
 curl -s https://your-domain.example/api/v1/admin/stats \
@@ -406,7 +450,7 @@ curl -s https://your-domain.example/api/v1/admin/stats \
 
 期望返回用户数、租户数、订单数等统计字段。
 
-6. 客户门户接口：
+7. 客户门户接口：
 
 ```bash
 curl -s https://your-domain.example/api/v1/portal/orders \
@@ -415,7 +459,7 @@ curl -s https://your-domain.example/api/v1/portal/orders \
 
 期望返回当前客户租户范围内订单列表。
 
-7. 队列 worker：
+8. 队列 worker：
 
 ```bash
 ps aux | grep "queue:work" | grep -v grep
@@ -423,11 +467,11 @@ ps aux | grep "queue:work" | grep -v grep
 
 期望存在运行中的 worker。
 
-8. 定时任务：
+9. 定时任务：
 
 在宝塔计划任务中查看最近一次执行日志，确认没有 PHP 版本或路径错误。
 
-9. Laravel 日志：
+10. Laravel 日志：
 
 ```bash
 tail -n 100 storage/logs/laravel.log
@@ -449,6 +493,8 @@ tail -n 100 storage/logs/laravel.log
 - `BT_PANEL_DEPLOY.md`
 - `.env.production.example`
 - `BT_NGINX_REWRITE.conf`
+- `frontend/admin-console`
+- `public/console`
 - `DEPLOYMENT_PACKAGE.md`
 - `PRODUCTION_CHECKLIST.md`
 - `ROLLBACK_GUIDE.md`

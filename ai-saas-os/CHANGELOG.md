@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.1.0 - 2026-06-14
+
+### Added
+- Added a React 18 + Ant Design Pro enterprise admin console in `frontend/admin-console`.
+- Added Vite production build output under `public/console` for Baota deployments without Node.js.
+- Added `/console/{any?}` Laravel SPA fallback serving `public/console/index.html`.
+- Added admin console pages for login, dashboard, users, tenants, licenses, orders, payment callbacks, marketing channels, commissions, and system status.
+- Added a protected read-only `/api/v1/admin/system` endpoint for console system diagnostics.
+- Extended admin channel and stats responses with read-only fields required by the console.
+- Added Laravel tests covering `/console`, `/console/dashboard`, unaffected `/api/v1/*` routing, and admin system status access.
+
+### Verified
+- `npm install` completed in `frontend/admin-console` with zero npm audit vulnerabilities after dependency overrides.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 28 tests and 359 assertions after the React console changes.
+
 ## v1.0.1 - 2026-06-14
 
 ### Added

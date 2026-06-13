@@ -13,3 +13,7 @@ Route::get('/health', function () {
         'environment' => app()->environment(),
     ]);
 })->name('health');
+
+Route::get('/console/{any?}', function () {
+    return response()->file(public_path('console/index.html'));
+})->where('any', '.*')->name('console');

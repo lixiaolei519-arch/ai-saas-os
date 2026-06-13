@@ -1,13 +1,13 @@
-# Production Checklist v1.0.1
+# Production Checklist v1.1.0
 
-Use this checklist before switching production traffic to `v1.0.1`.
+Use this checklist before switching production traffic to `v1.1.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.0.1`.
-- [ ] Release commit is `Release v1.0.1 deployment smoke test`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.0.1`.
-- [ ] `CHANGELOG.md` contains `v1.0.1`.
+- [ ] Stable release is `v1.1.0`.
+- [ ] Release commit is `Release v1.1.0 React Ant Design Pro admin console`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.1.0`.
+- [ ] `CHANGELOG.md` contains `v1.1.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -45,6 +45,17 @@ Use this checklist before switching production traffic to `v1.0.1`.
 ## Build
 
 - [ ] `composer install --no-dev --optimize-autoloader` completed.
+- [ ] React source exists at `frontend/admin-console`.
+- [ ] React build output exists at `public/console`.
+- [ ] If frontend source changed, rebuild completed:
+
+```bash
+cd frontend/admin-console
+npm install
+npm run build
+```
+
+- [ ] Baota servers without Node.js can serve the committed `public/console` build directly.
 - [ ] `php artisan storage:link` completed.
 - [ ] `php artisan config:cache` completed.
 - [ ] `php artisan route:cache` completed.
@@ -72,6 +83,8 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] `php artisan security:prelaunch` passes.
 - [ ] `php artisan app:production-check` passes.
 - [ ] `GET /health` returns `status=ok`.
+- [ ] `https://ai.js3.cn/console` returns the React console entry.
+- [ ] `https://ai.js3.cn/api/v1` remains the API base path.
 
 ## Smoke Test
 
@@ -84,6 +97,16 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Smoke test output includes `[OK] license verified`.
 - [ ] Smoke test output includes `[OK] commission generated`.
 - [ ] If smoke test fails, the printed `Reason:` and `Suggested fix:` have been resolved before launch.
+
+## Console
+
+- [ ] Console URL is `https://ai.js3.cn/console`.
+- [ ] `/console/login` displays the Chinese administrator login page.
+- [ ] Administrator login succeeds and redirects to `/console/dashboard`.
+- [ ] Dashboard shows users, tenants, License, orders, paid orders, commission amount, today orders, and today users.
+- [ ] Users, tenants, licenses, orders, payments, channels, commissions, and system pages load without API errors.
+- [ ] API requests include `Accept: application/json` and `Authorization: Bearer <token>` after login.
+- [ ] 401 responses redirect back to `/console/login`.
 
 ## Launch Decision
 
