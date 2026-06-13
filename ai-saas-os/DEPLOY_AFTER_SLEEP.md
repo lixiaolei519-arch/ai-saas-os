@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:34:56 +08:00
+Last updated: 2026-06-14 06:40:36 +08:00
 
 ## Run Summary
 
@@ -36,12 +36,12 @@ Last updated: 2026-06-14 06:34:56 +08:00
 
 ### v1.4.0 Queue and Scheduler Foundation
 
-- Status: stable locally, pending release commit and push
-- Commit: pending
+- Status: stable and pushed
+- Commit: `23408908ab0096869892028b7b9102d5e97efd20` (`Release v1.4.0 queue and scheduler foundation`)
 - Tests: `php artisan test` passed with 39 tests / 503 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
 - Added queue readiness command.
@@ -136,7 +136,6 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.4.0 release commit and push are pending.
 - v1.5.0 has not started yet.
 
 ## Risk List

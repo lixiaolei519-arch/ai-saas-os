@@ -125,7 +125,7 @@ Push:
 
 ### v1.4.0 Queue and Scheduler Foundation
 
-Status: stable, pending commit.
+Status: stable and pushed.
 
 Started: 2026-06-14 06:29:12 +08:00
 Completed: 2026-06-14 06:34:56 +08:00
@@ -149,7 +149,10 @@ Quality gate:
 - php artisan test passed with 39 tests and 503 assertions.
 
 Commit:
-- Pending.
+- `23408908ab0096869892028b7b9102d5e97efd20` (`Release v1.4.0 queue and scheduler foundation`)
+
+Push:
+- pushed to GitHub `main` at 2026-06-14 06:40:36 +08:00.
 
 ### v1.5.0 Production Hardening
 
