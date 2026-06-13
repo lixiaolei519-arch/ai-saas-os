@@ -186,7 +186,7 @@ Push:
 
 ### v1.6.0 AI Billing Foundation
 
-Status: stable, pending commit.
+Status: stable and pushed.
 
 Started: 2026-06-14 06:55:15 +08:00
 Completed: 2026-06-14 06:57:20 +08:00
@@ -211,7 +211,10 @@ Quality gate:
 - php artisan test passed with 41 tests and 544 assertions.
 
 Commit:
-- Pending.
+- `ae4171eb26a0ffed45af8c5304c32ab1239c4032` (`Release v1.6.0 ai billing foundation`)
+
+Push:
+- pushed to GitHub `main` at 2026-06-14 06:58:33 +08:00.
 
 ### v1.7.0 Plugin Delivery Foundation
 

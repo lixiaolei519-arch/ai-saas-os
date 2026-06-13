@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:57:20 +08:00
+Last updated: 2026-06-14 06:58:33 +08:00
 
 ## Run Summary
 
@@ -36,12 +36,12 @@ Last updated: 2026-06-14 06:57:20 +08:00
 
 ### v1.6.0 AI Billing Foundation
 
-- Status: stable locally, pending release commit and push
-- Commit: pending
+- Status: stable and pushed
+- Commit: `ae4171eb26a0ffed45af8c5304c32ab1239c4032` (`Release v1.6.0 ai billing foundation`)
 - Tests: `php artisan test` passed with 41 tests / 544 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
 - Added mock AI provider and `/api/v1/ai/mock/completions`.
@@ -166,7 +166,7 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.6.0 has not started yet.
+- v1.7.0 has not started yet.
 
 ## Risk List
 
