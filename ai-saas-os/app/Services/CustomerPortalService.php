@@ -9,6 +9,7 @@ use App\Models\License;
 use App\Models\LicenseActivation;
 use App\Models\MarketingChannel;
 use App\Models\Order;
+use App\Models\PluginInstallation;
 use App\Models\PromotionLink;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -66,6 +67,16 @@ class CustomerPortalService
         return AiAccount::query()
             ->whereIn('tenant_id', $this->tenantIds($user, $tenantId))
             ->with('tenant')
+            ->latest('id')
+            ->get();
+    }
+
+    public function plugins(User $user, ?int $tenantId = null): Collection
+    {
+        return PluginInstallation::query()
+            ->whereIn('tenant_id', $this->tenantIds($user, $tenantId))
+            ->where('status', 'installed')
+            ->with(['tenant', 'plugin.releases.packages', 'release.packages'])
             ->latest('id')
             ->get();
     }

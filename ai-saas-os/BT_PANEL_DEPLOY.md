@@ -631,3 +631,25 @@ Console checks:
 
 - Administrator AI usage: `https://ai.js3.cn/console/ai-usage`
 - Customer AI balance and usage: `https://ai.js3.cn/console/portal/ai-usage`
+
+## v1.7.0 Plugin Delivery Foundation Notes
+
+Release: `Release v1.7.0 plugin delivery foundation`
+
+This version adds plugin delivery visibility and download audit records. It does not execute plugin code on the server.
+
+Console checks:
+
+- Administrator plugin delivery: `https://ai.js3.cn/console/plugins`
+- Administrator plugin downloads: `https://ai.js3.cn/console/plugin-downloads`
+- Customer plugins: `https://ai.js3.cn/console/portal/plugins`
+
+Operational checks:
+
+```bash
+php artisan migrate --force
+php artisan app:production-check
+php artisan app:smoke-test
+```
+
+Confirm that verified plugin download tokens create records in `plugin_download_records` before enabling plugin package delivery for real customers.

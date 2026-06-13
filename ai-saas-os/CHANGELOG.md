@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.7.0 - 2026-06-14
+
+### Added
+- Added plugin download records to persist authorized package download verification events.
+- Added administrator APIs for plugin lists and plugin download records.
+- Added customer portal API for installed/downloadable plugins scoped to the authenticated customer's tenants.
+- Added administrator React pages for plugin upload/version management and plugin download records.
+- Added customer portal React page for downloadable installed plugins.
+- Added tests covering plugin download record generation, administrator visibility, customer portal visibility, and plugin console deep links.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 41 tests and 558 assertions after the plugin delivery foundation changes.
+
 ## v1.6.0 - 2026-06-14
 
 ### Added

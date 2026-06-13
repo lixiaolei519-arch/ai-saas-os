@@ -16,12 +16,15 @@ import ChannelsPage from './pages/ChannelsPage.jsx';
 import CommissionsPage from './pages/CommissionsPage.jsx';
 import SystemPage from './pages/SystemPage.jsx';
 import AiUsagePage from './pages/AiUsagePage.jsx';
+import PluginsPage from './pages/PluginsPage.jsx';
+import PluginDownloadsPage from './pages/PluginDownloadsPage.jsx';
 import PortalDashboardPage from './pages/portal/PortalDashboardPage.jsx';
 import PortalLicensesPage from './pages/portal/PortalLicensesPage.jsx';
 import PortalOrdersPage from './pages/portal/PortalOrdersPage.jsx';
 import PortalReferralsPage from './pages/portal/PortalReferralsPage.jsx';
 import PortalCommissionsPage from './pages/portal/PortalCommissionsPage.jsx';
 import PortalAiUsagePage from './pages/portal/PortalAiUsagePage.jsx';
+import PortalPluginsPage from './pages/portal/PortalPluginsPage.jsx';
 
 function AdminProtected({ children }) {
   const token = useAuthStore((state) => state.token);
@@ -67,6 +70,8 @@ export default function App() {
           <Route path="channels" element={<ChannelsPage />} />
           <Route path="commissions" element={<CommissionsPage />} />
           <Route path="ai-usage" element={<AiUsagePage />} />
+          <Route path="plugins" element={<PluginsPage />} />
+          <Route path="plugin-downloads" element={<PluginDownloadsPage />} />
           <Route path="system" element={<SystemPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
@@ -85,6 +90,7 @@ export default function App() {
           <Route path="referrals" element={<PortalReferralsPage />} />
           <Route path="commissions" element={<PortalCommissionsPage />} />
           <Route path="ai-usage" element={<PortalAiUsagePage />} />
+          <Route path="plugins" element={<PortalPluginsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />

@@ -31,6 +31,7 @@ Route::prefix('v1')->group(function () {
             Route::get('orders', [CustomerPortalController::class, 'orders']);
             Route::get('ai-account', [CustomerPortalController::class, 'aiAccount']);
             Route::get('usage-records', [CustomerPortalController::class, 'usageRecords']);
+            Route::get('plugins', [CustomerPortalController::class, 'plugins']);
             Route::get('promotion-links', [CustomerPortalController::class, 'promotionLinks']);
             Route::get('referrals', [CustomerPortalController::class, 'referrals']);
             Route::get('commissions', [CustomerPortalController::class, 'commissions']);
@@ -50,6 +51,8 @@ Route::prefix('v1')->group(function () {
         Route::get('marketing/channels', [AdminController::class, 'channels']);
         Route::get('marketing/commissions', [AdminController::class, 'commissions']);
         Route::get('ai/usage-records', [AdminController::class, 'aiUsageRecords']);
+        Route::get('plugins', [AdminController::class, 'plugins']);
+        Route::get('plugin-downloads', [AdminController::class, 'pluginDownloadRecords']);
         Route::get('stats', [AdminController::class, 'stats']);
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);

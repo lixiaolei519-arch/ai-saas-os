@@ -1,13 +1,13 @@
-# Production Checklist v1.6.0
+# Production Checklist v1.7.0
 
-Use this checklist before switching production traffic to `v1.6.0`.
+Use this checklist before switching production traffic to `v1.7.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.6.0`.
-- [ ] Release commit is `Release v1.6.0 ai billing foundation`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.6.0`.
-- [ ] `CHANGELOG.md` contains `v1.6.0`.
+- [ ] Stable release is `v1.7.0`.
+- [ ] Release commit is `Release v1.7.0 plugin delivery foundation`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.7.0`.
+- [ ] `CHANGELOG.md` contains `v1.7.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -138,6 +138,8 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Dashboard analytics show today revenue, month revenue, pending orders, trends, status distributions, and recent business activity without errors.
 - [ ] Users, tenants, licenses, orders, payments, channels, commissions, and system pages load without API errors.
 - [ ] Administrator AI usage page `/console/ai-usage` loads without API errors.
+- [ ] Administrator plugin delivery page `/console/plugins` loads without API errors.
+- [ ] Administrator plugin download records page `/console/plugin-downloads` loads without API errors.
 - [ ] API requests include `Accept: application/json` and `Authorization: Bearer <token>` after login.
 - [ ] 401 responses redirect back to `/console/login`.
 - [ ] A customer attempting to open administrator pages sees a `403` page or is blocked before data loads.
@@ -151,6 +153,8 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Customer login succeeds and redirects to `/console/portal/dashboard`.
 - [ ] Customer portal pages show only the logged-in customer's licenses, orders, referral links, and commissions.
 - [ ] Customer portal AI page `/console/portal/ai-usage` shows only the logged-in customer's AI balance and usage records.
+- [ ] Customer portal plugin page `/console/portal/plugins` shows only installed/downloadable plugins for the logged-in customer's tenants.
+- [ ] Plugin download token verification writes a download record before launch approval.
 - [ ] Customer-owned LicenseKey values can be copied from `/console/portal/licenses`.
 - [ ] A normal customer token cannot access `/api/v1/admin/*`.
 - [ ] Guest requests to `/api/v1/portal/*` return JSON `401`.

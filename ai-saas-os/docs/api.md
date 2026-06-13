@@ -53,7 +53,7 @@ AI usage checks License validity and balance before charging. The mock completio
 - `POST /plugins/download-tokens/verify`
 - `POST /plugins/updates/check`
 
-Only the foundation API is included in v1.0.0. Advanced plugin marketplace features are intentionally out of scope.
+Only delivery foundation APIs are included. Download token verification creates a download record. Advanced marketplace features and plugin code execution are intentionally out of scope.
 
 ## Workflow Foundation
 
@@ -93,6 +93,8 @@ Only basic event, condition, action, log, and retry behavior is included in v1.0
 - `GET /admin/marketing/channels`
 - `GET /admin/marketing/commissions`
 - `GET /admin/ai/usage-records`
+- `GET /admin/plugins`
+- `GET /admin/plugin-downloads`
 - `GET /admin/stats`
 
 Admin routes require an authenticated admin token.
@@ -103,6 +105,7 @@ Admin routes require an authenticated admin token.
 - `GET /portal/orders`
 - `GET /portal/ai-account`
 - `GET /portal/usage-records`
+- `GET /portal/plugins`
 - `GET /portal/promotion-links`
 - `GET /portal/commissions`
 - `POST /portal/renewals`

@@ -40,6 +40,9 @@ class ConsoleSpaTest extends TestCase
         $this->get('/console/portal/ai-usage')
             ->assertOk();
 
+        $this->get('/console/portal/plugins')
+            ->assertOk();
+
         $this->assertStringContainsString(
             '/console/assets/',
             (string) file_get_contents(public_path('console/index.html'))
@@ -52,6 +55,12 @@ class ConsoleSpaTest extends TestCase
             ->assertOk();
 
         $this->get('/console/ai-usage')
+            ->assertOk();
+
+        $this->get('/console/plugins')
+            ->assertOk();
+
+        $this->get('/console/plugin-downloads')
             ->assertOk();
 
         $this->get('/console/missing-page')

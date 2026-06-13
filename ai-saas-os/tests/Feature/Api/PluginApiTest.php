@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class PluginApiTest extends TestCase
@@ -72,7 +74,15 @@ class PluginApiTest extends TestCase
         ])
             ->assertOk()
             ->assertJsonPath('data.authorized', true)
-            ->assertJsonPath('data.package.size_bytes', 1500);
+            ->assertJsonPath('data.package.size_bytes', 1500)
+            ->assertJsonPath('data.download_record.status', 'authorized');
+
+        $this->assertDatabaseHas('plugin_download_records', [
+            'tenant_id' => $tenant['id'],
+            'plugin_id' => $plugin['id'],
+            'plugin_release_id' => $release['id'],
+            'status' => 'authorized',
+        ]);
 
         $this->postJson('/api/v1/plugins/updates/check', [
             'plugin_id' => $plugin['id'],
@@ -81,6 +91,35 @@ class PluginApiTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.update_available', true)
             ->assertJsonPath('data.latest_release.version', '1.1.0');
+
+        $admin = User::create([
+            'name' => 'Plugin Admin',
+            'email' => 'plugin-admin@example.com',
+            'password' => 'password123',
+            'status' => 'active',
+            'is_admin' => true,
+        ]);
+
+        $this->getJson('/api/v1/admin/plugins', $this->bearerHeaders($admin->createToken('admin')->plainTextToken))
+            ->assertOk()
+            ->assertJsonFragment(['slug' => 'invoice-exporter']);
+
+        $this->getJson('/api/v1/admin/plugin-downloads', $this->bearerHeaders($admin->createToken('admin-downloads')->plainTextToken))
+            ->assertOk()
+            ->assertJsonFragment(['status' => 'authorized'])
+            ->assertJsonFragment(['version' => '1.1.0']);
+        $this->flushHeaders();
+        Auth::forgetGuards();
+
+        $login = $this->postJson('/api/v1/auth/login', [
+            'email' => 'plugin-owner@example.com',
+            'password' => 'password123',
+        ])->assertOk()->json('data');
+
+        $this->getJson('/api/v1/portal/plugins', $this->bearerHeaders($login['token']))
+            ->assertOk()
+            ->assertJsonFragment(['status' => 'installed'])
+            ->assertJsonFragment(['slug' => 'invoice-exporter']);
     }
 
     public function test_plugin_download_requires_valid_license(): void
@@ -117,5 +156,12 @@ class PluginApiTest extends TestCase
         $this->assertDatabaseMissing('plugin_download_tokens', [
             'tenant_id' => $tenant['id'],
         ]);
+    }
+
+    private function bearerHeaders(string $token): array
+    {
+        return [
+            'Authorization' => 'Bearer '.$token,
+        ];
     }
 }

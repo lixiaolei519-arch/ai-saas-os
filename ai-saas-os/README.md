@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.6.0 scope adds AI billing foundation visibility on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.7.0 scope adds plugin delivery foundation visibility on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, live payment fund capture, real model-provider calls, advanced plugin ecosystems, and complex workflow products are out of scope for v1.6.0.
+Advanced AI autonomous operations, live payment fund capture, real model-provider calls, advanced plugin ecosystems, plugin code execution, and complex workflow products are out of scope for v1.7.0.
 
 ## Requirements
 
@@ -62,7 +62,11 @@ The administrator dashboard uses `/api/v1/admin/dashboard` for operational analy
 
 The administrator console also includes `/console/ai-usage`, backed by `/api/v1/admin/ai/usage-records`, for read-only AI usage records.
 
+The administrator console includes `/console/plugins` for plugin package/version management and `/console/plugin-downloads` for authorized download records.
+
 The customer portal includes `/console/portal/ai-usage`, backed by `/api/v1/portal/ai-account` and `/api/v1/portal/usage-records`, for AI balance and usage visibility.
+
+The customer portal includes `/console/portal/plugins`, backed by `/api/v1/portal/plugins`, for installed/downloadable plugins scoped to the logged-in customer's tenants.
 
 Baota servers without Node.js can use the committed `public/console` build directly. After changing frontend source, rebuild it:
 
@@ -113,6 +117,21 @@ POST /api/v1/ai/mock/completions
 ```
 
 The mock provider estimates token usage, validates the License, checks balance and token quota, writes an AI usage record, writes a ledger transaction, and returns a simulated response. It does not call OpenAI, Claude, Gemini, or any external model provider, and no real model API key is required or stored.
+
+## Plugin Delivery
+
+The plugin delivery foundation uses plugin metadata, releases, package records, installations, download tokens, and download records. It does not execute uploaded plugin code.
+
+Administrator pages:
+
+- `/console/plugins`
+- `/console/plugin-downloads`
+
+Customer portal page:
+
+- `/console/portal/plugins`
+
+Download token verification creates a `plugin_download_records` row so administrators can audit authorized package access.
 
 ## Commercial Flow
 

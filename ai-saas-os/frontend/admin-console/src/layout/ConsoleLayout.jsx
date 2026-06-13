@@ -30,6 +30,8 @@ const menuItems = [
   { key: '/console/channels', icon: <AppstoreOutlined />, label: '渠道管理' },
   { key: '/console/commissions', icon: <DollarOutlined />, label: '佣金管理' },
   { key: '/console/ai-usage', icon: <ApiOutlined />, label: 'AI 用量' },
+  { key: '/console/plugins', icon: <AppstoreOutlined />, label: '插件交付' },
+  { key: '/console/plugin-downloads', icon: <AuditOutlined />, label: '插件下载' },
   { key: '/console/system', icon: <SettingOutlined />, label: '系统状态' },
 ];
 

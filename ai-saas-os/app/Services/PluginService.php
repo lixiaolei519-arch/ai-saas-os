@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Plugin;
+use App\Models\PluginDownloadRecord;
 use App\Models\PluginDownloadToken;
 use App\Models\PluginInstallation;
 use App\Models\PluginPackage;
@@ -188,12 +189,45 @@ class PluginService
         }
 
         $downloadToken->update(['used_at' => now()]);
+        $package = $downloadToken->release->packages->first();
+        $record = PluginDownloadRecord::create([
+            'tenant_id' => $downloadToken->tenant_id,
+            'plugin_id' => $downloadToken->release->plugin_id,
+            'plugin_release_id' => $downloadToken->plugin_release_id,
+            'plugin_package_id' => $package?->id,
+            'plugin_download_token_id' => $downloadToken->id,
+            'status' => 'authorized',
+            'metadata' => [
+                'source' => 'download_token_verify',
+            ],
+            'downloaded_at' => now(),
+        ]);
 
         return [
             'authorized' => true,
             'release' => $downloadToken->release,
-            'package' => $downloadToken->release->packages->first(),
+            'package' => $package,
+            'download_record' => $record,
         ];
+    }
+
+    public function availableForTenants(array $tenantIds): \Illuminate\Database\Eloquent\Collection
+    {
+        return PluginInstallation::query()
+            ->whereIn('tenant_id', $tenantIds)
+            ->where('status', 'installed')
+            ->with(['tenant', 'plugin.releases.packages', 'release.packages'])
+            ->latest('id')
+            ->get();
+    }
+
+    public function downloadRecords(int $limit = 50): \Illuminate\Database\Eloquent\Collection
+    {
+        return PluginDownloadRecord::query()
+            ->with(['tenant', 'plugin', 'release', 'package'])
+            ->latest('id')
+            ->limit($limit)
+            ->get();
     }
 
     public function checkUpdate(array $data): array

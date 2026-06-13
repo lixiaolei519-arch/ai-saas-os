@@ -8,6 +8,8 @@ use App\Models\License;
 use App\Models\MarketingChannel;
 use App\Models\Order;
 use App\Models\PaymentCallback;
+use App\Models\Plugin;
+use App\Models\PluginDownloadRecord;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -93,6 +95,24 @@ class AdminService
             ->get();
     }
 
+    public function plugins(int $limit = 50): Collection
+    {
+        return Plugin::query()
+            ->with('releases.packages')
+            ->latest('id')
+            ->limit($limit)
+            ->get();
+    }
+
+    public function pluginDownloadRecords(int $limit = 50): Collection
+    {
+        return PluginDownloadRecord::query()
+            ->with(['tenant', 'plugin', 'release', 'package'])
+            ->latest('id')
+            ->limit($limit)
+            ->get();
+    }
+
     public function stats(): array
     {
         return [
@@ -110,6 +130,8 @@ class AdminService
             'ai_usage_records_count' => AiUsageRecord::count(),
             'ai_tokens_used' => AiUsageRecord::sum('total_tokens'),
             'ai_cost_amount' => AiUsageRecord::sum('total_cost_amount'),
+            'plugins_count' => Plugin::count(),
+            'plugin_download_records_count' => PluginDownloadRecord::count(),
         ];
     }
 

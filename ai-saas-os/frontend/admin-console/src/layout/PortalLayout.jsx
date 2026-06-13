@@ -1,5 +1,6 @@
 import {
   ApiOutlined,
+  AppstoreOutlined,
   DashboardOutlined,
   DollarOutlined,
   LinkOutlined,
@@ -22,6 +23,7 @@ const menuItems = [
   { key: '/console/portal/referrals', icon: <LinkOutlined />, label: '我的推广' },
   { key: '/console/portal/commissions', icon: <DollarOutlined />, label: '我的佣金' },
   { key: '/console/portal/ai-usage', icon: <ApiOutlined />, label: 'AI 余额' },
+  { key: '/console/portal/plugins', icon: <AppstoreOutlined />, label: '我的插件' },
 ];
 
 export default function PortalLayout() {

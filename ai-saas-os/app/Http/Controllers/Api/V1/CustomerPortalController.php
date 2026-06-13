@@ -76,6 +76,14 @@ class CustomerPortalController extends Controller
         );
     }
 
+    public function plugins(Request $request): JsonResponse
+    {
+        return $this->paginated(
+            $this->portalService->plugins($request->user(), $this->tenantId($request)),
+            $request
+        );
+    }
+
     public function referrals(Request $request): JsonResponse
     {
         return $this->promotionLinks($request);

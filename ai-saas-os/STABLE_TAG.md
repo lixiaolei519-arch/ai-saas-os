@@ -1,6 +1,6 @@
 # Stable Tag
 
-Current stable version: v1.6.0
+Current stable version: v1.7.0
 
 Date: 2026-06-14
 
@@ -11,7 +11,7 @@ Quality gate:
 - composer audit: passed, no security advisories
 - php artisan migrate:fresh --env=testing --force: passed
 - php artisan db:seed --env=testing --force: passed
-- php artisan test: passed, 41 tests / 544 assertions
+- php artisan test: passed, 41 tests / 558 assertions
 
 Notes:
-- v1.6.0 is the AI billing foundation release: the app now has a mock AI provider, AI completion billing through the existing ledger, administrator AI usage visibility, and customer portal AI balance visibility without real model API credentials.
+- v1.7.0 is the plugin delivery foundation release: the app now records authorized plugin downloads, exposes plugin delivery visibility to administrators, and shows installed/downloadable plugins in the customer portal without executing plugin code.

@@ -70,6 +70,20 @@ class AdminController extends Controller
         ]);
     }
 
+    public function plugins(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->plugins($this->limit($request)),
+        ]);
+    }
+
+    public function pluginDownloadRecords(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->pluginDownloadRecords($this->limit($request)),
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([

@@ -218,7 +218,37 @@ Push:
 
 ### v1.7.0 Plugin Delivery Foundation
 
-Status: next.
+Status: stable, pending commit.
+
+Started: 2026-06-14 07:02:48 +08:00
+Completed: 2026-06-14 07:04:07 +08:00
 
 Scope:
 - Plugin delivery, versioning, package metadata, authorized downloads, customer download visibility, and download records without executing plugin code.
+
+Progress:
+- Added plugin download records migration and model.
+- Added download record creation when download tokens are verified.
+- Added administrator plugin and plugin download APIs.
+- Added customer portal installed/downloadable plugin API.
+- Added React admin plugin delivery and download record pages.
+- Added React customer portal plugin page.
+- Rebuilt `public/console` production assets.
+
+Quality gate:
+- npm install completed in `frontend/admin-console`.
+- npm run build completed and generated a committed `public/console` build.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 41 tests and 558 assertions.
+
+Commit:
+- Pending.
+
+### v1.8.0 Workflow Automation Foundation
+
+Status: next.
+
+Scope:
+- Event-driven workflow tables, supported business events, action execution records, admin workflow visibility, and internal-only automation without calling external services.
