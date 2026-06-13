@@ -1,6 +1,6 @@
 # Stable Tag
 
-Current stable version: v1.1.2
+Current stable version: v1.2.0
 
 Date: 2026-06-14
 
@@ -11,7 +11,7 @@ Quality gate:
 - composer audit: passed, no security advisories
 - php artisan migrate:fresh --env=testing --force: passed
 - php artisan db:seed --env=testing --force: passed
-- php artisan test: passed, 34 tests / 401 assertions
+- php artisan test: passed, 37 tests / 436 assertions
 
 Notes:
-- v1.1.2 is the console permissions and UX hardening release: the existing frontend/admin-console Vite SPA now includes stronger role-aware route guards, dedicated 403 and 404 pages, unified API error handling, header version/Git/build metadata, and consistent table search/pagination behavior.
+- v1.2.0 is the payment adapter foundation release: the backend now has mock, WeChat Pay, and Alipay adapter structure, explicit unconfigured payloads for real payment channels, amount mismatch rejection, duplicate callback idempotency, and commission idempotency.

@@ -81,7 +81,7 @@ class CustomerPortalController extends Controller
             'tenant_id' => ['required', 'integer', 'exists:tenants,id'],
             'product_plan_id' => ['required', 'integer', 'exists:product_plans,id'],
             'quantity' => ['nullable', 'integer', 'min:1', 'max:1000'],
-            'payment_channel' => ['required', Rule::in(['wechat', 'alipay'])],
+            'payment_channel' => ['required', Rule::in(['mock', 'wechat', 'alipay'])],
         ]);
 
         return response()->json([

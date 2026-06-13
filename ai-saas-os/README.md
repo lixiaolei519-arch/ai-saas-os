@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.1.2 scope hardens the React console experience on top of the launchable foundation: users, tenants, License authorization, orders, simulated payment callbacks, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.2.0 scope adds the payment adapter foundation on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, real payment adapters, advanced plugin ecosystems, and complex workflow products are out of scope for v1.1.2.
+Advanced AI autonomous operations, live payment fund capture, advanced plugin ecosystems, and complex workflow products are out of scope for v1.2.0.
 
 ## Requirements
 
@@ -85,6 +85,16 @@ php artisan app:smoke-test
 ```
 
 The command verifies database connectivity, key tables, `/health`, administrator and customer demo accounts, customer login, customer portal API access, customer data isolation, administrator API access, `/console/index.html`, order creation, simulated payment callback, automatic License provisioning, LicenseKey readback, License verification, promotion attribution, and commission generation. On failure it prints the failed step, reason, and suggested fix.
+
+## Payment Adapters
+
+Payment channels are handled through adapter classes under `app/Services/Payments`:
+
+- `mock`: local HMAC mock payment adapter for testing and deployment verification
+- `wechat`: WeChat Pay adapter structure with explicit unconfigured payloads until real credentials are set
+- `alipay`: Alipay adapter structure with explicit unconfigured payloads until real credentials are set
+
+Set `PAYMENT_PROVIDER=mock` until production payment credentials are ready. Missing WeChat Pay or Alipay credentials do not crash order creation; their payment request payloads include a clear `*_unconfigured` error. Payment callbacks validate signatures, reject amount mismatches, and ignore duplicate paid callbacks without opening a second License or creating duplicate commissions.
 
 ## Commercial Flow
 

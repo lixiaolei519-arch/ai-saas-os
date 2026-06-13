@@ -13,7 +13,7 @@ class PaymentCallbackController extends Controller
     public function store(string $channel, Request $request, PaymentService $paymentService): JsonResponse
     {
         validator(['channel' => $channel], [
-            'channel' => ['required', Rule::in(['wechat', 'alipay'])],
+            'channel' => ['required', Rule::in(['mock', 'wechat', 'alipay'])],
         ])->validate();
 
         $payload = $request->validate([

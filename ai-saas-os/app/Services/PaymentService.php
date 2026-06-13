@@ -59,6 +59,29 @@ class PaymentService
             $paid = in_array($payload['trade_status'] ?? null, ['SUCCESS', 'TRADE_SUCCESS', 'paid'], true);
 
             if ($paid) {
+                if (isset($payload['amount_cents']) && (int) $payload['amount_cents'] !== (int) $payment->amount_cents) {
+                    $callback->update([
+                        'status' => 'rejected',
+                        'error_message' => 'amount_mismatch',
+                    ]);
+
+                    return $callback->fresh(['payment']);
+                }
+
+                $payment->load('order');
+                if ($payment->status === 'paid' || $payment->order?->status === 'paid') {
+                    $payment->update([
+                        'provider_trade_no' => $payload['provider_trade_no'] ?? $payment->provider_trade_no,
+                        'callback_payload' => $payload,
+                    ]);
+                    $callback->update([
+                        'status' => 'processed',
+                        'error_message' => 'duplicate_callback_ignored',
+                    ]);
+
+                    return $callback->fresh(['payment']);
+                }
+
                 $payment->update([
                     'provider_trade_no' => $payload['provider_trade_no'] ?? $payment->provider_trade_no,
                     'status' => 'paid',
@@ -70,15 +93,16 @@ class PaymentService
                     'status' => 'paid',
                     'paid_at' => now(),
                 ]);
+                $paidOrder = $payment->order()->firstOrFail();
 
-                $this->auditService->record('payment.paid', $payment->order->tenant_id, $payment->order->user_id, $payment);
-                $this->workflowService->triggerEvent($payment->order->tenant_id, 'order.paid', [
-                    'order_id' => $payment->order_id,
+                $this->auditService->record('payment.paid', $paidOrder->tenant_id, $paidOrder->user_id, $payment);
+                $this->workflowService->triggerEvent($paidOrder->tenant_id, 'order.paid', [
+                    'order_id' => $paidOrder->id,
                     'payment_id' => $payment->id,
                     'channel' => $payment->channel,
                 ]);
-                $this->provisionLicenseForOrder($payment->order);
-                $this->marketingService->calculateCommissionForOrder($payment->order);
+                $this->provisionLicenseForOrder($paidOrder);
+                $this->marketingService->calculateCommissionForOrder($paidOrder);
                 $callback->update(['status' => 'processed']);
             }
 

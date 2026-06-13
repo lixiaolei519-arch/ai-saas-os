@@ -18,7 +18,7 @@ class OrderController extends Controller
             'product_plan_id' => ['required', 'integer', 'exists:product_plans,id'],
             'quantity' => ['nullable', 'integer', 'min:1'],
             'discount_cents' => ['nullable', 'integer', 'min:0'],
-            'payment_channel' => ['required', Rule::in(['wechat', 'alipay'])],
+            'payment_channel' => ['required', Rule::in(['mock', 'wechat', 'alipay'])],
             'metadata' => ['nullable', 'array'],
         ]);
 

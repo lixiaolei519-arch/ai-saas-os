@@ -2,15 +2,6 @@
 
 namespace App\Services\Payments;
 
-class WeChatPayGateway extends AbstractHmacGateway
+class WeChatPayGateway extends WechatPayAdapter
 {
-    public function channel(): string
-    {
-        return 'wechat';
-    }
-
-    protected function secret(): string
-    {
-        return (string) config('payments.channels.wechat.webhook_secret');
-    }
 }

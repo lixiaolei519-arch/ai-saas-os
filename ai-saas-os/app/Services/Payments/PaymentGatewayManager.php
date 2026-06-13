@@ -13,8 +13,9 @@ class PaymentGatewayManager
     private function gateways(): array
     {
         return [
-            'wechat' => app(WeChatPayGateway::class),
-            'alipay' => app(AlipayGateway::class),
+            'mock' => app(MockPayAdapter::class),
+            'wechat' => app(WechatPayAdapter::class),
+            'alipay' => app(AlipayAdapter::class),
         ];
     }
 

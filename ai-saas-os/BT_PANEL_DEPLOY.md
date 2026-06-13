@@ -1,8 +1,8 @@
 # 宝塔面板部署交付包
 
-适用版本：`v1.1.2`
+适用版本：`v1.2.0`
 
-稳定提交：`Release v1.1.2 console permissions and UX hardening`
+稳定提交：`Release v1.2.0 payment adapter foundation`
 
 本文档用于中国大陆服务器上的宝塔面板部署。仅覆盖部署、配置、权限、初始化、队列、定时任务和上线后 smoke test，不包含任何新业务功能。
 
@@ -62,7 +62,7 @@ PHP 禁用函数检查：
 cd /www/wwwroot
 git clone <your-repository-url> ai-saas-os
 cd /www/wwwroot/ai-saas-os
-git checkout v1.1.2
+git checkout v1.2.0
 ```
 
 如果使用压缩包上传，解压后确认 `artisan`、`composer.json`、`public/index.php` 位于项目根目录内。
@@ -95,6 +95,8 @@ ALIPAY_WEBHOOK_SECRET=replace-with-real-alipay-webhook-secret
 ```
 
 真实微信/支付宝密钥未准备好时，只允许在测试或预发布环境继续使用模拟 HMAC 回调密钥。生产流量前必须替换。
+
+v1.2.0 默认使用 `PAYMENT_PROVIDER=mock`。如果微信/支付宝真实密钥未配置，订单创建不会崩溃，但支付参数会返回 `wechat_pay_unconfigured` 或 `alipay_unconfigured`，用于提示继续使用 mock 支付或补齐真实密钥。不要在未完成商户、证书、私钥和回调密钥配置前切换真实支付流量。
 
 ## 5. 宝塔 Nginx 伪静态规则
 

@@ -1,5 +1,27 @@
 # Changelog
 
+## v1.2.0 - 2026-06-14
+
+### Added
+- Added payment adapter classes for mock payment, WeChat Pay, and Alipay.
+- Added `PAYMENT_PROVIDER`, mock payment secret, WeChat Pay merchant/certificate/key/API v3 configuration placeholders, and Alipay private/public key placeholders.
+- Added explicit unconfigured payment payloads for WeChat Pay and Alipay when real credentials are missing.
+- Added `mock` as a first-class payment channel for orders and payment callbacks.
+- Added automated coverage for mock payment provisioning, unconfigured real payment adapters, amount mismatch rejection, and duplicate callback idempotency.
+
+### Changed
+- Hardened payment callback processing so amount mismatches are rejected before License provisioning.
+- Duplicate paid callbacks are now acknowledged without re-opening Licenses, re-running workflows, or duplicating commissions.
+- Commission generation now remains idempotent for an order.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 37 tests and 436 assertions after the payment adapter foundation changes.
+
 ## v1.1.2 - 2026-06-14
 
 ### Added

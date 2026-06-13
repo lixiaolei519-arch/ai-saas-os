@@ -9,6 +9,11 @@ abstract class AbstractHmacGateway implements PaymentGateway
 {
     public function buildPayParams(Payment $payment): array
     {
+        return $this->basePayParams($payment);
+    }
+
+    protected function basePayParams(Payment $payment): array
+    {
         return [
             'channel' => $this->channel(),
             'out_trade_no' => $payment->out_trade_no,
@@ -46,6 +51,29 @@ abstract class AbstractHmacGateway implements PaymentGateway
     protected function signature(array $parts): string
     {
         return hash_hmac('sha256', implode('|', $parts), $this->secret());
+    }
+
+    protected function unconfiguredPayParams(Payment $payment, string $code, string $message, array $required): array
+    {
+        return array_merge($this->basePayParams($payment), [
+            'configured' => false,
+            'error' => [
+                'code' => $code,
+                'message' => $message,
+                'required' => $required,
+            ],
+        ]);
+    }
+
+    protected function hasConfigValues(array $values): bool
+    {
+        foreach ($values as $value) {
+            if (! filled($value)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     abstract protected function secret(): string;

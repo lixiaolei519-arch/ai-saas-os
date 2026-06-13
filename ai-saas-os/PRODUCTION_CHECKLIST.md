@@ -1,13 +1,13 @@
-# Production Checklist v1.1.2
+# Production Checklist v1.2.0
 
-Use this checklist before switching production traffic to `v1.1.2`.
+Use this checklist before switching production traffic to `v1.2.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.1.2`.
-- [ ] Release commit is `Release v1.1.2 console permissions and UX hardening`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.1.2`.
-- [ ] `CHANGELOG.md` contains `v1.1.2`.
+- [ ] Stable release is `v1.2.0`.
+- [ ] Release commit is `Release v1.2.0 payment adapter foundation`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.2.0`.
+- [ ] `CHANGELOG.md` contains `v1.2.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -31,6 +31,11 @@ Use this checklist before switching production traffic to `v1.1.2`.
 - [ ] `APP_URL` uses the production HTTPS domain.
 - [ ] Database credentials are production credentials.
 - [ ] Payment callback secrets are no longer placeholder values.
+- [ ] `PAYMENT_PROVIDER=mock` is used until real WeChat Pay or Alipay credentials are complete.
+- [ ] If real WeChat Pay is enabled, `WECHAT_PAY_MCH_ID`, `WECHAT_PAY_APP_ID`, `WECHAT_PAY_CERT_PATH`, `WECHAT_PAY_KEY_PATH`, `WECHAT_PAY_API_V3_KEY`, and `WECHAT_PAY_WEBHOOK_SECRET` are configured.
+- [ ] If real Alipay is enabled, `ALIPAY_APP_ID`, `ALIPAY_PRIVATE_KEY`, `ALIPAY_PUBLIC_KEY`, and `ALIPAY_WEBHOOK_SECRET` are configured.
+- [ ] Duplicate payment callbacks do not create duplicate Licenses or commission records.
+- [ ] Amount-mismatch payment callbacks are rejected before business provisioning.
 - [ ] Deployment verification accounts are created with `php artisan app:create-demo-users`.
 - [ ] No real production passwords are stored in documentation or the repository.
 

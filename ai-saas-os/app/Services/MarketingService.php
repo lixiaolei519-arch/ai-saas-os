@@ -140,6 +140,13 @@ class MarketingService
             return null;
         }
 
+        $existing = CommissionRecord::where('order_id', $order->id)
+            ->where('promotion_attribution_id', $attribution->id)
+            ->first();
+        if ($existing) {
+            return $existing;
+        }
+
         $commission = CommissionRecord::create([
             'tenant_id' => $order->tenant_id,
             'marketing_channel_id' => $channel->id,

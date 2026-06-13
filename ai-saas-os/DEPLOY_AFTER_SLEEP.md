@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:17:07 +08:00
+Last updated: 2026-06-14 06:22:38 +08:00
 
 ## Run Summary
 
@@ -9,7 +9,7 @@ Last updated: 2026-06-14 06:17:07 +08:00
 - Estimated duration: in progress
 - Start version: v1.1.1
 - Current target version: v1.2.0
-- End version: v1.1.2, continuing
+- End version: v1.2.0, continuing
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
 ## Completed Stages
@@ -23,6 +23,22 @@ Last updated: 2026-06-14 06:17:07 +08:00
 - Push: pushed to GitHub `main`
 
 ## Current Stage
+
+### v1.2.0 Payment Adapter Foundation
+
+- Status: stable locally, pending commit hash before push
+- Commit: pending
+- Tests: `php artisan test` passed with 37 tests / 436 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
+- Push: pending
+
+Completed changes so far:
+- Added mock, WeChat Pay, and Alipay adapter structure.
+- Added missing-credential payload errors for real payment adapters.
+- Added mock payment channel support for order creation and callbacks.
+- Added callback amount mismatch rejection.
+- Added duplicate paid-callback idempotency for Licenses and commissions.
 
 ### v1.1.2 Console Permissions and UX Hardening
 
@@ -82,8 +98,8 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.1.2 is complete and pushed.
-- v1.2.0 payment adapter foundation has not started yet.
+- v1.2.0 is complete locally and awaiting Git commit/push.
+- v1.3.0 business dashboard analytics has not started yet.
 
 ## Risk List
 

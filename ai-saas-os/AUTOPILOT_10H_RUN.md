@@ -58,10 +58,40 @@ Push:
 
 ### v1.2.0 Payment Adapter Foundation
 
-Status: next.
+Status: in progress.
+
+Started: 2026-06-14 06:17:07 +08:00
+
+Completed: 2026-06-14 06:22:38 +08:00
 
 Scope:
 - Preserve mock payment behavior.
 - Add payment adapter structure for mock, WeChat Pay, and Alipay.
 - Return clear JSON errors when real payment credentials are missing.
 - Preserve idempotent paid-order License provisioning and commission behavior.
+
+Progress:
+- Added `MockPayAdapter`, `WechatPayAdapter`, and `AlipayAdapter`.
+- Added `mock` payment channel support.
+- Added unconfigured real-payment payloads instead of external calls.
+- Added amount mismatch and duplicate callback protections.
+- Added focused v1.2.0 payment adapter tests.
+
+Quality gate:
+- npm install: passed
+- npm run build: passed
+- composer audit --no-interaction: passed, no security advisories
+- php artisan migrate:fresh --env=testing --force: passed
+- php artisan db:seed --env=testing --force: passed
+- php artisan test: passed, 37 tests / 436 assertions
+
+Commit:
+- Pending.
+
+### v1.3.0 Business Dashboard Analytics
+
+Status: next.
+
+Scope:
+- Expand dashboard statistics into operational analytics.
+- Add revenue/order trends, status distributions, and recent business activity.
