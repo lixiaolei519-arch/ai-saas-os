@@ -74,6 +74,14 @@ Safe command:
 
 - `php artisan operations:generate-drafts`
 
+## Product Factory
+
+Product Factory v2.2.0 is internal simulation only. It creates product templates, plugin templates, landing page templates, pricing package templates, License package templates, generated product drafts, launch checklists, and Codex prompt drafts. It does not create real external websites or automatically sell products.
+
+Safe command:
+
+- `php artisan product-factory:generate-drafts`
+
 ## Plugin Foundation
 
 - `POST /plugins`
@@ -152,6 +160,12 @@ Only internal event, condition, action, log, and retry behavior is included. Wor
 - `GET /admin/operations/customer-emails`
 - `GET /admin/operations/faq`
 - `GET /admin/operations/partner-recruiting`
+- `GET /admin/product-factory/dashboard`
+- `GET /admin/product-factory/product-templates`
+- `GET /admin/product-factory/plugin-templates`
+- `GET /admin/product-factory/landing-page-templates`
+- `GET /admin/product-factory/package-templates`
+- `GET /admin/product-factory/launch-checklists`
 - `GET /admin/stats`
 
 Admin routes require an authenticated admin token.

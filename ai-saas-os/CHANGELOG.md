@@ -1,5 +1,22 @@
 # Changelog
 
+## v2.2.0 - 2026-06-14
+
+### Added
+- Added Product Factory tables for templates, generated drafts, and launch checklists.
+- Added `ProductFactoryService` and the safe `product-factory:generate-drafts` command.
+- Added administrator APIs for product factory dashboard, product templates, plugin templates, landing page templates, package templates, and launch checklists.
+- Added React administrator pages under `/console/product-factory/*` for Product Factory visibility.
+- Added tests covering draft-only product factory generation, administrator API visibility, customer access blocking, and console deep links.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 53 tests and 756 assertions after the Product Factory changes.
+
 ## v2.1.0 - 2026-06-14
 
 ### Added

@@ -59,6 +59,12 @@ const menuItems = [
   { key: '/console/operations/customer-emails', icon: <RobotOutlined />, label: '客户邮件' },
   { key: '/console/operations/faq', icon: <RobotOutlined />, label: '售后 FAQ' },
   { key: '/console/operations/partner-recruiting', icon: <RobotOutlined />, label: '代理招募' },
+  { key: '/console/product-factory/dashboard', icon: <RobotOutlined />, label: '产品工厂' },
+  { key: '/console/product-factory/product-templates', icon: <RobotOutlined />, label: '产品模板' },
+  { key: '/console/product-factory/plugin-templates', icon: <RobotOutlined />, label: '插件模板' },
+  { key: '/console/product-factory/landing-page-templates', icon: <RobotOutlined />, label: '落地页模板' },
+  { key: '/console/product-factory/package-templates', icon: <RobotOutlined />, label: '套餐模板' },
+  { key: '/console/product-factory/launch-checklists', icon: <RobotOutlined />, label: '发布清单' },
   { key: '/console/system', icon: <SettingOutlined />, label: '系统状态' },
 ];
 

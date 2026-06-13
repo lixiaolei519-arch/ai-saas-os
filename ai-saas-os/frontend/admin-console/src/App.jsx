@@ -50,6 +50,14 @@ import {
   OperationsReportsPage,
   OperationsSeoPlansPage,
 } from './pages/OperationsPages.jsx';
+import {
+  LandingPageTemplatesPage,
+  LaunchChecklistsPage,
+  PackageTemplatesPage,
+  PluginTemplatesPage,
+  ProductFactoryDashboardPage,
+  ProductTemplatesPage,
+} from './pages/ProductFactoryPages.jsx';
 import PortalDashboardPage from './pages/portal/PortalDashboardPage.jsx';
 import PortalLicensesPage from './pages/portal/PortalLicensesPage.jsx';
 import PortalOrdersPage from './pages/portal/PortalOrdersPage.jsx';
@@ -130,6 +138,12 @@ export default function App() {
           <Route path="operations/customer-emails" element={<OperationsCustomerEmailsPage />} />
           <Route path="operations/faq" element={<OperationsFaqPage />} />
           <Route path="operations/partner-recruiting" element={<OperationsPartnerRecruitingPage />} />
+          <Route path="product-factory/dashboard" element={<ProductFactoryDashboardPage />} />
+          <Route path="product-factory/product-templates" element={<ProductTemplatesPage />} />
+          <Route path="product-factory/plugin-templates" element={<PluginTemplatesPage />} />
+          <Route path="product-factory/landing-page-templates" element={<LandingPageTemplatesPage />} />
+          <Route path="product-factory/package-templates" element={<PackageTemplatesPage />} />
+          <Route path="product-factory/launch-checklists" element={<LaunchChecklistsPage />} />
           <Route path="system" element={<SystemPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

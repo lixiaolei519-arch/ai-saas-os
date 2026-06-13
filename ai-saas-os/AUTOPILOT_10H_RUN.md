@@ -388,7 +388,32 @@ Push:
 
 ### v2.2.0 Product Factory Foundation
 
-Status: next.
+Status: stable pending release commit.
+
+Started: 2026-06-14 07:45:59 +08:00
+Completed: 2026-06-14 07:48:26 +08:00
 
 Scope:
 - Safe product factory for product templates, plugin templates, landing page templates, pricing package templates, License package templates, launch checklists, product generation drafts, Codex prompt drafts, and internal tasks. It must not create real external websites or automatically sell products.
+
+Progress:
+- Added product factory template, draft, and launch checklist migration/models.
+- Added service generation for product planning, plugin planning, landing page copy, pricing packages, License rule suggestions, Codex prompt drafts, and launch checklists.
+- Added safe `product-factory:generate-drafts` command.
+- Added administrator product factory APIs.
+- Added React administrator product factory pages and menu entries.
+- Rebuilt `public/console` production assets.
+- Added targeted backend and console deep-link tests.
+
+Quality gate:
+- npm install completed in `frontend/admin-console`.
+- npm run build completed and generated a committed `public/console` build.
+- Targeted `ProductFactoryTest` passed with 3 tests and 29 assertions.
+- Targeted `ConsoleSpaTest` passed with 7 tests and 63 assertions.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 53 tests and 756 assertions.
+
+Commit:
+- Pending release commit.

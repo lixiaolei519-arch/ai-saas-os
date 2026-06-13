@@ -1,6 +1,6 @@
 # Stable Tag
 
-Current stable version: v2.1.0
+Current stable version: v2.2.0
 
 Date: 2026-06-14
 
@@ -11,7 +11,7 @@ Quality gate:
 - composer audit: passed, no security advisories
 - php artisan migrate:fresh --env=testing --force: passed
 - php artisan db:seed --env=testing --force: passed
-- php artisan test: passed, 50 tests / 721 assertions
+- php artisan test: passed, 53 tests / 756 assertions
 
 Notes:
-- v2.1.0 is the Autonomous Operations Center release: the app now stores draft-only operations reports, SEO plans, landing page copy, pricing suggestions, release announcements, customer email drafts, support FAQ, partner recruiting copy, sales lead tasks, customer follow-up tasks, and promotion tasks. It must not send email/SMS, publish pages, buy ads, contact customers, or execute external actions automatically.
+- v2.2.0 is the Product Factory Foundation release: the app now stores product templates, plugin templates, landing page templates, pricing/License package templates, generated product drafts, and launch checklists in simulation mode. It must not create real external websites or automatically sell products.

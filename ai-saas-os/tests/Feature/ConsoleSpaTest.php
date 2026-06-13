@@ -141,6 +141,24 @@ class ConsoleSpaTest extends TestCase
         $this->get('/console/operations/partner-recruiting')
             ->assertOk();
 
+        $this->get('/console/product-factory/dashboard')
+            ->assertOk();
+
+        $this->get('/console/product-factory/product-templates')
+            ->assertOk();
+
+        $this->get('/console/product-factory/plugin-templates')
+            ->assertOk();
+
+        $this->get('/console/product-factory/landing-page-templates')
+            ->assertOk();
+
+        $this->get('/console/product-factory/package-templates')
+            ->assertOk();
+
+        $this->get('/console/product-factory/launch-checklists')
+            ->assertOk();
+
         $this->get('/console/missing-page')
             ->assertOk();
 

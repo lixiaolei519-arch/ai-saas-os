@@ -785,3 +785,31 @@ Safety limits:
 - Keep all generated operations records as draft simulation output.
 - Require manual approval before any outbound content can be used.
 - Do not configure real mail/SMS/ad publishing automation for this release.
+
+## v2.2.0 Product Factory Foundation Notes
+
+Release: `Release v2.2.0 product factory foundation`
+
+This version adds the Product Factory simulation layer. It stores product templates, plugin templates, landing page templates, pricing and License package templates, generated product drafts, Codex prompt drafts, and launch checklists. It must not create real external websites or automatically sell products.
+
+Safe command:
+
+```bash
+cd /www/wwwroot/ai-saas-os
+php artisan product-factory:generate-drafts
+```
+
+Console checks:
+
+- Product factory dashboard: `https://ai.js3.cn/console/product-factory/dashboard`
+- Product templates: `https://ai.js3.cn/console/product-factory/product-templates`
+- Plugin templates: `https://ai.js3.cn/console/product-factory/plugin-templates`
+- Landing page templates: `https://ai.js3.cn/console/product-factory/landing-page-templates`
+- Package templates: `https://ai.js3.cn/console/product-factory/package-templates`
+- Launch checklists: `https://ai.js3.cn/console/product-factory/launch-checklists`
+
+Safety limits:
+
+- Keep all Product Factory records as draft simulation output.
+- Require manual approval before any generated product plan is used.
+- Do not connect this release to external site builders, payment launchers, or automatic sales flows.

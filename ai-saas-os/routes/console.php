@@ -12,6 +12,7 @@ use App\Services\LicenseService;
 use App\Services\MarketingService;
 use App\Services\OrderService;
 use App\Services\PaymentService;
+use App\Services\ProductFactoryService;
 use App\Services\SelfEvolutionService;
 use App\Services\TenantService;
 use Illuminate\Foundation\Inspiring;
@@ -411,6 +412,17 @@ Artisan::command('operations:generate-drafts', function () {
 
     return 0;
 })->purpose('Generate draft-only autonomous operations content and tasks');
+
+Artisan::command('product-factory:generate-drafts', function () {
+    $result = app(ProductFactoryService::class)->generateDrafts();
+
+    $this->line('[OK] product factory templates generated: '.$result['templates']->count());
+    $this->line('[OK] product factory drafts generated: '.$result['drafts']->count());
+    $this->line('[OK] launch checklist generated: '.$result['launch_checklist']->id);
+    $this->line('[OK] no external website or automatic sale created');
+
+    return 0;
+})->purpose('Generate draft-only product factory templates, plans, and checklists');
 
 Artisan::command('app:smoke-test', function () {
     $failed = false;

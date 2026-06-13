@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v2.1.0 scope adds a safe Autonomous Operations Center on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, self-evolution scans/scores/plans/reviews/suggestions, draft-only operations records, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v2.2.0 scope adds a safe Product Factory foundation on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, self-evolution scans/scores/plans/reviews/suggestions, draft-only operations records, product factory templates/drafts/checklists, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
-Autonomous code execution, production deployment, production pushes, live payment fund capture, real model-provider calls, real email/SMS sending, real ad publishing, real customer contact, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v2.1.0.
+Autonomous code execution, production deployment, production pushes, live payment fund capture, real model-provider calls, real email/SMS sending, real ad publishing, real customer contact, real external website creation, automatic product sales, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v2.2.0.
 
 ## Requirements
 
@@ -71,6 +71,8 @@ The administrator console includes AI Company OS simulation pages: `/console/ai-
 The administrator console includes Self-Evolution Engine pages: `/console/self-evolution/dashboard`, `/console/self-evolution/score`, `/console/self-evolution/plans`, `/console/self-evolution/release-review`, and `/console/self-evolution/suggestions`.
 
 The administrator console includes Autonomous Operations Center pages: `/console/operations/dashboard`, `/console/operations/reports`, `/console/operations/seo-plans`, `/console/operations/landing-pages`, `/console/operations/pricing`, `/console/operations/release-announcements`, `/console/operations/customer-emails`, `/console/operations/faq`, and `/console/operations/partner-recruiting`.
+
+The administrator console includes Product Factory pages: `/console/product-factory/dashboard`, `/console/product-factory/product-templates`, `/console/product-factory/plugin-templates`, `/console/product-factory/landing-page-templates`, `/console/product-factory/package-templates`, and `/console/product-factory/launch-checklists`.
 
 The customer portal includes `/console/portal/ai-usage`, backed by `/api/v1/portal/ai-account` and `/api/v1/portal/usage-records`, for AI balance and usage visibility.
 
@@ -167,6 +169,18 @@ php artisan operations:generate-drafts
 ```
 
 All generated records are `draft`, `simulation_mode=true`, and require manual approval. The command does not send email, send SMS, publish pages, buy ads, contact customers, or execute outbound actions.
+
+## Product Factory
+
+The Product Factory generates draft templates and plans for sellable software, plugins, landing pages, pricing packages, License packages, launch checklists, and Codex development prompts.
+
+Safe command:
+
+```bash
+php artisan product-factory:generate-drafts
+```
+
+All generated records are `draft`, `simulation_mode=true`, and require manual approval. The command does not create real external websites and does not automatically sell products.
 
 ## Plugin Delivery
 

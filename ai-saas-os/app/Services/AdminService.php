@@ -20,6 +20,9 @@ use App\Models\Order;
 use App\Models\PaymentCallback;
 use App\Models\Plugin;
 use App\Models\PluginDownloadRecord;
+use App\Models\ProductFactoryDraft;
+use App\Models\ProductFactoryLaunchChecklist;
+use App\Models\ProductFactoryTemplate;
 use App\Models\SelfEvolutionPlan;
 use App\Models\SelfEvolutionReleaseReview;
 use App\Models\SelfEvolutionScan;
@@ -278,6 +281,36 @@ class AdminService
         return app(AutonomousOperationsService::class)->partnerRecruiting($limit);
     }
 
+    public function productFactoryDashboard(): array
+    {
+        return app(ProductFactoryService::class)->dashboard();
+    }
+
+    public function productFactoryProductTemplates(int $limit = 50): Collection
+    {
+        return app(ProductFactoryService::class)->templates('product', $limit);
+    }
+
+    public function productFactoryPluginTemplates(int $limit = 50): Collection
+    {
+        return app(ProductFactoryService::class)->templates('plugin', $limit);
+    }
+
+    public function productFactoryLandingPageTemplates(int $limit = 50): Collection
+    {
+        return app(ProductFactoryService::class)->templates('landing_page', $limit);
+    }
+
+    public function productFactoryPackageTemplates(int $limit = 50): Collection
+    {
+        return app(ProductFactoryService::class)->packageTemplates($limit);
+    }
+
+    public function productFactoryLaunchChecklists(int $limit = 50): Collection
+    {
+        return app(ProductFactoryService::class)->launchChecklists($limit);
+    }
+
     public function stats(): array
     {
         return [
@@ -315,6 +348,9 @@ class AdminService
             'self_evolution_suggestions_count' => SelfEvolutionSuggestion::count(),
             'autonomous_operation_drafts_count' => AutonomousOperationDraft::count(),
             'autonomous_operation_tasks_count' => AutonomousOperationTask::count(),
+            'product_factory_templates_count' => ProductFactoryTemplate::count(),
+            'product_factory_drafts_count' => ProductFactoryDraft::count(),
+            'product_factory_launch_checklists_count' => ProductFactoryLaunchChecklist::count(),
         ];
     }
 

@@ -273,6 +273,48 @@ class AdminController extends Controller
         ]);
     }
 
+    public function productFactoryDashboard(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->productFactoryDashboard(),
+        ]);
+    }
+
+    public function productFactoryProductTemplates(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->productFactoryProductTemplates($this->limit($request)),
+        ]);
+    }
+
+    public function productFactoryPluginTemplates(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->productFactoryPluginTemplates($this->limit($request)),
+        ]);
+    }
+
+    public function productFactoryLandingPageTemplates(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->productFactoryLandingPageTemplates($this->limit($request)),
+        ]);
+    }
+
+    public function productFactoryPackageTemplates(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->productFactoryPackageTemplates($this->limit($request)),
+        ]);
+    }
+
+    public function productFactoryLaunchChecklists(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->productFactoryLaunchChecklists($this->limit($request)),
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([

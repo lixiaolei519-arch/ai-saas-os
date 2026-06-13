@@ -80,6 +80,12 @@ Route::prefix('v1')->group(function () {
         Route::get('operations/customer-emails', [AdminController::class, 'autonomousOperationCustomerEmails']);
         Route::get('operations/faq', [AdminController::class, 'autonomousOperationFaq']);
         Route::get('operations/partner-recruiting', [AdminController::class, 'autonomousOperationPartnerRecruiting']);
+        Route::get('product-factory/dashboard', [AdminController::class, 'productFactoryDashboard']);
+        Route::get('product-factory/product-templates', [AdminController::class, 'productFactoryProductTemplates']);
+        Route::get('product-factory/plugin-templates', [AdminController::class, 'productFactoryPluginTemplates']);
+        Route::get('product-factory/landing-page-templates', [AdminController::class, 'productFactoryLandingPageTemplates']);
+        Route::get('product-factory/package-templates', [AdminController::class, 'productFactoryPackageTemplates']);
+        Route::get('product-factory/launch-checklists', [AdminController::class, 'productFactoryLaunchChecklists']);
         Route::get('stats', [AdminController::class, 'stats']);
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);

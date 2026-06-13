@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:40:57 +08:00
+Last updated: 2026-06-14 07:48:26 +08:00
 
 ## Run Summary
 
@@ -26,18 +26,19 @@ Last updated: 2026-06-14 07:40:57 +08:00
 
 ### v2.2.0 Product Factory Foundation
 
-- Status: next
+- Status: stable pending release commit
 - Commit: pending
-- Tests: pending
-- Frontend build: pending if React console changes
-- Backend gates: pending
+- Tests: `php artisan test` passed with 53 tests / 756 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
 - Push: pending
 
-Planned scope:
+Completed changes so far:
 - Add product, plugin, landing page, pricing, and License package templates.
 - Add product launch checklist and product generation draft records.
 - Add administrator API and console pages for product factory visibility.
 - Keep all generated content as internal drafts and tasks only.
+- Rebuilt committed React assets in `public/console`.
 
 ## Completed Stages
 
