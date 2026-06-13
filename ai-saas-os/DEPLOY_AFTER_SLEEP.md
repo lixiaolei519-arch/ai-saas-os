@@ -1,15 +1,15 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:53:10 +08:00
+Last updated: 2026-06-14 07:54:16 +08:00
 
 ## Run Summary
 
 - Start time: 2026-06-14 06:09:34 +08:00
-- End time: in progress
-- Estimated duration: in progress
+- End time: 2026-06-14 07:54:16 +08:00
+- Estimated duration: 1 hour 44 minutes 42 seconds
 - Start version: v1.1.1
-- Current target version: v2.3.0
-- End version: in progress
+- Current target version: completed through v2.3.0
+- End version: v2.3.0
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
 ## Baseline Stage
@@ -24,21 +24,52 @@ Last updated: 2026-06-14 07:53:10 +08:00
 
 ## Current Stage
 
+### Run Completed
+
+- Status: completed through v2.3.0
+- Final release commit: `fe3da655b63abaeacf800df193453f96dbc3e366` (`Release v2.3.0 deep quality expansion`)
+- Final tests: `php artisan test` passed with 55 tests / 778 assertions
+- Final backend gates: `composer audit`, testing migration, and testing seed passed
+- Final push: pushed to GitHub `main`
+
+Deployment commands for the server:
+
+```bash
+cd /www/wwwroot/ai-saas-os
+git pull origin main
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force
+php artisan db:seed --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan queue:restart
+php artisan app:production-check
+php artisan app:smoke-test
+```
+
+Manual checks:
+- Confirm `.env` contains production credentials and no real AI/payment keys are committed.
+- Confirm `/health`, `/console/login`, `/console/portal/login`, and `/api/v1/admin/quality/deployment` work after deployment.
+- Confirm all AI Company OS, Self-Evolution, Operations, and Product Factory outputs remain draft/simulation records requiring manual approval.
+- Confirm no real email, SMS, ad publishing, customer contact, external website creation, product selling, production deploy, or production push is triggered by application commands.
+
+## Completed Stages
+
 ### v2.3.0 Deep Quality Expansion
 
-- Status: stable pending release commit
-- Commit: pending
+- Status: stable and pushed
+- Commit: `fe3da655b63abaeacf800df193453f96dbc3e366` (`Release v2.3.0 deep quality expansion`)
 - Tests: `php artisan test` passed with 55 tests / 778 assertions
 - Frontend build: not required, frontend source unchanged
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
 - Added read-only quality version, deployment, and documentation status APIs.
 - Added OpenAPI draft at `docs/openapi-v1.yaml`.
 - Added targeted quality endpoint tests.
 
-## Completed Stages
 
 ### v2.2.0 Product Factory Foundation
 
