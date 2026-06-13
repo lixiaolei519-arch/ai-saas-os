@@ -1,16 +1,20 @@
-# Production Checklist v1.4.0
+# Production Checklist v1.5.0
 
-Use this checklist before switching production traffic to `v1.4.0`.
+Use this checklist before switching production traffic to `v1.5.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.4.0`.
-- [ ] Release commit is `Release v1.4.0 queue and scheduler foundation`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.4.0`.
-- [ ] `CHANGELOG.md` contains `v1.4.0`.
+- [ ] Stable release is `v1.5.0`.
+- [ ] Release commit is `Release v1.5.0 production hardening`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.5.0`.
+- [ ] `CHANGELOG.md` contains `v1.5.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
+- [ ] `docs/deployment/backup-restore.md` exists.
+- [ ] `docs/deployment/github-deployment.md` exists.
+- [ ] `docs/deployment/baota-troubleshooting.md` exists.
+- [ ] `scripts/deploy-bt.sh` exists.
 
 ## Server
 
@@ -30,6 +34,7 @@ Use this checklist before switching production traffic to `v1.4.0`.
 - [ ] `APP_KEY` is generated.
 - [ ] `APP_URL` uses the production HTTPS domain.
 - [ ] Database credentials are production credentials.
+- [ ] `DB_COLLATION=utf8mb4_0900_ai_ci` or an approved MySQL-compatible collation is configured.
 - [ ] Payment callback secrets are no longer placeholder values.
 - [ ] `PAYMENT_PROVIDER=mock` is used until real WeChat Pay or Alipay credentials are complete.
 - [ ] If real WeChat Pay is enabled, `WECHAT_PAY_MCH_ID`, `WECHAT_PAY_APP_ID`, `WECHAT_PAY_CERT_PATH`, `WECHAT_PAY_KEY_PATH`, `WECHAT_PAY_API_V3_KEY`, and `WECHAT_PAY_WEBHOOK_SECRET` are configured.
@@ -92,6 +97,9 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] `php artisan security:prelaunch` passes.
 - [ ] `php artisan app:production-check` passes.
 - [ ] `GET /health` returns `status=ok`.
+- [ ] `php artisan app:production-check` confirms `/console` is accessible.
+- [ ] `php artisan app:production-check` confirms `/api/v1/product-plans` returns JSON.
+- [ ] `php artisan app:production-check` confirms `/.env`, `/.git/config`, and `/composer.json` are not publicly accessible.
 - [ ] `https://ai.js3.cn/console/login` returns the React administrator console entry.
 - [ ] `https://ai.js3.cn/console/portal/login` returns the React customer portal entry.
 - [ ] `https://ai.js3.cn/api/v1` remains the API base path.
@@ -108,6 +116,9 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Smoke test output includes `[OK] customer order api is isolated`.
 - [ ] Smoke test output includes `[OK] admin api accessible`.
 - [ ] Smoke test output includes `[OK] console build exists`.
+- [ ] Smoke test output includes `[OK] console route accessible`.
+- [ ] Smoke test output includes `[OK] api json response`.
+- [ ] Smoke test output includes `[OK] sensitive files inaccessible`.
 - [ ] Smoke test output includes `[OK] order created`.
 - [ ] Smoke test output includes `[OK] mock payment callback`.
 - [ ] Smoke test output includes `[OK] license provisioned`.

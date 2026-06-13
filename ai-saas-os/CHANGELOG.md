@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.5.0 - 2026-06-14
+
+### Added
+- Enhanced `php artisan app:production-check` with checks for `APP_DEBUG=false`, `APP_URL`, `DB_COLLATION`, writable `bootstrap/cache`, `public/console/index.html`, `/console`, public API JSON response, and sensitive file exposure.
+- Enhanced `php artisan app:smoke-test` with console route, API JSON, and sensitive file probes.
+- Added `DB_COLLATION` to `.env.example` and `.env.production.example`.
+- Added Baota backup/restore, GitHub deployment, and Baota troubleshooting documents.
+- Added `scripts/deploy-bt.sh` as a manual Baota deployment script draft.
+- Added test coverage for the production hardening checks and deployment documents.
+
+### Verified
+- Frontend source was not changed; no React rebuild was required for this release.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 39 tests and 519 assertions after the production hardening changes.
+
 ## v1.4.0 - 2026-06-14
 
 ### Added

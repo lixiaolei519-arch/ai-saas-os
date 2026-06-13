@@ -4,10 +4,13 @@ namespace Tests\Feature\Api;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class DeploymentReadinessTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_health_endpoint_reports_ok(): void
     {
         $this->getJson('/health')
@@ -22,9 +25,13 @@ class DeploymentReadinessTest extends TestCase
     public function test_deployment_documents_exist(): void
     {
         $this->assertFileExists(base_path('docs/deployment/baota-production.md'));
+        $this->assertFileExists(base_path('docs/deployment/backup-restore.md'));
+        $this->assertFileExists(base_path('docs/deployment/github-deployment.md'));
+        $this->assertFileExists(base_path('docs/deployment/baota-troubleshooting.md'));
         $this->assertFileExists(base_path('docs/deployment/prelaunch-checklist.md'));
         $this->assertFileExists(base_path('docs/security/prelaunch-security.md'));
         $this->assertFileExists(base_path('docs/api.md'));
+        $this->assertFileExists(base_path('scripts/deploy-bt.sh'));
     }
 
     public function test_production_and_security_check_commands_run(): void
@@ -50,7 +57,9 @@ class DeploymentReadinessTest extends TestCase
     {
         app()->detectEnvironment(fn () => 'production');
         config([
+            'app.debug' => false,
             'app.key' => 'base64:4xgxwIGkfqQ+E0Mkc2U59hmp/TpmZPND2tMVgqktk8s=',
+            'app.url' => 'https://example.test',
             'cache.default' => 'array',
             'database.default' => 'sqlite',
             'queue.default' => 'sync',
@@ -61,10 +70,13 @@ class DeploymentReadinessTest extends TestCase
         File::put($envFile, implode(PHP_EOL, [
             'APP_ENV=production',
             'APP_KEY=base64:4xgxwIGkfqQ+E0Mkc2U59hmp/TpmZPND2tMVgqktk8s=',
+            'APP_DEBUG=false',
             'APP_URL=https://example.test',
             'DB_CONNECTION=sqlite',
             'DB_DATABASE=:memory:',
             'DB_USERNAME=null',
+            'DB_PASSWORD=null',
+            'DB_COLLATION=utf8mb4_0900_ai_ci',
             'QUEUE_CONNECTION=sync',
             'CACHE_STORE=array',
         ]));
@@ -76,12 +88,20 @@ class DeploymentReadinessTest extends TestCase
 
         $this->assertSame(0, $exitCode);
         $this->assertStringContainsString('[PASS] APP_ENV is production', $output);
+        $this->assertStringContainsString('[PASS] APP_DEBUG is false', $output);
         $this->assertStringContainsString('[PASS] APP_KEY exists', $output);
+        $this->assertStringContainsString('[PASS] APP_URL exists', $output);
         $this->assertStringContainsString('[PASS] Database is reachable', $output);
+        $this->assertStringContainsString('[PASS] DB_COLLATION is configured', $output);
         $this->assertStringContainsString('[PASS] Storage is writable', $output);
+        $this->assertStringContainsString('[PASS] Bootstrap cache is writable', $output);
         $this->assertStringContainsString('[PASS] Cache is writable', $output);
+        $this->assertStringContainsString('[PASS] Console build exists', $output);
         $this->assertStringContainsString('[PASS] Queue config exists', $output);
         $this->assertStringContainsString('[PASS] .env required fields exist', $output);
         $this->assertStringContainsString('[PASS] /health is accessible', $output);
+        $this->assertStringContainsString('[PASS] /console route is accessible', $output);
+        $this->assertStringContainsString('[PASS] API JSON response is available', $output);
+        $this->assertStringContainsString('[PASS] Sensitive files are not web accessible', $output);
     }
 }

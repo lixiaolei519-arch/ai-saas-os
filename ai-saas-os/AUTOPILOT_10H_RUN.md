@@ -156,7 +156,34 @@ Push:
 
 ### v1.5.0 Production Hardening
 
-Status: next.
+Status: stable, pending commit.
+
+Started: 2026-06-14 06:44:21 +08:00
+Completed: 2026-06-14 06:47:30 +08:00
 
 Scope:
 - Production diagnostics, deployment hardening, operational checks, and documentation updates within the existing Laravel and React surfaces.
+
+Progress:
+- Enhanced `app:production-check` with production config, console, API JSON, and sensitive-file checks.
+- Enhanced `app:smoke-test` with console route, API JSON, and sensitive-file probes.
+- Added backup/restore, GitHub deployment, and Baota troubleshooting documents.
+- Added manual Baota deployment script draft.
+- Added focused test coverage for the new production hardening checks.
+
+Quality gate:
+- Frontend source was not changed; no React rebuild was required.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 39 tests and 519 assertions.
+
+Commit:
+- Pending.
+
+### v1.6.0 AI Billing Foundation
+
+Status: next.
+
+Scope:
+- AI balance accounts, usage records, billing ledger, mock AI provider, insufficient-balance blocking, and console/portal visibility without real model provider credentials.

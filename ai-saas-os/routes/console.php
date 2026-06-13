@@ -74,10 +74,13 @@ Artisan::command('app:production-check {--env-file= : Optional env file path for
     $requiredEnvKeys = [
         'APP_ENV',
         'APP_KEY',
+        'APP_DEBUG',
         'APP_URL',
         'DB_CONNECTION',
         'DB_DATABASE',
         'DB_USERNAME',
+        'DB_PASSWORD',
+        'DB_COLLATION',
         'QUEUE_CONNECTION',
         'CACHE_STORE',
     ];
@@ -87,7 +90,9 @@ Artisan::command('app:production-check {--env-file= : Optional env file path for
 
     $checks = [
         'APP_ENV is production' => app()->environment('production'),
+        'APP_DEBUG is false' => config('app.debug') === false,
         'APP_KEY exists' => filled(config('app.key')),
+        'APP_URL exists' => filled(config('app.url')) && Str::startsWith(config('app.url'), ['http://', 'https://']),
         'Database is reachable' => function () {
             try {
                 DB::connection()->getPdo();
@@ -98,7 +103,19 @@ Artisan::command('app:production-check {--env-file= : Optional env file path for
                 return false;
             }
         },
+        'DB_COLLATION is configured' => function () use ($envContents) {
+            $connection = config('database.default');
+            $driver = config('database.connections.'.$connection.'.driver');
+
+            if (in_array($driver, ['mysql', 'mariadb'], true)) {
+                return filled(config('database.connections.'.$connection.'.collation'))
+                    || preg_match('/^\s*DB_COLLATION\s*=\s*\S+/m', $envContents) === 1;
+            }
+
+            return preg_match('/^\s*DB_COLLATION\s*=/m', $envContents) === 1;
+        },
         'Storage is writable' => is_writable(storage_path()),
+        'Bootstrap cache is writable' => is_writable(base_path('bootstrap/cache')),
         'Cache is writable' => function () {
             try {
                 $key = 'app_production_check_'.now()->timestamp;
@@ -111,6 +128,7 @@ Artisan::command('app:production-check {--env-file= : Optional env file path for
                 return false;
             }
         },
+        'Console build exists' => is_file(public_path('console/index.html')),
         'Queue config exists' => function () {
             $connection = config('queue.default');
 
@@ -126,6 +144,46 @@ Artisan::command('app:production-check {--env-file= : Optional env file path for
             } catch (Throwable) {
                 return false;
             }
+        },
+        '/console route is accessible' => function () {
+            try {
+                $response = Route::dispatch(HttpRequest::create('/console', 'GET'));
+
+                return $response->getStatusCode() === 200;
+            } catch (Throwable) {
+                return false;
+            }
+        },
+        'API JSON response is available' => function () {
+            try {
+                $request = HttpRequest::create('/api/v1/product-plans', 'GET', [], [], [], [
+                    'HTTP_ACCEPT' => 'application/json',
+                ]);
+                $response = app(\Illuminate\Contracts\Http\Kernel::class)->handle($request);
+                $contentType = $response->headers->get('Content-Type', '');
+                $payload = json_decode((string) $response->getContent(), true);
+                \Illuminate\Support\Facades\Auth::forgetGuards();
+
+                return $response->getStatusCode() === 200
+                    && str_contains($contentType, 'application/json')
+                    && is_array($payload)
+                    && array_key_exists('data', $payload);
+            } catch (Throwable) {
+                return false;
+            }
+        },
+        'Sensitive files are not web accessible' => function () {
+            foreach (['/.env', '/.git/config', '/composer.json'] as $path) {
+                $response = app(\Illuminate\Contracts\Http\Kernel::class)->handle(HttpRequest::create($path, 'GET'));
+                if ($response->getStatusCode() === 200) {
+                    \Illuminate\Support\Facades\Auth::forgetGuards();
+
+                    return false;
+                }
+            }
+            \Illuminate\Support\Facades\Auth::forgetGuards();
+
+            return true;
         },
     ];
 
@@ -362,6 +420,44 @@ Artisan::command('app:smoke-test', function () {
             throw new RuntimeException('Missing public/console/index.html');
         }
     }, 'Run cd frontend/admin-console && npm install && npm run build, then deploy public/console.');
+    if ($failed) {
+        return 1;
+    }
+
+    $runStep('console route accessible', function () {
+        $response = Route::dispatch(HttpRequest::create('/console/dashboard', 'GET'));
+        $content = (string) file_get_contents(public_path('console/index.html'));
+
+        if ($response->getStatusCode() !== 200 || ! str_contains($content, '/console/assets/')) {
+            throw new RuntimeException('Console route returned HTTP '.$response->getStatusCode().' without the React asset entry.');
+        }
+    }, 'Confirm the /console fallback route is registered, route cache is rebuilt, and public/console/index.html exists.');
+    if ($failed) {
+        return 1;
+    }
+
+    $runStep('api json response', function () use ($dispatchJson) {
+        [$response, $payload] = $dispatchJson('GET', '/api/v1/product-plans');
+        $contentType = $response->headers->get('Content-Type', '');
+
+        if ($response->getStatusCode() !== 200 || ! str_contains($contentType, 'application/json') || ! array_key_exists('data', $payload)) {
+            throw new RuntimeException('Product plans API returned HTTP '.$response->getStatusCode().': '.$response->getContent());
+        }
+    }, 'Confirm /api/v1/* routes are loaded and requests send Accept: application/json.');
+    if ($failed) {
+        return 1;
+    }
+
+    $runStep('sensitive files inaccessible', function () {
+        foreach (['/.env', '/.git/config', '/composer.json'] as $path) {
+            $response = app(\Illuminate\Contracts\Http\Kernel::class)->handle(HttpRequest::create($path, 'GET'));
+            \Illuminate\Support\Facades\Auth::forgetGuards();
+
+            if ($response->getStatusCode() === 200) {
+                throw new RuntimeException($path.' returned HTTP 200');
+            }
+        }
+    }, 'Point Nginx site root to public and keep deny rules for dotfiles plus env/log/sql/bak/conf files.');
     if ($failed) {
         return 1;
     }

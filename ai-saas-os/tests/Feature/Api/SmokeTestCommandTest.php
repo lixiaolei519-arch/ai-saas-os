@@ -22,6 +22,10 @@ class SmokeTestCommandTest extends TestCase
         $this->assertStringContainsString('[OK] database connected', $output);
         $this->assertStringContainsString('[OK] key tables exist', $output);
         $this->assertStringContainsString('[OK] /health route exists', $output);
+        $this->assertStringContainsString('[OK] console build exists', $output);
+        $this->assertStringContainsString('[OK] console route accessible', $output);
+        $this->assertStringContainsString('[OK] api json response', $output);
+        $this->assertStringContainsString('[OK] sensitive files inaccessible', $output);
         $this->assertStringContainsString('[OK] customer login', $output);
         $this->assertStringContainsString('[OK] order created', $output);
         $this->assertStringContainsString('[OK] mock payment callback', $output);

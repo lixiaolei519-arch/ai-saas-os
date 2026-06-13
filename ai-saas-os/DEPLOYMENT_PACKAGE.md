@@ -19,8 +19,12 @@ Required repository files:
 - `ROLLBACK_GUIDE.md`.
 - `docs/api.md`.
 - `docs/deployment/baota-production.md`.
+- `docs/deployment/backup-restore.md`.
+- `docs/deployment/github-deployment.md`.
+- `docs/deployment/baota-troubleshooting.md`.
 - `docs/deployment/prelaunch-checklist.md`.
 - `docs/security/prelaunch-security.md`.
+- `scripts/deploy-bt.sh`.
 
 Do not package:
 

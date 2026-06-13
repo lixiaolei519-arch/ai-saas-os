@@ -1,10 +1,10 @@
-# Rollback Guide v1.0.0
+# Rollback Guide v1.5.0
 
-This guide covers rollback for the `v1.0.0` minimum commercial launch.
+This guide covers rollback for the `v1.5.0` production hardening release.
 
-Git tag: `v1.0.0`
+Git branch: `main`
 
-Stable commit: `c69377b Release v1.0.0 minimum commercial launch`
+Stable commit: `Release v1.5.0 production hardening`
 
 ## Rollback Principles
 
@@ -26,19 +26,20 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 php artisan queue:restart
-php artisan production:check
+php artisan app:production-check
+php artisan app:smoke-test
 ```
 
 Verify:
 
 ```bash
-curl https://your-domain.example/health
+curl -i https://your-domain.example/health
 ```
 
 Expected:
 
 ```json
-{"status":"ok"}
+{"status":"ok","app":"AI SaaS OS","environment":"production"}
 ```
 
 ## Roll Back To Previous Deployment

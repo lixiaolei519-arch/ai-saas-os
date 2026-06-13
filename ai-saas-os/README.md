@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.4.0 scope adds queue and scheduler foundations on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.5.0 scope adds production hardening on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, live payment fund capture, advanced plugin ecosystems, and complex workflow products are out of scope for v1.4.0.
+Advanced AI autonomous operations, live payment fund capture, advanced plugin ecosystems, and complex workflow products are out of scope for v1.5.0.
 
 ## Requirements
 
@@ -116,9 +116,13 @@ Set `PAYMENT_PROVIDER=mock` until production payment credentials are ready. Miss
 ## Deployment
 
 - Baota deployment guide: `docs/deployment/baota-production.md`
+- Backup and restore guide: `docs/deployment/backup-restore.md`
+- GitHub deployment guide: `docs/deployment/github-deployment.md`
+- Baota troubleshooting guide: `docs/deployment/baota-troubleshooting.md`
 - Prelaunch checklist: `docs/deployment/prelaunch-checklist.md`
 - Security checks: `docs/security/prelaunch-security.md`
 - API draft: `docs/api.md`
+- Manual Baota deployment script draft: `scripts/deploy-bt.sh`
 
 Health check:
 
@@ -140,8 +144,8 @@ php artisan app:queue-check
 php artisan app:smoke-test
 ```
 
-`app:production-check` validates production environment readiness: `APP_ENV`, `APP_KEY`, database connectivity, writable storage/cache, queue configuration, required `.env` fields, and `/health` accessibility.
-`app:smoke-test` validates the minimum commercial launch flow using synthetic smoke-test data.
+`app:production-check` validates production environment readiness: `APP_ENV=production`, `APP_DEBUG=false`, `APP_KEY`, `APP_URL`, database connectivity, `DB_COLLATION`, writable `storage` and `bootstrap/cache`, queue configuration, required `.env` fields, `public/console/index.html`, `/health`, `/console`, public API JSON response, and blocked sensitive paths such as `/.env`.
+`app:smoke-test` validates the minimum commercial launch flow using synthetic smoke-test data and also probes `/console`, `/api/v1/product-plans`, and sensitive-file exposure.
 
 Queue and scheduler commands:
 

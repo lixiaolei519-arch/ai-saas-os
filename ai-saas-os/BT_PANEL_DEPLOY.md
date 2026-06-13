@@ -546,3 +546,64 @@ tail -n 100 storage/logs/laravel.log
 - `PRODUCTION_CHECKLIST.md`
 - `ROLLBACK_GUIDE.md`
 - `RELEASE_NOTES_v1.0.0.md`
+
+## v1.5.0 Production Hardening Notes
+
+Release: `Release v1.5.0 production hardening`
+
+Run the strengthened production self-check after deployment:
+
+```bash
+cd /www/wwwroot/ai-saas-os
+php artisan app:production-check
+```
+
+The command now checks:
+
+- `APP_ENV=production`
+- `APP_DEBUG=false`
+- `APP_KEY`
+- `APP_URL`
+- database connectivity
+- `DB_COLLATION`
+- writable `storage`
+- writable `bootstrap/cache`
+- queue configuration
+- required `.env` fields
+- `public/console/index.html`
+- `/health`
+- `/console`
+- `/api/v1/product-plans` JSON response
+- sensitive paths blocked from public access: `/.env`, `/.git/config`, `/composer.json`
+
+Run the strengthened smoke test after the self-check:
+
+```bash
+php artisan app:smoke-test
+```
+
+The smoke test now also verifies:
+
+- `/console/dashboard` can return the React console entry
+- `/api/v1/product-plans` returns JSON with `Accept: application/json`
+- sensitive files are not web accessible
+
+New deployment documents:
+
+- `docs/deployment/backup-restore.md`
+- `docs/deployment/github-deployment.md`
+- `docs/deployment/baota-troubleshooting.md`
+
+Manual deployment script draft:
+
+```bash
+bash scripts/deploy-bt.sh
+```
+
+Review the script variables before running it on a production server:
+
+- `PROJECT_DIR`
+- `BRANCH`
+- `PHP_BIN`
+- `COMPOSER_BIN`
+- `RUN_SEED`

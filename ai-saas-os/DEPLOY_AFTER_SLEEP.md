@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:40:36 +08:00
+Last updated: 2026-06-14 06:47:30 +08:00
 
 ## Run Summary
 
@@ -8,7 +8,7 @@ Last updated: 2026-06-14 06:40:36 +08:00
 - End time: in progress
 - Estimated duration: in progress
 - Start version: v1.1.1
-- Current target version: v1.5.0
+- Current target version: v1.6.0
 - End version: in progress
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
@@ -24,7 +24,7 @@ Last updated: 2026-06-14 06:40:36 +08:00
 
 ## Current Stage
 
-### v1.5.0 Production Hardening
+### v1.6.0 AI Billing Foundation
 
 - Status: next
 - Commit: pending
@@ -33,6 +33,21 @@ Last updated: 2026-06-14 06:40:36 +08:00
 - Push: pending
 
 ## Completed Stages
+
+### v1.5.0 Production Hardening
+
+- Status: stable locally, pending release commit and push
+- Commit: pending
+- Tests: `php artisan test` passed with 39 tests / 519 assertions
+- Frontend build: not required unless frontend files change
+- Backend gates: `composer audit`, testing migration, and testing seed passed
+- Push: pending
+
+Completed changes so far:
+- Enhanced `app:production-check` for production config, writable cache, console, API JSON, and sensitive-file checks.
+- Enhanced `app:smoke-test` with console/API/sensitive-file probes.
+- Added backup/restore, GitHub deployment, and Baota troubleshooting docs.
+- Added `scripts/deploy-bt.sh` as a manual deployment draft.
 
 ### v1.4.0 Queue and Scheduler Foundation
 
@@ -136,7 +151,8 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.5.0 has not started yet.
+- v1.5.0 release commit and push are pending.
+- v1.6.0 has not started yet.
 
 ## Risk List
 
@@ -146,4 +162,4 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Production Deployment Risk
 
-Current risk: low. v1.4.0 adds internal queue and scheduler readiness commands only; production deployment still requires the manual commands above and post-deploy smoke test.
+Current risk: low. v1.5.0 changes production diagnostics, smoke-test probes, and deployment documents only; production deployment still requires the manual commands above and post-deploy smoke test.
