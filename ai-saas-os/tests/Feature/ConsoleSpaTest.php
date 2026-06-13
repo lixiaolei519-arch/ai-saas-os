@@ -114,6 +114,33 @@ class ConsoleSpaTest extends TestCase
         $this->get('/console/self-evolution/suggestions')
             ->assertOk();
 
+        $this->get('/console/operations/dashboard')
+            ->assertOk();
+
+        $this->get('/console/operations/reports')
+            ->assertOk();
+
+        $this->get('/console/operations/seo-plans')
+            ->assertOk();
+
+        $this->get('/console/operations/landing-pages')
+            ->assertOk();
+
+        $this->get('/console/operations/pricing')
+            ->assertOk();
+
+        $this->get('/console/operations/release-announcements')
+            ->assertOk();
+
+        $this->get('/console/operations/customer-emails')
+            ->assertOk();
+
+        $this->get('/console/operations/faq')
+            ->assertOk();
+
+        $this->get('/console/operations/partner-recruiting')
+            ->assertOk();
+
         $this->get('/console/missing-page')
             ->assertOk();
 

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Services\CatalogService;
 use App\Services\CustomerPortalService;
 use App\Services\AiCompanyService;
+use App\Services\AutonomousOperationsService;
 use App\Services\LicenseService;
 use App\Services\MarketingService;
 use App\Services\OrderService;
@@ -399,6 +400,17 @@ Artisan::command('self-evolve:review-release {--release-version= : Release versi
 
     return 0;
 })->purpose('Generate release review, rollback, deployment, test, security, and business suggestions');
+
+Artisan::command('operations:generate-drafts', function () {
+    $result = app(AutonomousOperationsService::class)->generateDrafts();
+
+    $this->line('[OK] autonomous operations drafts generated: '.$result['drafts']->count());
+    $this->line('[OK] autonomous operations tasks generated: '.$result['tasks']->count());
+    $this->line('[OK] manual approval required');
+    $this->line('[OK] no email, page publish, ad spend, or customer contact executed');
+
+    return 0;
+})->purpose('Generate draft-only autonomous operations content and tasks');
 
 Artisan::command('app:smoke-test', function () {
     $failed = false;

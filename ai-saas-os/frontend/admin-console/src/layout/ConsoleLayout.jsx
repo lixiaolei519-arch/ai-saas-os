@@ -50,6 +50,15 @@ const menuItems = [
   { key: '/console/self-evolution/plans', icon: <RobotOutlined />, label: '自进化计划' },
   { key: '/console/self-evolution/release-review', icon: <RobotOutlined />, label: '发布评审' },
   { key: '/console/self-evolution/suggestions', icon: <RobotOutlined />, label: '建议中心' },
+  { key: '/console/operations/dashboard', icon: <RobotOutlined />, label: '运营总览' },
+  { key: '/console/operations/reports', icon: <RobotOutlined />, label: '运营报告' },
+  { key: '/console/operations/seo-plans', icon: <RobotOutlined />, label: 'SEO 计划' },
+  { key: '/console/operations/landing-pages', icon: <RobotOutlined />, label: '落地页草案' },
+  { key: '/console/operations/pricing', icon: <RobotOutlined />, label: '价格策略' },
+  { key: '/console/operations/release-announcements', icon: <RobotOutlined />, label: '发布公告' },
+  { key: '/console/operations/customer-emails', icon: <RobotOutlined />, label: '客户邮件' },
+  { key: '/console/operations/faq', icon: <RobotOutlined />, label: '售后 FAQ' },
+  { key: '/console/operations/partner-recruiting', icon: <RobotOutlined />, label: '代理招募' },
   { key: '/console/system', icon: <SettingOutlined />, label: '系统状态' },
 ];
 

@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 07:32:22 +08:00
+Last updated: 2026-06-14 07:40:05 +08:00
 
 ## Run Summary
 
@@ -26,17 +26,18 @@ Last updated: 2026-06-14 07:32:22 +08:00
 
 ### v2.1.0 Autonomous Operations Center
 
-- Status: next
+- Status: stable pending release commit
 - Commit: pending
-- Tests: pending
-- Frontend build: pending if React console changes
-- Backend gates: pending
+- Tests: `php artisan test` passed with 50 tests / 721 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
 - Push: pending
 
-Planned scope:
+Completed changes so far:
 - Add draft-only autonomous operations records for reports, SEO plans, landing pages, pricing, announcements, customer emails, FAQ, promotion tasks, and partner recruiting copy.
 - Add administrator API and console pages under `/console/operations/*`.
 - Keep all outbound content as internal drafts requiring manual approval.
+- Rebuilt committed React assets in `public/console`.
 
 ## Completed Stages
 

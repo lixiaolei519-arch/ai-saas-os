@@ -210,6 +210,69 @@ class AdminController extends Controller
         ]);
     }
 
+    public function autonomousOperationsDashboard(): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationsDashboard(),
+        ]);
+    }
+
+    public function autonomousOperationReports(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationReports($this->limit($request)),
+        ]);
+    }
+
+    public function autonomousOperationSeoPlans(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationSeoPlans($this->limit($request)),
+        ]);
+    }
+
+    public function autonomousOperationLandingPages(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationLandingPages($this->limit($request)),
+        ]);
+    }
+
+    public function autonomousOperationPricing(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationPricing($this->limit($request)),
+        ]);
+    }
+
+    public function autonomousOperationReleaseAnnouncements(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationReleaseAnnouncements($this->limit($request)),
+        ]);
+    }
+
+    public function autonomousOperationCustomerEmails(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationCustomerEmails($this->limit($request)),
+        ]);
+    }
+
+    public function autonomousOperationFaq(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationFaq($this->limit($request)),
+        ]);
+    }
+
+    public function autonomousOperationPartnerRecruiting(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->autonomousOperationPartnerRecruiting($this->limit($request)),
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([

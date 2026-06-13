@@ -11,6 +11,8 @@ use App\Models\AiCompanyReleasePlan;
 use App\Models\AiCompanyRiskReport;
 use App\Models\AiCompanyRoadmap;
 use App\Models\AiCompanyTask;
+use App\Models\AutonomousOperationDraft;
+use App\Models\AutonomousOperationTask;
 use App\Models\CommissionRecord;
 use App\Models\License;
 use App\Models\MarketingChannel;
@@ -231,6 +233,51 @@ class AdminService
         return app(SelfEvolutionService::class)->suggestions($limit);
     }
 
+    public function autonomousOperationsDashboard(): array
+    {
+        return app(AutonomousOperationsService::class)->dashboard();
+    }
+
+    public function autonomousOperationReports(int $limit = 50): Collection
+    {
+        return app(AutonomousOperationsService::class)->reports($limit);
+    }
+
+    public function autonomousOperationSeoPlans(int $limit = 50): Collection
+    {
+        return app(AutonomousOperationsService::class)->seoPlans($limit);
+    }
+
+    public function autonomousOperationLandingPages(int $limit = 50): Collection
+    {
+        return app(AutonomousOperationsService::class)->landingPages($limit);
+    }
+
+    public function autonomousOperationPricing(int $limit = 50): Collection
+    {
+        return app(AutonomousOperationsService::class)->pricing($limit);
+    }
+
+    public function autonomousOperationReleaseAnnouncements(int $limit = 50): Collection
+    {
+        return app(AutonomousOperationsService::class)->releaseAnnouncements($limit);
+    }
+
+    public function autonomousOperationCustomerEmails(int $limit = 50): Collection
+    {
+        return app(AutonomousOperationsService::class)->customerEmails($limit);
+    }
+
+    public function autonomousOperationFaq(int $limit = 50): Collection
+    {
+        return app(AutonomousOperationsService::class)->faq($limit);
+    }
+
+    public function autonomousOperationPartnerRecruiting(int $limit = 50): Collection
+    {
+        return app(AutonomousOperationsService::class)->partnerRecruiting($limit);
+    }
+
     public function stats(): array
     {
         return [
@@ -266,6 +313,8 @@ class AdminService
             'self_evolution_plans_count' => SelfEvolutionPlan::count(),
             'self_evolution_release_reviews_count' => SelfEvolutionReleaseReview::count(),
             'self_evolution_suggestions_count' => SelfEvolutionSuggestion::count(),
+            'autonomous_operation_drafts_count' => AutonomousOperationDraft::count(),
+            'autonomous_operation_tasks_count' => AutonomousOperationTask::count(),
         ];
     }
 

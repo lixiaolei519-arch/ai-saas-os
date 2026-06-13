@@ -66,6 +66,14 @@ Safe commands:
 - `php artisan self-evolve:plan`
 - `php artisan self-evolve:review-release`
 
+## Autonomous Operations Center
+
+Autonomous Operations Center v2.1.0 is internal simulation only. It creates draft reports, SEO plans, landing page copy, pricing suggestions, release announcements, customer emails, FAQ content, partner recruiting copy, sales lead tasks, customer follow-up tasks, and promotion tasks. It does not send email/SMS, publish pages, buy ads, contact customers, or execute outbound actions.
+
+Safe command:
+
+- `php artisan operations:generate-drafts`
+
 ## Plugin Foundation
 
 - `POST /plugins`
@@ -135,6 +143,15 @@ Only internal event, condition, action, log, and retry behavior is included. Wor
 - `GET /admin/self-evolution/plans`
 - `GET /admin/self-evolution/release-reviews`
 - `GET /admin/self-evolution/suggestions`
+- `GET /admin/operations/dashboard`
+- `GET /admin/operations/reports`
+- `GET /admin/operations/seo-plans`
+- `GET /admin/operations/landing-pages`
+- `GET /admin/operations/pricing`
+- `GET /admin/operations/release-announcements`
+- `GET /admin/operations/customer-emails`
+- `GET /admin/operations/faq`
+- `GET /admin/operations/partner-recruiting`
 - `GET /admin/stats`
 
 Admin routes require an authenticated admin token.

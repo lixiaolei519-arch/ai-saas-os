@@ -39,6 +39,17 @@ import {
   SelfEvolutionScorePage,
   SelfEvolutionSuggestionsPage,
 } from './pages/SelfEvolutionPages.jsx';
+import {
+  OperationsCustomerEmailsPage,
+  OperationsDashboardPage,
+  OperationsFaqPage,
+  OperationsLandingPagesPage,
+  OperationsPartnerRecruitingPage,
+  OperationsPricingPage,
+  OperationsReleaseAnnouncementsPage,
+  OperationsReportsPage,
+  OperationsSeoPlansPage,
+} from './pages/OperationsPages.jsx';
 import PortalDashboardPage from './pages/portal/PortalDashboardPage.jsx';
 import PortalLicensesPage from './pages/portal/PortalLicensesPage.jsx';
 import PortalOrdersPage from './pages/portal/PortalOrdersPage.jsx';
@@ -110,6 +121,15 @@ export default function App() {
           <Route path="self-evolution/plans" element={<SelfEvolutionPlansPage />} />
           <Route path="self-evolution/release-review" element={<SelfEvolutionReleaseReviewPage />} />
           <Route path="self-evolution/suggestions" element={<SelfEvolutionSuggestionsPage />} />
+          <Route path="operations/dashboard" element={<OperationsDashboardPage />} />
+          <Route path="operations/reports" element={<OperationsReportsPage />} />
+          <Route path="operations/seo-plans" element={<OperationsSeoPlansPage />} />
+          <Route path="operations/landing-pages" element={<OperationsLandingPagesPage />} />
+          <Route path="operations/pricing" element={<OperationsPricingPage />} />
+          <Route path="operations/release-announcements" element={<OperationsReleaseAnnouncementsPage />} />
+          <Route path="operations/customer-emails" element={<OperationsCustomerEmailsPage />} />
+          <Route path="operations/faq" element={<OperationsFaqPage />} />
+          <Route path="operations/partner-recruiting" element={<OperationsPartnerRecruitingPage />} />
           <Route path="system" element={<SystemPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

@@ -754,3 +754,34 @@ Safety limits:
 - Keep all generated self-evolution records as draft simulation output.
 - Require manual approval before any suggested plan can become real work.
 - Continue running `composer audit`, testing migrations, testing seed, full tests, and frontend build before marking a release stable.
+
+## v2.1.0 Autonomous Operations Center Notes
+
+Release: `Release v2.1.0 autonomous operations center`
+
+This version adds the Autonomous Operations Center simulation layer. It stores draft product reports, operations reports, SEO plans, landing page copy, pricing suggestions, release announcements, customer emails, FAQ content, partner recruiting copy, and operations tasks. It must not send emails, send SMS, publish pages, buy ads, contact customers, or execute outbound actions automatically.
+
+Safe command:
+
+```bash
+cd /www/wwwroot/ai-saas-os
+php artisan operations:generate-drafts
+```
+
+Console checks:
+
+- Operations dashboard: `https://ai.js3.cn/console/operations/dashboard`
+- Reports: `https://ai.js3.cn/console/operations/reports`
+- SEO plans: `https://ai.js3.cn/console/operations/seo-plans`
+- Landing pages: `https://ai.js3.cn/console/operations/landing-pages`
+- Pricing: `https://ai.js3.cn/console/operations/pricing`
+- Release announcements: `https://ai.js3.cn/console/operations/release-announcements`
+- Customer emails: `https://ai.js3.cn/console/operations/customer-emails`
+- FAQ: `https://ai.js3.cn/console/operations/faq`
+- Partner recruiting: `https://ai.js3.cn/console/operations/partner-recruiting`
+
+Safety limits:
+
+- Keep all generated operations records as draft simulation output.
+- Require manual approval before any outbound content can be used.
+- Do not configure real mail/SMS/ad publishing automation for this release.

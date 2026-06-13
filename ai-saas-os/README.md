@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v2.0.0 scope adds a safe Self-Evolution Engine on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, self-evolution scans/scores/plans/reviews/suggestions, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v2.1.0 scope adds a safe Autonomous Operations Center on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin delivery records, workflow event logs, workflow execution records, AI Company OS simulation records, self-evolution scans/scores/plans/reviews/suggestions, draft-only operations records, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
-Autonomous code execution, production deployment, production pushes, live payment fund capture, real model-provider calls, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v2.0.0.
+Autonomous code execution, production deployment, production pushes, live payment fund capture, real model-provider calls, real email/SMS sending, real ad publishing, real customer contact, advanced plugin ecosystems, plugin code execution, external workflow calls, and complex workflow visual builders are out of scope for v2.1.0.
 
 ## Requirements
 
@@ -69,6 +69,8 @@ The administrator console includes `/console/workflows`, `/console/workflow-runs
 The administrator console includes AI Company OS simulation pages: `/console/ai-company/dashboard`, `/console/ai-company/tasks`, `/console/ai-company/ideas`, `/console/ai-company/roadmap`, `/console/ai-company/releases`, `/console/ai-company/quality`, `/console/ai-company/risks`, `/console/ai-company/prompts`, and `/console/ai-company/reports`.
 
 The administrator console includes Self-Evolution Engine pages: `/console/self-evolution/dashboard`, `/console/self-evolution/score`, `/console/self-evolution/plans`, `/console/self-evolution/release-review`, and `/console/self-evolution/suggestions`.
+
+The administrator console includes Autonomous Operations Center pages: `/console/operations/dashboard`, `/console/operations/reports`, `/console/operations/seo-plans`, `/console/operations/landing-pages`, `/console/operations/pricing`, `/console/operations/release-announcements`, `/console/operations/customer-emails`, `/console/operations/faq`, and `/console/operations/partner-recruiting`.
 
 The customer portal includes `/console/portal/ai-usage`, backed by `/api/v1/portal/ai-account` and `/api/v1/portal/usage-records`, for AI balance and usage visibility.
 
@@ -153,6 +155,18 @@ php artisan self-evolve:review-release
 ```
 
 Use `--stable-version=<version>` with scan/score, `--target-version=<version>` with plan, and `--release-version=<version>` with release review when a specific version label is required. All generated plans, reviews, and suggestions are `draft`, `simulation_mode=true`, and require manual approval.
+
+## Autonomous Operations Center
+
+The Autonomous Operations Center generates product daily reports, operations weekly reports, sales lead tasks, customer follow-up tasks, SEO content plans, landing page copy drafts, pricing strategy suggestions, release announcement drafts, customer email drafts, support FAQ drafts, promotion tasks, and partner recruiting copy drafts.
+
+Safe command:
+
+```bash
+php artisan operations:generate-drafts
+```
+
+All generated records are `draft`, `simulation_mode=true`, and require manual approval. The command does not send email, send SMS, publish pages, buy ads, contact customers, or execute outbound actions.
 
 ## Plugin Delivery
 

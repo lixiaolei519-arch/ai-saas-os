@@ -353,7 +353,32 @@ Push:
 
 ### v2.1.0 Autonomous Operations Center
 
-Status: next.
+Status: stable pending release commit.
+
+Started: 2026-06-14 07:37:42 +08:00
+Completed: 2026-06-14 07:40:05 +08:00
 
 Scope:
 - Safe autonomous operations center for product daily reports, operations weekly reports, sales lead tasks, customer follow-up tasks, SEO content plans, landing page copy drafts, pricing strategy suggestions, release announcements, customer email drafts, support FAQ, promotion tasks, and partner recruiting copy. All output is draft-only, requires manual approval, and must not send, publish, advertise, or contact customers.
+
+Progress:
+- Added autonomous operation draft and task migration/models.
+- Added service generation for draft reports, SEO plans, landing pages, pricing, release announcements, customer emails, FAQ, partner recruiting copy, sales lead tasks, customer follow-up tasks, and promotion tasks.
+- Added safe `operations:generate-drafts` command.
+- Added administrator operations APIs.
+- Added React administrator operations pages and menu entries.
+- Rebuilt `public/console` production assets.
+- Added targeted backend and console deep-link tests.
+
+Quality gate:
+- npm install completed in `frontend/admin-console`.
+- npm run build completed and generated a committed `public/console` build.
+- Targeted `AutonomousOperationsCenterTest` passed with 3 tests and 38 assertions.
+- Targeted `ConsoleSpaTest` passed with 7 tests and 57 assertions.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 50 tests and 721 assertions.
+
+Commit:
+- Pending release commit.

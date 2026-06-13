@@ -71,6 +71,15 @@ Route::prefix('v1')->group(function () {
         Route::get('self-evolution/plans', [AdminController::class, 'selfEvolutionPlans']);
         Route::get('self-evolution/release-reviews', [AdminController::class, 'selfEvolutionReleaseReviews']);
         Route::get('self-evolution/suggestions', [AdminController::class, 'selfEvolutionSuggestions']);
+        Route::get('operations/dashboard', [AdminController::class, 'autonomousOperationsDashboard']);
+        Route::get('operations/reports', [AdminController::class, 'autonomousOperationReports']);
+        Route::get('operations/seo-plans', [AdminController::class, 'autonomousOperationSeoPlans']);
+        Route::get('operations/landing-pages', [AdminController::class, 'autonomousOperationLandingPages']);
+        Route::get('operations/pricing', [AdminController::class, 'autonomousOperationPricing']);
+        Route::get('operations/release-announcements', [AdminController::class, 'autonomousOperationReleaseAnnouncements']);
+        Route::get('operations/customer-emails', [AdminController::class, 'autonomousOperationCustomerEmails']);
+        Route::get('operations/faq', [AdminController::class, 'autonomousOperationFaq']);
+        Route::get('operations/partner-recruiting', [AdminController::class, 'autonomousOperationPartnerRecruiting']);
         Route::get('stats', [AdminController::class, 'stats']);
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);

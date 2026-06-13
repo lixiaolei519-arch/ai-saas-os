@@ -1,5 +1,22 @@
 # Changelog
 
+## v2.1.0 - 2026-06-14
+
+### Added
+- Added draft-only Autonomous Operations Center tables for operation drafts and operation tasks.
+- Added `AutonomousOperationsService` and the safe `operations:generate-drafts` command.
+- Added administrator APIs for operations dashboard, reports, SEO plans, landing pages, pricing, release announcements, customer emails, FAQ, and partner recruiting drafts.
+- Added React administrator pages under `/console/operations/*` for autonomous operations visibility.
+- Added tests covering draft-only generation, simulation/approval safety flags, administrator API visibility, customer access blocking, and console deep links.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 50 tests and 721 assertions after the Autonomous Operations Center changes.
+
 ## v2.0.0 - 2026-06-14
 
 ### Added
