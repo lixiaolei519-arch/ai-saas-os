@@ -22,4 +22,9 @@ class AiUsageRecord extends Model
     {
         return $this->belongsTo(Tenant::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -37,6 +37,9 @@ class ConsoleSpaTest extends TestCase
         $this->get('/console/portal/dashboard')
             ->assertOk();
 
+        $this->get('/console/portal/ai-usage')
+            ->assertOk();
+
         $this->assertStringContainsString(
             '/console/assets/',
             (string) file_get_contents(public_path('console/index.html'))
@@ -46,6 +49,9 @@ class ConsoleSpaTest extends TestCase
     public function test_console_hardening_deep_links_return_frontend_app(): void
     {
         $this->get('/console/403')
+            ->assertOk();
+
+        $this->get('/console/ai-usage')
             ->assertOk();
 
         $this->get('/console/missing-page')

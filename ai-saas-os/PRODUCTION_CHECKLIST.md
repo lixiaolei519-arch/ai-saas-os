@@ -1,13 +1,13 @@
-# Production Checklist v1.5.0
+# Production Checklist v1.6.0
 
-Use this checklist before switching production traffic to `v1.5.0`.
+Use this checklist before switching production traffic to `v1.6.0`.
 
 ## Release Identity
 
-- [ ] Stable release is `v1.5.0`.
-- [ ] Release commit is `Release v1.5.0 production hardening`.
-- [ ] `STABLE_TAG.md` says `Current stable version: v1.5.0`.
-- [ ] `CHANGELOG.md` contains `v1.5.0`.
+- [ ] Stable release is `v1.6.0`.
+- [ ] Release commit is `Release v1.6.0 ai billing foundation`.
+- [ ] `STABLE_TAG.md` says `Current stable version: v1.6.0`.
+- [ ] `CHANGELOG.md` contains `v1.6.0`.
 - [ ] `RELEASE_NOTES_v1.0.0.md` exists.
 - [ ] `DEPLOYMENT_PACKAGE.md` exists.
 - [ ] `ROLLBACK_GUIDE.md` exists.
@@ -39,6 +39,8 @@ Use this checklist before switching production traffic to `v1.5.0`.
 - [ ] `PAYMENT_PROVIDER=mock` is used until real WeChat Pay or Alipay credentials are complete.
 - [ ] If real WeChat Pay is enabled, `WECHAT_PAY_MCH_ID`, `WECHAT_PAY_APP_ID`, `WECHAT_PAY_CERT_PATH`, `WECHAT_PAY_KEY_PATH`, `WECHAT_PAY_API_V3_KEY`, and `WECHAT_PAY_WEBHOOK_SECRET` are configured.
 - [ ] If real Alipay is enabled, `ALIPAY_APP_ID`, `ALIPAY_PRIVATE_KEY`, `ALIPAY_PUBLIC_KEY`, and `ALIPAY_WEBHOOK_SECRET` are configured.
+- [ ] `AI_PROVIDER=mock` is used until a later approved real-provider release.
+- [ ] No real OpenAI, Claude, Gemini, or other model-provider API key is stored in `.env`, docs, or source code.
 - [ ] Duplicate payment callbacks do not create duplicate Licenses or commission records.
 - [ ] Amount-mismatch payment callbacks are rejected before business provisioning.
 - [ ] Deployment verification accounts are created with `php artisan app:create-demo-users`.
@@ -135,6 +137,7 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] Dashboard shows users, tenants, License, orders, paid orders, commission amount, today orders, and today users.
 - [ ] Dashboard analytics show today revenue, month revenue, pending orders, trends, status distributions, and recent business activity without errors.
 - [ ] Users, tenants, licenses, orders, payments, channels, commissions, and system pages load without API errors.
+- [ ] Administrator AI usage page `/console/ai-usage` loads without API errors.
 - [ ] API requests include `Accept: application/json` and `Authorization: Bearer <token>` after login.
 - [ ] 401 responses redirect back to `/console/login`.
 - [ ] A customer attempting to open administrator pages sees a `403` page or is blocked before data loads.
@@ -147,6 +150,7 @@ php artisan queue:work database --sleep=3 --tries=3 --timeout=90
 - [ ] `/console/portal/login` displays the Chinese customer login page.
 - [ ] Customer login succeeds and redirects to `/console/portal/dashboard`.
 - [ ] Customer portal pages show only the logged-in customer's licenses, orders, referral links, and commissions.
+- [ ] Customer portal AI page `/console/portal/ai-usage` shows only the logged-in customer's AI balance and usage records.
 - [ ] Customer-owned LicenseKey values can be copied from `/console/portal/licenses`.
 - [ ] A normal customer token cannot access `/api/v1/admin/*`.
 - [ ] Guest requests to `/api/v1/portal/*` return JSON `401`.

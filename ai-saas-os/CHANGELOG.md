@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.6.0 - 2026-06-14
+
+### Added
+- Added a configurable mock AI provider that estimates tokens and returns a simulated response without calling real model APIs.
+- Added `POST /api/v1/ai/mock/completions` to run mock AI completion billing through the existing License, balance, usage record, and ledger flow.
+- Added administrator API and React console page for AI usage records.
+- Added customer portal AI account API, AI balance dashboard cards, and AI balance/usage page.
+- Added AI mock provider environment placeholders without adding any real OpenAI, Claude, Gemini, or other provider keys.
+- Added tests covering mock AI billing, insufficient-balance blocking, administrator visibility, customer portal balance visibility, and AI console deep links.
+
+### Verified
+- `npm install` completed in `frontend/admin-console`.
+- `npm run build` generated the committed `public/console` production build.
+- `composer audit --no-interaction` reported no security vulnerability advisories.
+- `php artisan migrate:fresh --env=testing --force` completed successfully.
+- `php artisan db:seed --env=testing --force` completed successfully.
+- `php artisan test` passed with 41 tests and 544 assertions after the AI billing foundation changes.
+
 ## v1.5.0 - 2026-06-14
 
 ### Added

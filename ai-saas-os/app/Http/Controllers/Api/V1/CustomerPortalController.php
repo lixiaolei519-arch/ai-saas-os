@@ -54,6 +54,20 @@ class CustomerPortalController extends Controller
         );
     }
 
+    public function aiAccount(Request $request): JsonResponse
+    {
+        $accounts = $this->portalService->aiAccounts($request->user(), $this->tenantId($request));
+
+        return response()->json([
+            'data' => [
+                'accounts' => $accounts->values(),
+                'balance_amount' => $accounts->sum(fn ($account) => (float) $account->balance_amount),
+                'balance_tokens' => $accounts->sum('balance_tokens'),
+                'currency' => $accounts->first()->currency ?? 'CNY',
+            ],
+        ]);
+    }
+
     public function promotionLinks(Request $request): JsonResponse
     {
         return $this->paginated(

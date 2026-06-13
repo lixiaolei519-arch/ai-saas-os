@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AiAccount;
 use App\Models\AiUsageRecord;
 use App\Models\CommissionRecord;
 use App\Models\License;
@@ -56,6 +57,15 @@ class CustomerPortalService
     {
         return AiUsageRecord::query()
             ->whereIn('tenant_id', $this->tenantIds($user, $tenantId))
+            ->latest('id')
+            ->get();
+    }
+
+    public function aiAccounts(User $user, ?int $tenantId = null): Collection
+    {
+        return AiAccount::query()
+            ->whereIn('tenant_id', $this->tenantIds($user, $tenantId))
+            ->with('tenant')
             ->latest('id')
             ->get();
     }
@@ -117,6 +127,8 @@ class CustomerPortalService
             'orders_count' => Order::whereIn('tenant_id', $tenantIds)->count(),
             'commission_amount_cents' => CommissionRecord::whereIn('marketing_channel_id', $channelIds)->sum('commission_amount_cents'),
             'promotion_links_count' => PromotionLink::whereIn('marketing_channel_id', $channelIds)->count(),
+            'ai_balance_amount' => AiAccount::whereIn('tenant_id', $tenantIds)->sum('balance_amount'),
+            'ai_balance_tokens' => AiAccount::whereIn('tenant_id', $tenantIds)->sum('balance_tokens'),
             'recent_orders' => Order::whereIn('tenant_id', $tenantIds)
                 ->with(['items', 'payments'])
                 ->latest('id')

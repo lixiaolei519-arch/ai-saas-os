@@ -9,6 +9,8 @@ export default function PortalDashboardPage() {
     ['我的订单数量', data.orders_count],
     ['我的佣金总额', yuan(data.commission_amount_cents)],
     ['我的推广链接数量', data.promotion_links_count],
+    ['AI 余额', `CNY ${Number(data.ai_balance_amount || 0).toLocaleString('zh-CN', { minimumFractionDigits: 6, maximumFractionDigits: 6 })}`],
+    ['Token 余额', data.ai_balance_tokens],
   ];
 
   return (

@@ -63,6 +63,13 @@ class AdminController extends Controller
         ]);
     }
 
+    public function aiUsageRecords(Request $request): JsonResponse
+    {
+        return response()->json([
+            'data' => $this->adminService->aiUsageRecords($this->limit($request)),
+        ]);
+    }
+
     public function stats(): JsonResponse
     {
         return response()->json([

@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
             Route::get('dashboard', [CustomerPortalController::class, 'dashboard']);
             Route::get('licenses', [CustomerPortalController::class, 'licenses']);
             Route::get('orders', [CustomerPortalController::class, 'orders']);
+            Route::get('ai-account', [CustomerPortalController::class, 'aiAccount']);
             Route::get('usage-records', [CustomerPortalController::class, 'usageRecords']);
             Route::get('promotion-links', [CustomerPortalController::class, 'promotionLinks']);
             Route::get('referrals', [CustomerPortalController::class, 'referrals']);
@@ -48,6 +49,7 @@ Route::prefix('v1')->group(function () {
         Route::get('payment-callbacks', [AdminController::class, 'paymentCallbacks']);
         Route::get('marketing/channels', [AdminController::class, 'channels']);
         Route::get('marketing/commissions', [AdminController::class, 'commissions']);
+        Route::get('ai/usage-records', [AdminController::class, 'aiUsageRecords']);
         Route::get('stats', [AdminController::class, 'stats']);
         Route::get('dashboard', [AdminController::class, 'dashboard']);
         Route::get('system', [AdminController::class, 'system']);
@@ -71,6 +73,7 @@ Route::prefix('v1')->group(function () {
     Route::get('ai/accounts/{tenant}', [AiUsageController::class, 'balance']);
     Route::post('ai/credits/grant', [AiUsageController::class, 'grant']);
     Route::post('ai/usage', [AiUsageController::class, 'store']);
+    Route::post('ai/mock/completions', [AiUsageController::class, 'mockCompletion']);
 
     Route::post('plugins', [PluginController::class, 'store']);
     Route::post('plugins/{plugin}/releases', [PluginController::class, 'uploadRelease']);

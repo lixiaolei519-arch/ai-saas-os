@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class BillingApiTest extends TestCase
@@ -117,5 +119,112 @@ class BillingApiTest extends TestCase
         $this->assertDatabaseMissing('ai_usage_records', [
             'request_id' => 'ai-insufficient-balance',
         ]);
+    }
+
+    public function test_mock_ai_provider_charges_usage_and_is_visible_to_admin_and_customer(): void
+    {
+        $tenant = $this->postJson('/api/v1/tenants', [
+            'tenant_name' => 'AI Mock Tenant',
+            'owner_name' => 'Mock Owner',
+            'owner_email' => 'ai-mock-owner@example.com',
+            'owner_password' => 'password123',
+            'ai_balance_amount' => 5,
+            'ai_balance_tokens' => 10000,
+        ])->assertCreated()->json('data');
+
+        $license = $this->postJson('/api/v1/licenses', [
+            'tenant_id' => $tenant['id'],
+            'domain' => 'mock.example.cn',
+            'expires_at' => now()->addMonth()->toIso8601String(),
+        ])->assertCreated()->json('data');
+
+        $this->postJson('/api/v1/ai/mock/completions', [
+            'tenant_id' => $tenant['id'],
+            'license_key' => $license['license_key'],
+            'domain' => 'mock.example.cn',
+            'fingerprint' => 'mock-worker-1',
+            'request_id' => 'ai-mock-001',
+            'prompt' => '请生成一个模拟回复，不调用真实大模型。',
+        ])
+            ->assertCreated()
+            ->assertJsonPath('data.provider', 'mock')
+            ->assertJsonPath('data.simulation', true)
+            ->assertJsonPath('data.usage.request_id', 'ai-mock-001')
+            ->assertJsonPath('data.usage.provider', 'mock')
+            ->assertJsonPath('data.usage.status', 'charged');
+
+        $this->assertDatabaseHas('ai_usage_records', [
+            'request_id' => 'ai-mock-001',
+            'provider' => 'mock',
+            'model' => 'mock-gpt-lite',
+            'status' => 'charged',
+        ]);
+
+        $admin = User::create([
+            'name' => 'AI Admin',
+            'email' => 'ai-admin@example.com',
+            'password' => 'password123',
+            'status' => 'active',
+            'is_admin' => true,
+        ]);
+
+        $this->getJson('/api/v1/admin/ai/usage-records', $this->bearerHeaders($admin->createToken('admin')->plainTextToken))
+            ->assertOk()
+            ->assertJsonFragment(['request_id' => 'ai-mock-001'])
+            ->assertJsonFragment(['provider' => 'mock']);
+        $this->flushHeaders();
+        Auth::forgetGuards();
+
+        $login = $this->postJson('/api/v1/auth/login', [
+            'email' => 'ai-mock-owner@example.com',
+            'password' => 'password123',
+        ])->assertOk()->json('data');
+
+        $balanceResponse = $this->getJson('/api/v1/portal/ai-account', $this->bearerHeaders($login['token']))
+            ->assertOk()
+            ->assertJsonPath('data.currency', 'CNY');
+
+        $this->assertLessThan(10000, $balanceResponse->json('data.balance_tokens'));
+
+        $this->getJson('/api/v1/portal/usage-records', $this->bearerHeaders($login['token']))
+            ->assertOk()
+            ->assertJsonFragment(['request_id' => 'ai-mock-001'])
+            ->assertJsonFragment(['provider' => 'mock']);
+    }
+
+    public function test_mock_ai_provider_blocks_insufficient_balance_without_real_provider_call(): void
+    {
+        $tenant = $this->postJson('/api/v1/tenants', [
+            'tenant_name' => 'AI Mock Block Tenant',
+            'owner_name' => 'Mock Block Owner',
+            'owner_email' => 'ai-mock-block@example.com',
+            'owner_password' => 'password123',
+        ])->assertCreated()->json('data');
+
+        $license = $this->postJson('/api/v1/licenses', [
+            'tenant_id' => $tenant['id'],
+            'domain' => 'mock-block.example.cn',
+            'expires_at' => now()->addMonth()->toIso8601String(),
+        ])->assertCreated()->json('data');
+
+        $this->postJson('/api/v1/ai/mock/completions', [
+            'tenant_id' => $tenant['id'],
+            'license_key' => $license['license_key'],
+            'domain' => 'mock-block.example.cn',
+            'fingerprint' => 'mock-worker-block',
+            'request_id' => 'ai-mock-blocked-001',
+            'prompt' => '余额不足时必须拦截。',
+        ])->assertUnprocessable();
+
+        $this->assertDatabaseMissing('ai_usage_records', [
+            'request_id' => 'ai-mock-blocked-001',
+        ]);
+    }
+
+    private function bearerHeaders(string $token): array
+    {
+        return [
+            'Authorization' => 'Bearer '.$token,
+        ];
     }
 }

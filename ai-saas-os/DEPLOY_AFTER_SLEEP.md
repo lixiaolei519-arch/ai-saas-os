@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:48:30 +08:00
+Last updated: 2026-06-14 06:57:20 +08:00
 
 ## Run Summary
 
@@ -8,7 +8,7 @@ Last updated: 2026-06-14 06:48:30 +08:00
 - End time: in progress
 - Estimated duration: in progress
 - Start version: v1.1.1
-- Current target version: v1.6.0
+- Current target version: v1.7.0
 - End version: in progress
 - GitHub repository: https://github.com/lixiaolei519-arch/ai-saas-os
 
@@ -24,7 +24,7 @@ Last updated: 2026-06-14 06:48:30 +08:00
 
 ## Current Stage
 
-### v1.6.0 AI Billing Foundation
+### v1.7.0 Plugin Delivery Foundation
 
 - Status: next
 - Commit: pending
@@ -33,6 +33,21 @@ Last updated: 2026-06-14 06:48:30 +08:00
 - Push: pending
 
 ## Completed Stages
+
+### v1.6.0 AI Billing Foundation
+
+- Status: stable locally, pending release commit and push
+- Commit: pending
+- Tests: `php artisan test` passed with 41 tests / 544 assertions
+- Frontend build: `npm install` and `npm run build` passed
+- Backend gates: `composer audit`, testing migration, and testing seed passed
+- Push: pending
+
+Completed changes so far:
+- Added mock AI provider and `/api/v1/ai/mock/completions`.
+- Added administrator AI usage API and console page.
+- Added customer portal AI account API, balance dashboard cards, and usage page.
+- Rebuilt committed React assets in `public/console`.
 
 ### v1.5.0 Production Hardening
 

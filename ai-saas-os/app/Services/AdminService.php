@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AiUsageRecord;
 use App\Models\CommissionRecord;
 use App\Models\License;
 use App\Models\MarketingChannel;
@@ -83,6 +84,15 @@ class AdminService
             ->get();
     }
 
+    public function aiUsageRecords(int $limit = 50): Collection
+    {
+        return AiUsageRecord::query()
+            ->with(['tenant', 'user'])
+            ->latest('id')
+            ->limit($limit)
+            ->get();
+    }
+
     public function stats(): array
     {
         return [
@@ -97,6 +107,9 @@ class AdminService
             'commission_amount_cents' => CommissionRecord::sum('commission_amount_cents'),
             'today_orders_count' => Order::whereDate('created_at', today())->count(),
             'today_users_count' => User::whereDate('created_at', today())->count(),
+            'ai_usage_records_count' => AiUsageRecord::count(),
+            'ai_tokens_used' => AiUsageRecord::sum('total_tokens'),
+            'ai_cost_amount' => AiUsageRecord::sum('total_cost_amount'),
         ];
     }
 

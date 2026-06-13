@@ -5,7 +5,9 @@ namespace App\Services;
 use App\Models\AiAccount;
 use App\Models\AiUsageRecord;
 use App\Models\BalanceTransaction;
+use App\Services\Ai\MockAiProvider;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class BillingService
@@ -13,6 +15,7 @@ class BillingService
     public function __construct(
         private readonly AuditService $auditService,
         private readonly LicenseService $licenseService,
+        private readonly MockAiProvider $mockAiProvider,
     ) {
     }
 
@@ -134,5 +137,44 @@ class BillingService
 
             return $usage->fresh();
         });
+    }
+
+    public function chargeMockCompletion(array $data): array
+    {
+        $completion = $this->mockAiProvider->complete($data['prompt'], $data['model'] ?? null);
+        $usage = $this->chargeUsage([
+            'tenant_id' => $data['tenant_id'],
+            'user_id' => $data['user_id'] ?? null,
+            'license_key' => $data['license_key'],
+            'domain' => $data['domain'] ?? null,
+            'fingerprint' => $data['fingerprint'],
+            'request_id' => $data['request_id'] ?? 'mock-ai-'.(string) Str::uuid(),
+            'provider' => 'mock',
+            'model' => $completion['model'],
+            'prompt_tokens' => $completion['prompt_tokens'],
+            'completion_tokens' => $completion['completion_tokens'],
+            'unit_price_per_1k' => $data['unit_price_per_1k'] ?? config('ai.mock.unit_price_per_1k', 0.01),
+            'metadata' => array_merge($data['metadata'] ?? [], [
+                'simulation' => true,
+                'prompt_hash' => hash('sha256', $data['prompt']),
+            ]),
+        ]);
+
+        return [
+            'provider' => 'mock',
+            'model' => $completion['model'],
+            'simulation' => true,
+            'message' => $completion['message'],
+            'usage' => $usage,
+        ];
+    }
+
+    public function usageRecords(int $limit = 50): \Illuminate\Database\Eloquent\Collection
+    {
+        return AiUsageRecord::query()
+            ->with(['tenant', 'user'])
+            ->latest('id')
+            ->limit($limit)
+            ->get();
     }
 }

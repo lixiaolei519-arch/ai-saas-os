@@ -186,7 +186,36 @@ Push:
 
 ### v1.6.0 AI Billing Foundation
 
-Status: next.
+Status: stable, pending commit.
+
+Started: 2026-06-14 06:55:15 +08:00
+Completed: 2026-06-14 06:57:20 +08:00
 
 Scope:
 - AI balance accounts, usage records, billing ledger, mock AI provider, insufficient-balance blocking, and console/portal visibility without real model provider credentials.
+
+Progress:
+- Added mock AI provider configuration and service.
+- Added mock AI completion endpoint that reuses License validation, balance checks, usage records, and ledger transactions.
+- Added administrator AI usage API and React page.
+- Added customer portal AI account API, AI balance dashboard cards, and AI usage page.
+- Added focused backend and console deep-link tests.
+- Rebuilt `public/console` production assets.
+
+Quality gate:
+- npm install completed in `frontend/admin-console`.
+- npm run build completed and generated a committed `public/console` build.
+- composer audit passed with no advisories.
+- php artisan migrate:fresh --env=testing --force passed.
+- php artisan db:seed --env=testing --force passed.
+- php artisan test passed with 41 tests and 544 assertions.
+
+Commit:
+- Pending.
+
+### v1.7.0 Plugin Delivery Foundation
+
+Status: next.
+
+Scope:
+- Plugin delivery, versioning, package metadata, authorized downloads, customer download visibility, and download records without executing plugin code.

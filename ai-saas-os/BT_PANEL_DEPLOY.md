@@ -607,3 +607,27 @@ Review the script variables before running it on a production server:
 - `PHP_BIN`
 - `COMPOSER_BIN`
 - `RUN_SEED`
+
+## v1.6.0 AI Billing Foundation Notes
+
+Release: `Release v1.6.0 ai billing foundation`
+
+AI billing in this version uses only the mock provider:
+
+```env
+AI_PROVIDER=mock
+AI_MOCK_MODEL=mock-gpt-lite
+AI_MOCK_UNIT_PRICE_PER_1K=0.010000
+AI_MOCK_MAX_COMPLETION_TOKENS=256
+```
+
+Do not add real OpenAI, Claude, Gemini, or other model API keys for this release. The endpoint below simulates a model response and writes billing records through the internal ledger only:
+
+```text
+POST /api/v1/ai/mock/completions
+```
+
+Console checks:
+
+- Administrator AI usage: `https://ai.js3.cn/console/ai-usage`
+- Customer AI balance and usage: `https://ai.js3.cn/console/portal/ai-usage`

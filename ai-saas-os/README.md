@@ -1,8 +1,8 @@
 # AI SaaS OS
 
-AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.5.0 scope adds production hardening on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
+AI SaaS OS is a Laravel-based minimum commercial SaaS backend for mainland China deployment scenarios. The v1.6.0 scope adds AI billing foundation visibility on top of the launchable foundation: users, tenants, License authorization, orders, mock payment callbacks, payment adapter structure, AI billing ledger, mock AI provider, plugin foundation, workflow foundation, risk controls, marketing attribution, admin APIs, customer portal APIs, administrator console, customer portal, deployment readiness, queue/scheduler checks, and one-command deployment smoke testing.
 
-Advanced AI autonomous operations, live payment fund capture, advanced plugin ecosystems, and complex workflow products are out of scope for v1.5.0.
+Advanced AI autonomous operations, live payment fund capture, real model-provider calls, advanced plugin ecosystems, and complex workflow products are out of scope for v1.6.0.
 
 ## Requirements
 
@@ -60,6 +60,10 @@ The console includes role-aware route guards, dedicated `403` and `404` pages, u
 
 The administrator dashboard uses `/api/v1/admin/dashboard` for operational analytics: today orders, today revenue, month revenue, paid/pending orders, commission totals, seven-day order and revenue trends, License and commission status distributions, recent orders, recent payment callbacks, and recent Licenses.
 
+The administrator console also includes `/console/ai-usage`, backed by `/api/v1/admin/ai/usage-records`, for read-only AI usage records.
+
+The customer portal includes `/console/portal/ai-usage`, backed by `/api/v1/portal/ai-account` and `/api/v1/portal/usage-records`, for AI balance and usage visibility.
+
 Baota servers without Node.js can use the committed `public/console` build directly. After changing frontend source, rebuild it:
 
 ```bash
@@ -97,6 +101,18 @@ Payment channels are handled through adapter classes under `app/Services/Payment
 - `alipay`: Alipay adapter structure with explicit unconfigured payloads until real credentials are set
 
 Set `PAYMENT_PROVIDER=mock` until production payment credentials are ready. Missing WeChat Pay or Alipay credentials do not crash order creation; their payment request payloads include a clear `*_unconfigured` error. Payment callbacks validate signatures, reject amount mismatches, and ignore duplicate paid callbacks without opening a second License or creating duplicate commissions.
+
+## AI Billing
+
+The AI billing foundation uses the existing `ai_accounts`, `ai_usage_records`, and `balance_transactions` tables.
+
+Mock AI completion endpoint:
+
+```text
+POST /api/v1/ai/mock/completions
+```
+
+The mock provider estimates token usage, validates the License, checks balance and token quota, writes an AI usage record, writes a ledger transaction, and returns a simulated response. It does not call OpenAI, Claude, Gemini, or any external model provider, and no real model API key is required or stored.
 
 ## Commercial Flow
 

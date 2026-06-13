@@ -1,5 +1,6 @@
 import {
   AppstoreOutlined,
+  ApiOutlined,
   AuditOutlined,
   BankOutlined,
   DashboardOutlined,
@@ -28,6 +29,7 @@ const menuItems = [
   { key: '/console/payments', icon: <AuditOutlined />, label: '支付回调' },
   { key: '/console/channels', icon: <AppstoreOutlined />, label: '渠道管理' },
   { key: '/console/commissions', icon: <DollarOutlined />, label: '佣金管理' },
+  { key: '/console/ai-usage', icon: <ApiOutlined />, label: 'AI 用量' },
   { key: '/console/system', icon: <SettingOutlined />, label: '系统状态' },
 ];
 

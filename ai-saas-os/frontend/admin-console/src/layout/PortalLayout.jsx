@@ -1,4 +1,5 @@
 import {
+  ApiOutlined,
   DashboardOutlined,
   DollarOutlined,
   LinkOutlined,
@@ -20,6 +21,7 @@ const menuItems = [
   { key: '/console/portal/orders', icon: <ShoppingCartOutlined />, label: '我的订单' },
   { key: '/console/portal/referrals', icon: <LinkOutlined />, label: '我的推广' },
   { key: '/console/portal/commissions', icon: <DollarOutlined />, label: '我的佣金' },
+  { key: '/console/portal/ai-usage', icon: <ApiOutlined />, label: 'AI 余额' },
 ];
 
 export default function PortalLayout() {

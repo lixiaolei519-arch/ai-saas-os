@@ -40,8 +40,9 @@ Payment callbacks use the simulated HMAC adapter unless real WeChat Pay or Alipa
 - `GET /ai/accounts/{tenant}`
 - `POST /ai/credits/grant`
 - `POST /ai/usage`
+- `POST /ai/mock/completions`
 
-AI usage checks License validity and balance before charging.
+AI usage checks License validity and balance before charging. The mock completion endpoint estimates tokens, creates usage and ledger records, and returns a simulated response without calling a real model provider.
 
 ## Plugin Foundation
 
@@ -91,6 +92,7 @@ Only basic event, condition, action, log, and retry behavior is included in v1.0
 - `GET /admin/payment-callbacks`
 - `GET /admin/marketing/channels`
 - `GET /admin/marketing/commissions`
+- `GET /admin/ai/usage-records`
 - `GET /admin/stats`
 
 Admin routes require an authenticated admin token.
@@ -99,6 +101,7 @@ Admin routes require an authenticated admin token.
 
 - `GET /portal/licenses`
 - `GET /portal/orders`
+- `GET /portal/ai-account`
 - `GET /portal/usage-records`
 - `GET /portal/promotion-links`
 - `GET /portal/commissions`

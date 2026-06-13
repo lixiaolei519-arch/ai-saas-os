@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\BillingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AiUsageController extends Controller
 {
@@ -54,6 +55,26 @@ class AiUsageController extends Controller
 
         return response()->json([
             'data' => $billingService->chargeUsage($data),
+        ], 201);
+    }
+
+    public function mockCompletion(Request $request, BillingService $billingService): JsonResponse
+    {
+        $data = $request->validate([
+            'tenant_id' => ['required', 'integer', 'exists:tenants,id'],
+            'user_id' => ['nullable', 'integer', 'exists:users,id'],
+            'license_key' => ['required', 'string'],
+            'domain' => ['nullable', 'string', 'max:255'],
+            'fingerprint' => ['required', 'string', 'max:255'],
+            'request_id' => ['nullable', 'string', 'max:255', Rule::unique('ai_usage_records', 'request_id')],
+            'prompt' => ['required', 'string', 'max:8000'],
+            'model' => ['nullable', 'string', 'max:128'],
+            'unit_price_per_1k' => ['nullable', 'numeric', 'min:0'],
+            'metadata' => ['nullable', 'array'],
+        ]);
+
+        return response()->json([
+            'data' => $billingService->chargeMockCompletion($data),
         ], 201);
     }
 }
