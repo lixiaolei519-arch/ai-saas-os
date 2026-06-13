@@ -1,6 +1,6 @@
 # Deploy After Sleep
 
-Last updated: 2026-06-14 06:28:10 +08:00
+Last updated: 2026-06-14 06:29:12 +08:00
 
 ## Run Summary
 
@@ -26,12 +26,12 @@ Last updated: 2026-06-14 06:28:10 +08:00
 
 ### v1.3.0 Business Dashboard Analytics
 
-- Status: stable locally, pending commit hash before push
-- Commit: pending
+- Status: stable and pushed
+- Commit: `3d8eb0e` (`Release v1.3.0 business dashboard analytics`)
 - Tests: `php artisan test` passed with 37 tests / 486 assertions
 - Frontend build: `npm install` and `npm run build` passed
 - Backend gates: `composer audit`, testing migration, and testing seed passed
-- Push: pending
+- Push: pushed to GitHub `main`
 
 Completed changes so far:
 - Added `/api/v1/admin/dashboard`.
@@ -112,7 +112,7 @@ If the server does not have Node.js, use the committed `public/console` build ar
 
 ## Unfinished Work
 
-- v1.3.0 is complete locally and awaiting Git commit/push.
+- v1.3.0 is complete and pushed.
 - v1.4.0 queue and scheduler foundation has not started yet.
 
 ## Risk List
